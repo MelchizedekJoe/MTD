@@ -876,17 +876,18 @@ function loadDemo(){
   },2000);
 }
 
-function showScanResults(txns,results,preClassified){
+function showScanResults(txns,results){
   document.getElementById('sc-loading').style.display='none';
   document.getElementById('sc-results').style.display='block';
-  if(preClassified){
-    scanned=txns;
+  if(!results){
+    // Already fully classified (PDF path or pre-classified)
+    scanned=txns.map(function(t){return Object.assign({choice:t.classification==='TRADE'?'trade':'gift'},t);});
   } else {
     scanned=txns.map(function(t,i){
       var r=(results||[]).find(function(x){return x.id===i;});
-      var cls=r?r.classification:(/mum|gift|dinner|sofa|uncle|split/i.test(t.desc)?'GIFT_OR_PERSONAL':'TRADE');
+      var cls=r?r.classification:'TRADE';
       var conf=r?r.confidence:'LOW';
-      var reason=r?r.reason:(cls==='TRADE'?'Looks like a business payment — please confirm.':'Looks like a personal transfer — please confirm.');
+      var reason=r?r.reason:'Could not classify — please review manually.';
       return Object.assign({},t,{classification:cls,confidence:conf,reason:reason,choice:cls==='TRADE'?'trade':'gift'});
     });
   }
