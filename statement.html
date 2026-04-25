@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTD Filing Suite</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f0;color:#1a1a1a;font-size:14px;min-height:100vh}
+.app{max-width:900px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 0 1px rgba(0,0,0,0.08)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #e8e8e4;background:#fff}
+.logo{display:flex;align-items:center;gap:10px}
+.badge{width:34px;height:34px;border-radius:7px;background:#042C53;display:flex;align-items:center;justify-content:center;color:#B5D4F4;font-size:9px;font-weight:600;letter-spacing:0.4px}
+.logo-text{font-size:15px;font-weight:600;color:#1a1a1a}
+.logo-sub{font-size:11px;color:#888;margin-top:1px}
+.period-pill{font-size:11px;padding:4px 11px;border-radius:4px;background:#f5f5f0;border:1px solid #e0e0d8;color:#666}
+.nav{display:flex;gap:2px;padding:9px 24px;border-bottom:1px solid #e8e8e4;background:#fafaf8;flex-wrap:wrap}
+.nb{padding:7px 14px;border:none;background:transparent;border-radius:6px;font-size:13px;color:#666;cursor:pointer;transition:all 0.15s;font-family:inherit}
+.nb:hover{background:#fff;color:#1a1a1a}
+.nb.active{background:#fff;color:#1a1a1a;font-weight:600;border:1px solid #e0e0d8}
+.content{flex:1;padding:22px 24px}
+.sec{display:none}.sec.on{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:#f5f5f0;border-radius:8px;padding:14px 16px}
+.stat-l{font-size:11px;color:#888;margin-bottom:6px}
+.stat-v{font-size:22px;font-weight:600;color:#1a1a1a}
+.stat-s{font-size:11px;color:#aaa;margin-top:3px}
+.stat.hi{background:#E6F1FB;border:1px solid #B5D4F4}
+.stat.hi .stat-v{color:#185FA5}
+.stat.hi .stat-l{color:#378ADD}
+.card{background:#fff;border:1px solid #e8e8e4;border-radius:10px;padding:16px 20px;margin-bottom:14px}
+.ct{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+.pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.pill.paid{background:#EAF3DE;color:#3B6D11}
+.pill.pend{background:#FAEEDA;color:#854F0B}
+.pill.draft{background:#f5f5f0;color:#666}
+.irow{display:grid;grid-template-columns:90px 1fr 105px 88px 78px 78px;align-items:center;padding:10px 12px;border:1px solid #e8e8e4;border-radius:7px;gap:8px;font-size:12px;margin-bottom:6px}
+.irow.hdr{background:#fafaf8;font-size:11px;color:#888}
+.inv-n{font-weight:600;color:#185FA5}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:11px;color:#888}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;background:#fff;color:#1a1a1a;font-family:inherit;outline:none;transition:border-color 0.15s}
+input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,0.1)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:15px}
+.full{grid-column:span 2}
+.lih{display:grid;grid-template-columns:1fr 65px 78px 65px 28px;gap:7px;font-size:11px;color:#888;padding:6px 8px;background:#fafaf8;border-radius:6px;margin-bottom:6px}
+.li{display:grid;grid-template-columns:1fr 65px 78px 65px 28px;gap:7px;align-items:center;margin-bottom:6px}
+.li input,.li select{padding:6px 8px;font-size:12px}
+.db{width:24px;height:24px;border:1px solid #e0e0d8;border-radius:4px;background:transparent;color:#aaa;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;padding:0;font-family:inherit;transition:all 0.15s}
+.db:hover{background:#fff0f0;border-color:#f09595;color:#a32d2d}
+.add-li{padding:6px 14px;border:1px dashed #ccc;border-radius:6px;background:transparent;color:#888;font-size:12px;cursor:pointer;margin-top:4px;font-family:inherit;transition:all 0.15s}
+.add-li:hover{background:#fafaf8;border-style:solid}
+.tots{background:#fafaf8;border-radius:8px;padding:14px 16px;margin-top:15px}
+.tr{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#888}
+.tr.tot{border-top:1px solid #e8e8e4;margin-top:6px;padding-top:10px;font-size:16px;font-weight:600;color:#1a1a1a}
+.pbtn{padding:10px 24px;background:#042C53;color:#B5D4F4;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s}
+.pbtn:hover{background:#185FA5}
+.sbtn{padding:10px 18px;background:transparent;color:#666;border:1px solid #e0e0d8;border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.sbtn:hover{background:#fafaf8}
+.br{display:flex;gap:10px;justify-content:flex-end;margin-top:15px}
+.vbox{background:#fff;border:1px solid #e8e8e4;border-radius:8px;padding:14px}
+.vb-n{font-size:11px;font-weight:600;color:#185FA5;margin-bottom:5px}
+.vb-l{font-size:11px;color:#888;margin-bottom:8px;line-height:1.5}
+.vb-v{font-size:20px;font-weight:600;color:#1a1a1a}
+.vbox.hi2{background:#E6F1FB;border-color:#B5D4F4}
+.vbox.hi2 .vb-v{color:#042C53}
+.warn{background:#FAEEDA;border:1px solid #FAC775;border-radius:7px;padding:12px 14px;font-size:12px;color:#854F0B;margin-bottom:14px;line-height:1.6}
+.info{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:12px 14px;font-size:12px;color:#0C447C;margin-bottom:14px;line-height:1.6}
+.sub-area{background:#fafaf8;border-radius:8px;padding:22px;text-align:center}
+.sub-area h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.sub-area p{font-size:13px;color:#888;margin-bottom:16px}
+.steps{display:flex;margin-bottom:18px;border:1px solid #e8e8e4;border-radius:8px;overflow:hidden}
+.step{flex:1;padding:11px 14px;text-align:center;font-size:11px;color:#888;background:#fafaf8;border-right:1px solid #e8e8e4}
+.step:last-child{border-right:none}
+.step.act{background:#E6F1FB;color:#185FA5;font-weight:600}
+.step.done{background:#EAF3DE;color:#3B6D11;font-weight:600}
+.step-n{display:block;font-size:17px;font-weight:600;margin-bottom:2px}
+.upload-zone{border:2px dashed #d0d0c8;border-radius:10px;padding:36px 20px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:14px}
+.upload-zone:hover,.upload-zone.drag{border-color:#378ADD;background:#E6F1FB}
+.upload-zone input[type=file]{display:none}
+.upload-icon{width:48px;height:48px;border-radius:10px;background:#fafaf8;border:1px solid #e8e8e4;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.upload-title{font-size:14px;font-weight:600;margin-bottom:5px;color:#1a1a1a}
+.upload-sub{font-size:12px;color:#888;line-height:1.6}
+.file-types{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.ft{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#f5f5f0;border:1px solid #e0e0d8;color:#666}
+.ft.active-ft{background:#E6F1FB;border-color:#B5D4F4;color:#185FA5}
+.txn-card{background:#fff;border:1px solid #e8e8e4;border-radius:9px;padding:14px 16px;margin-bottom:10px;transition:opacity 0.2s}
+.txn-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.txn-desc{font-size:13px;font-weight:600;color:#1a1a1a}
+.txn-amt{font-size:14px;font-weight:600}
+.txn-amt.in{color:#3B6D11}
+.txn-meta{font-size:11px;color:#aaa;margin-bottom:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.txn-reason{font-size:12px;color:#555;background:#fafaf8;border-radius:5px;padding:8px 10px;margin-bottom:10px;line-height:1.6;border-left:3px solid #e0e0d8}
+.txn-reason.trade-r{border-left-color:#378ADD}
+.txn-reason.gift-r{border-left-color:#D4537E}
+.txn-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tg-btn{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all 0.15s;font-family:inherit}
+.tg-btn.trade-btn{border-color:#185FA5;color:#185FA5;background:transparent}
+.tg-btn.trade-btn:hover,.tg-btn.trade-btn.sel{background:#E6F1FB}
+.tg-btn.gift-btn{border-color:#993556;color:#993556;background:transparent}
+.tg-btn.gift-btn:hover,.tg-btn.gift-btn.sel{background:#FBEAF0}
+.tg-btn.skip-btn{border-color:#ddd;color:#888;background:transparent}
+.tg-btn.skip-btn:hover{background:#fafaf8}
+.ai-loading{display:flex;align-items:center;gap:12px;padding:24px 0;color:#888;font-size:13px}
+.dot-spin{width:18px;height:18px;border:2px solid #e0e0d8;border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.ss{background:#fafaf8;border-radius:7px;padding:12px 13px;text-align:center;border:1px solid #e8e8e4}
+.ss-v{font-size:22px;font-weight:600;color:#1a1a1a}
+.ss-l{font-size:11px;color:#888;margin-top:2px}
+.progress-bar{height:5px;background:#e8e8e4;border-radius:3px;margin:8px 0 20px;overflow:hidden}
+.progress-fill{height:100%;background:#378ADD;border-radius:3px;transition:width 0.5s ease}
+.toast{position:fixed;bottom:24px;right:24px;background:#042C53;color:#B5D4F4;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999;font-weight:500;max-width:320px}
+.toast.show{opacity:1}
+.vat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.demo-link{font-size:12px;color:#185FA5;cursor:pointer;text-decoration:underline;display:inline-block}
+.conf-high{background:#EAF3DE;color:#3B6D11;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600}
+.conf-med{background:#FAEEDA;color:#854F0B;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600}
+.conf-low{background:#f5f5f0;color:#666;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600}
+.vat-table{width:100%;border-collapse:collapse;font-size:12px}
+.vat-table th{text-align:left;padding:8px 10px;color:#888;font-weight:400;font-size:11px;border-bottom:1px solid #e8e8e4}
+.vat-table td{padding:9px 10px;border-bottom:1px solid #e8e8e4}
+.vat-table tr:last-child td{border-bottom:none}
+.box-num{display:inline-block;width:22px;height:22px;border-radius:4px;background:#E6F1FB;color:#185FA5;font-size:10px;text-align:center;line-height:22px;margin-right:6px;font-weight:600}
+.pdf-preview{background:#fafaf8;border:1px solid #e8e8e4;border-radius:7px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:#888;max-height:120px;overflow:hidden;position:relative}
+.pdf-preview::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,#fafaf8)}
+.pdf-preview pre{white-space:pre-wrap;word-break:break-word;font-family:monospace;font-size:11px;color:#555;line-height:1.5}
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr 1fr}
+  .fgrid{grid-template-columns:1fr}.full{grid-column:span 1}
+  .irow{grid-template-columns:1fr 1fr;gap:4px}.irow.hdr{display:none}
+  .vat-grid{grid-template-columns:1fr}
+  .scan-stats{grid-template-columns:1fr}
+  .nav{gap:2px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="logo">
+      <div class="badge">MTD</div>
+      <div><div class="logo-text">MTD Filing Suite</div><div class="logo-sub">Making Tax Digital &middot; HMRC</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px"><span class="period-pill" id="period-label">VAT Period: Jan&ndash;Mar 2025</span><button onclick="openSettings()" style="padding:4px 11px;border-radius:4px;background:#f5f5f0;border:1px solid #e0e0d8;color:#666;font-size:11px;cursor:pointer;font-family:inherit">&#9881; Settings</button><button onclick="exportAllInvoices()" style="padding:4px 11px;border-radius:4px;background:#f5f5f0;border:1px solid #e0e0d8;color:#666;font-size:11px;cursor:pointer;font-family:inherit">&#8595; Export</button></div>
+  </div>
+  <nav class="nav">
+    <button class="nb active" onclick="tab('dash',this)">Dashboard</button>
+    <button class="nb" onclick="tab('scan',this)">Statement Scanner</button>
+    <button class="nb" onclick="tab('inv',this)">Invoices</button>
+    <button class="nb" onclick="tab('create',this)">Create Invoice</button>
+    <button class="nb" onclick="tab('ret',this)">MTD Return</button>
+  </nav>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="s-dash" class="sec on">
+      <div class="stats">
+        <div class="stat hi"><div class="stat-l">VAT owed</div><div class="stat-v" id="d-vat">£0.00</div><div class="stat-s">Box 1 &minus; Box 4</div></div>
+        <div class="stat"><div class="stat-l">Total sales ex. VAT</div><div class="stat-v" id="d-sales">£0.00</div><div class="stat-s">Box 6</div></div>
+        <div class="stat"><div class="stat-l">Output VAT</div><div class="stat-v" id="d-out">£0.00</div><div class="stat-s">Box 1</div></div>
+        <div class="stat"><div class="stat-l">Invoices</div><div class="stat-v" id="d-cnt">0</div><div class="stat-s">This period</div></div>
+      </div>
+      <div class="card">
+        <div class="ct">VAT return summary (boxes 1&ndash;9)</div>
+        <table class="vat-table"><thead><tr><th>Box</th><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody id="vat-body"></tbody></table>
+      </div>
+      <div class="card"><div class="ct">Recent invoices</div><div id="d-recent"></div></div>
+    </div>
+
+    <!-- STATEMENT SCANNER -->
+    <div id="s-scan" class="sec">
+
+      <div id="scan-upload-view">
+        <div style="font-size:16px;font-weight:600;margin-bottom:14px">Statement scanner</div>
+        <div class="info">&#128161; Upload your bank statement as a <strong>PDF or CSV</strong>. The AI will read every transaction, flag potential trade income, and let you decide what to file.</div>
+        <div class="upload-zone" id="drop-zone"
+          onclick="document.getElementById('file-in').click()"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleDrop(event)">
+          <input type="file" id="file-in" accept=".csv,.txt,.pdf" onchange="handleFile(this.files[0])">
+          <div class="upload-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v13M8 8l4-5 4 5M3 18v2a1 1 0 001 1h16a1 1 0 001-1v-2" stroke="#378ADD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="upload-title">Upload your bank statement</div>
+          <div class="upload-sub">Drag &amp; drop or click to browse</div>
+          <div class="file-types" style="margin-top:14px">
+            <span class="ft active-ft">PDF</span>
+            <span class="ft active-ft">CSV</span>
+            <span class="ft">TXT</span>
+          </div>
+        </div>
+        <div style="margin-bottom:6px;font-size:12px;color:#888">
+          <strong>CSV format:</strong> date, description, amount (one transaction per line)<br>
+          <strong>PDF:</strong> works with most UK bank statement PDFs — Monzo, Barclays, HSBC, Starling, NatWest, etc.
+        </div>
+        <div style="text-align:center;margin-top:10px"><span class="demo-link" onclick="loadDemo()">No file? Load demo statement to try it out &rarr;</span></div>
+      </div>
+
+      <div id="scan-loading-view" style="display:none">
+        <div style="font-size:16px;font-weight:600;margin-bottom:6px">Analysing statement&hellip;</div>
+        <div style="font-size:12px;color:#888;margin-bottom:14px" id="file-type-label"></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+        <div class="ai-loading"><div class="dot-spin"></div><span id="loading-msg">Reading your statement&hellip;</span></div>
+      </div>
+
+      <div id="scan-results-view" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:16px;font-weight:600">Review transactions</div>
+          <button class="sbtn" onclick="resetScan()" style="font-size:12px;padding:6px 12px">&#8592; Scan another</button>
+        </div>
+        <div class="scan-stats">
+          <div class="ss"><div class="ss-v" id="sc-total">0</div><div class="ss-l">Transactions found</div></div>
+          <div class="ss"><div class="ss-v" id="sc-flagged" style="color:#185FA5">0</div><div class="ss-l">Flagged as trades</div></div>
+          <div class="ss"><div class="ss-v" id="sc-added" style="color:#3B6D11">0</div><div class="ss-l">Added as invoices</div></div>
+        </div>
+        <div id="txn-list"></div>
+        <div class="br">
+          <button class="sbtn" onclick="exportCSV()">Export reviewed CSV</button>
+          <button class="pbtn" onclick="finaliseScan()">Add trades to invoices</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INVOICES -->
+    <div id="s-inv" class="sec">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:16px;font-weight:600">All invoices</div>
+        <button class="pbtn" onclick="tab('create',document.querySelectorAll('.nb')[3])">+ New invoice</button>
+      </div>
+      <div class="irow hdr"><span>Number</span><span>Client</span><span>Date</span><span>Net</span><span>VAT</span><span>Status</span></div>
+      <div id="inv-list"></div>
+      <div id="no-inv" style="text-align:center;padding:32px;color:#aaa;font-size:13px">No invoices yet. Create your first invoice above.</div>
+    </div>
+
+    <!-- CREATE INVOICE -->
+    <div id="s-create" class="sec">
+      <div style="font-size:16px;font-weight:600;margin-bottom:15px">New invoice</div>
+      <div class="card">
+        <div class="fgrid">
+          <div class="fg"><label>Invoice number</label><input id="c-num" placeholder="INV-001"></div>
+          <div class="fg"><label>Date</label><input type="date" id="c-date"></div>
+          <div class="fg"><label>Client name</label><input id="c-client" placeholder="Acme Ltd"></div>
+          <div class="fg"><label>Client VAT number (optional)</label><input id="c-cvat" placeholder="GB 123 4567 89"></div>
+          <div class="fg full"><label>Client address</label><input id="c-addr" placeholder="123 High Street, London, EC1A 1BB"></div>
+          <div class="fg"><label>Payment terms</label><select id="c-terms"><option>Due on receipt</option><option>Net 14</option><option>Net 30</option><option>Net 60</option></select></div>
+          <div class="fg"><label>Default VAT rate</label><select id="c-vrate"><option value="20">Standard 20%</option><option value="5">Reduced 5%</option><option value="0">Zero rated 0%</option></select></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px">Line items</div>
+        <div class="lih"><span>Description</span><span>Qty</span><span>Unit price</span><span>VAT</span><span></span></div>
+        <div id="line-items"></div>
+        <button class="add-li" onclick="addLI()">+ Add line item</button>
+        <div class="tots">
+          <div class="tr"><span>Subtotal</span><span id="t-sub">£0.00</span></div>
+          <div class="tr"><span>VAT</span><span id="t-vat">£0.00</span></div>
+          <div class="tr tot"><span>Total</span><span id="t-tot">£0.00</span></div>
+        </div>
+      </div>
+      <div id="inv-preview" style="display:none;background:#fafaf8;border-radius:8px;padding:18px;font-size:12px;color:#444;line-height:1.8;margin-bottom:14px;border:1px solid #e8e8e4"></div>
+      <div class="br"><button class="sbtn" onclick="previewInv()">Preview</button><button class="pbtn" onclick="saveInv()">Save invoice</button></div>
+    </div>
+
+    <!-- MTD RETURN -->
+    <div id="s-ret" class="sec">
+      <div style="font-size:16px;font-weight:600;margin-bottom:15px">Submit MTD VAT return</div>
+      <div class="steps">
+        <div class="step done"><span class="step-n">1</span>Collect data</div>
+        <div class="step act"><span class="step-n">2</span>Review boxes</div>
+        <div class="step"><span class="step-n">3</span>Submit</div>
+      </div>
+      <div class="warn">&#9888; Review all figures carefully before submitting. Once submitted to HMRC, amendments require a separate correction return.</div>
+      <div class="card"><div class="ct">VAT return boxes &mdash; review &amp; edit</div><div class="vat-grid" id="ret-boxes"></div></div>
+      <div class="sub-area">
+        <h3>Ready to submit?</h3>
+        <p>These figures are auto-calculated from your invoices. Edit boxes 2, 4, 7, 8, 9 manually if needed. Submit officially via HMRC or bridging software.</p>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <a href="https://www.gov.uk/send-vat-return" target="_blank" rel="noopener" style="text-decoration:none"><button class="sbtn">File on HMRC &rarr;</button></a>
+          <button class="pbtn" onclick="doSubmit()">Mark as submitted</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+var ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE';
+// ────────────────────────────────────────────────────────
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+var invoices = [];
+var lis=[], nextN=5, scannedTxns=[], addedCount=0;
+
+var DEMO_TXNS=[
+  {date:'2025-01-08',desc:'STRIPE PAYOUT ACME LTD',amount:2400,dir:'in',raw:'Stripe payment from Acme Ltd project delivery'},
+  {date:'2025-01-14',desc:'PAYPAL TRANSFER JOHN SMITH',amount:150,dir:'in',raw:'PayPal from John Smith'},
+  {date:'2025-01-20',desc:'BANK TRANSFER MUM',amount:500,dir:'in',raw:'Family transfer from Mum birthday gift'},
+  {date:'2025-01-25',desc:'GUMTREE SALE OLD SOFA',amount:80,dir:'in',raw:'Sold personal sofa on Gumtree'},
+  {date:'2025-02-02',desc:'STRIPE PAYOUT NORTHGATE',amount:1800,dir:'in',raw:'Northgate consulting Feb retainer payment'},
+  {date:'2025-02-10',desc:'REVOLUT SPLIT DINNER',amount:45,dir:'in',raw:'Revolut bill split dinner with friends'},
+  {date:'2025-02-18',desc:'CLIENT REF LYRA FOODS',amount:4200,dir:'in',raw:'Lyra Foods brand strategy invoice payment'},
+  {date:'2025-02-22',desc:'BACS STERLING CO PHOTO',amount:2000,dir:'in',raw:'Sterling and Co photography shoot payment'},
+  {date:'2025-03-05',desc:'PAYPAL GIFT FROM UNCLE',amount:200,dir:'in',raw:'Birthday gift from uncle'},
+  {date:'2025-03-12',desc:'ETSY SALE HANDMADE',amount:65,dir:'in',raw:'Etsy shop sale handmade candles regular'},
+];
+
+function fmt(n){return'£'+parseFloat(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function ci(inv){var n=0,v=0;inv.lines.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});return{net:n,vat:v,tot:n+v};}
+function boxes(){var b1=0,b6=0;invoices.forEach(function(i){var c=ci(i);b1+=c.vat;b6+=c.net;});return{b1:b1,b2:0,b3:b1,b4:0,b5:Math.max(0,b1),b6:b6,b7:0,b8:0,b9:0};}
+
+function tab(name,el){
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('s-'+name).classList.add('on');
+  el.classList.add('active');
+  if(name==='dash')renderDash();
+  if(name==='inv')renderInvList();
+  if(name==='ret')renderRet();
+  if(name==='create')initCreate();
+}
+
+function renderDash(){
+  var b=boxes();
+  document.getElementById('d-vat').textContent=fmt(b.b5);
+  document.getElementById('d-sales').textContent=fmt(b.b6);
+  document.getElementById('d-out').textContent=fmt(b.b1);
+  document.getElementById('d-cnt').textContent=invoices.length;
+  var rows=[['1','VAT due on sales and other outputs',b.b1],['2','VAT due on acquisitions from EC member states',b.b2],['3','Total VAT due (boxes 1 + 2)',b.b3],['4','VAT reclaimed on purchases and inputs',b.b4],['5','Net VAT to pay to HMRC or reclaim',b.b5],['6','Total value of sales and outputs ex. VAT',b.b6],['7','Total value of purchases and inputs ex. VAT',b.b7],['8','Total value of EC supplies of goods ex. VAT',b.b8],['9','Total value of EC acquisitions of goods ex. VAT',b.b9]];
+  var h='';
+  rows.forEach(function(r){h+='<tr><td><span class="box-num">'+r[0]+'</span></td><td style="color:#888;font-size:12px">'+r[1]+'</td><td style="text-align:right;font-weight:'+(r[0]==='5'?'600':'400')+';color:'+(r[0]==='5'?'#185FA5':'#1a1a1a')+'">'+fmt(r[2])+'</td></tr>';});
+  document.getElementById('vat-body').innerHTML=h;
+  var rec=invoices.slice(-4).reverse();
+  var rh='';
+  rec.forEach(function(inv){var c=ci(inv);var p=inv.status==='paid'?'paid':inv.status==='pending'?'pend':'draft';var l=inv.status==='paid'?'Paid':inv.status==='pending'?'Pending':'Draft';rh+='<div class="irow"><span class="inv-n">'+inv.id+'</span><span>'+inv.client+'</span><span>'+inv.date+'</span><span>'+fmt(c.net)+'</span><span>'+fmt(c.vat)+'</span><span class="pill '+p+'">'+l+'</span></div>';});
+  document.getElementById('d-recent').innerHTML=rh||'<div style="padding:10px;color:#aaa;font-size:12px">No invoices yet</div>';
+}
+
+function renderInvList(){
+  var el=document.getElementById('inv-list'),ne=document.getElementById('no-inv');
+  if(!invoices.length){el.innerHTML='';ne.style.display='block';return;}
+  ne.style.display='none';
+  var h='';
+  invoices.forEach(function(inv){var c=ci(inv);var p=inv.status==='paid'?'paid':inv.status==='pending'?'pend':'draft';var l=inv.status==='paid'?'Paid':inv.status==='pending'?'Pending':'Draft';h+='<div class="irow"><span class="inv-n">'+inv.id+'</span><span>'+inv.client+'</span><span>'+inv.date+'</span><span>'+fmt(c.net)+'</span><span>'+fmt(c.vat)+'</span><span class="pill '+p+'">'+l+'</span></div>';});
+  el.innerHTML=h;
+}
+
+function renderRet(){
+  var b=boxes();
+  var defs=[{n:'1',l:'VAT due on sales',v:b.b1,e:false},{n:'2',l:'VAT on EC acquisitions',v:b.b2,e:true},{n:'3',l:'Total VAT due',v:b.b3,e:false},{n:'4',l:'VAT reclaimed on purchases',v:b.b4,e:true},{n:'5',l:'Net VAT payable',v:b.b5,e:false,hi:true},{n:'6',l:'Total sales ex. VAT',v:b.b6,e:false},{n:'7',l:'Total purchases ex. VAT',v:b.b7,e:true},{n:'8',l:'EC supplies of goods',v:b.b8,e:true},{n:'9',l:'EC acquisitions of goods',v:b.b9,e:true}];
+  var h='';
+  defs.forEach(function(bx){h+='<div class="vbox'+(bx.hi?' hi2':'')+'"><div class="vb-n">Box '+bx.n+'</div><div class="vb-l">'+bx.l+'</div>'+(bx.e?'<input type="number" step="0.01" value="'+bx.v.toFixed(2)+'" style="font-size:15px;font-weight:600;border:none;border-bottom:2px solid #e0e0d8;border-radius:0;padding:3px 0;background:transparent">':'<div class="vb-v">'+fmt(bx.v)+'</div>')+'</div>';});
+  document.getElementById('ret-boxes').innerHTML=h;
+}
+
+function initCreate(){
+  document.getElementById('c-date').value=new Date().toISOString().split('T')[0];
+  if(!document.getElementById('c-num').value)document.getElementById('c-num').value='INV-00'+nextN;
+  if(!lis.length){lis=[{d:'',q:1,p:0,v:20}];renderLIs();}
+}
+function renderLIs(){
+  var h='';
+  lis.forEach(function(it,i){h+='<div class="li"><input placeholder="Description" value="'+it.d+'" oninput="lis['+i+'].d=this.value"><input type="number" min="0" value="'+it.q+'" oninput="lis['+i+'].q=parseFloat(this.value)||0;calcTots()"><input type="number" min="0" step="0.01" value="'+it.p+'" oninput="lis['+i+'].p=parseFloat(this.value)||0;calcTots()"><select onchange="lis['+i+'].v=parseFloat(this.value);calcTots()"><option value="20"'+(it.v===20?' selected':'')+'>20%</option><option value="5"'+(it.v===5?' selected':'')+'>5%</option><option value="0"'+(it.v===0?' selected':'')+'>0%</option></select><button class="db" onclick="delLI('+i+')">&#215;</button></div>';});
+  document.getElementById('line-items').innerHTML=h;calcTots();
+}
+function addLI(){lis.push({d:'',q:1,p:0,v:20});renderLIs();}
+function delLI(i){if(lis.length>1){lis.splice(i,1);renderLIs();}}
+function calcTots(){var n=0,v=0;lis.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});document.getElementById('t-sub').textContent=fmt(n);document.getElementById('t-vat').textContent=fmt(v);document.getElementById('t-tot').textContent=fmt(n+v);}
+function previewInv(){
+  var n=0,v=0;lis.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});
+  var h='<strong>'+document.getElementById('c-num').value+'</strong>&nbsp;&nbsp;'+document.getElementById('c-date').value+'<br>To: <strong>'+document.getElementById('c-client').value+'</strong>';
+  if(document.getElementById('c-cvat').value)h+=' &mdash; VAT: '+document.getElementById('c-cvat').value;
+  if(document.getElementById('c-addr').value)h+='<br>'+document.getElementById('c-addr').value;
+  h+='<br><br><table style="width:100%;border-collapse:collapse;font-size:12px"><tr style="border-bottom:1px solid #ddd"><td><strong>Description</strong></td><td><strong>Qty</strong></td><td><strong>Unit price</strong></td><td><strong>VAT</strong></td><td style="text-align:right"><strong>Line total</strong></td></tr>';
+  lis.forEach(function(l){if(l.d)h+='<tr style="border-bottom:1px solid #f0f0ec"><td>'+l.d+'</td><td>'+l.q+'</td><td>'+fmt(l.p)+'</td><td>'+l.v+'%</td><td style="text-align:right">'+fmt(l.q*l.p)+'</td></tr>';});
+  h+='</table><br>Subtotal: '+fmt(n)+'&emsp;VAT: '+fmt(v)+'&emsp;<strong>Total: '+fmt(n+v)+'</strong><br>Terms: '+document.getElementById('c-terms').value;
+  var pr=document.getElementById('inv-preview');pr.innerHTML=h;pr.style.display='block';
+}
+function saveInv(prefill){
+  var num=prefill?prefill.num:document.getElementById('c-num').value;
+  var cl=prefill?prefill.client:document.getElementById('c-client').value;
+  if(!num||!cl){toast('Please fill in invoice number and client name');return;}
+  var lines=prefill?prefill.lines:lis.filter(function(l){return l.d;});
+  if(!lines.length){toast('Add at least one line item');return;}
+  invoices.push({id:num,client:cl,date:prefill?prefill.date:document.getElementById('c-date').value,lines:JSON.parse(JSON.stringify(lines)),status:'pending'});
+  nextN++;
+  if(!prefill){lis=[];document.getElementById('c-num').value='';document.getElementById('c-client').value='';document.getElementById('c-cvat').value='';document.getElementById('c-addr').value='';document.getElementById('inv-preview').style.display='none';}
+  toast('Invoice '+num+' saved!');
+  if(!prefill)tab('inv',document.querySelectorAll('.nb')[2]);
+}
+
+// ── PDF EXTRACTION ──────────────────────────────────────
+async function extractPdfText(file){
+  var arrayBuffer=await file.arrayBuffer();
+  var pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+  var fullText='';
+  for(var i=1;i<=pdf.numPages;i++){
+    var page=await pdf.getPage(i);
+    var content=await page.getTextContent();
+    var pageText=content.items.map(function(item){return item.str;}).join(' ');
+    fullText+=pageText+'\n';
+  }
+  return fullText;
+}
+
+// ── FILE HANDLING ───────────────────────────────────────
+function handleDrop(e){e.preventDefault();document.getElementById('drop-zone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f)handleFile(f);}
+
+function handleFile(file){
+  if(!file)return;
+  var isPdf=file.type==='application/pdf'||file.name.toLowerCase().endsWith('.pdf');
+  document.getElementById('scan-upload-view').style.display='none';
+  document.getElementById('scan-loading-view').style.display='block';
+  document.getElementById('file-type-label').textContent=isPdf?'Reading PDF: '+file.name:'Reading CSV: '+file.name;
+  startProgress();
+  if(isPdf){
+    extractPdfText(file).then(function(text){
+      updateMsg('Sending to AI for analysis...');
+      analyseWithAI(null,null,text);
+    }).catch(function(){
+      updateMsg('PDF read failed, trying as text...');
+      var reader=new FileReader();
+      reader.onload=function(e){analyseWithAI(null,null,e.target.result);};
+      reader.readAsText(file);
+    });
+  } else {
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var lines=e.target.result.split('\n').filter(function(l){return l.trim();});
+      var txns=[];
+      lines.forEach(function(line){
+        var parts=line.split(',');
+        if(parts.length>=3){var amt=parseFloat(parts[2]);if(!isNaN(amt)&&amt>0)txns.push({date:(parts[0]||'').trim(),desc:(parts[1]||'Unknown').trim(),amount:Math.abs(amt),dir:'in',raw:line});}
+      });
+      if(txns.length){analyseWithAI(txns,null,null);}
+      else{updateMsg('Could not parse CSV, sending raw text to AI...');analyseWithAI(null,null,e.target.result);}
+    };
+    reader.onerror=function(){analyseWithAI(DEMO_TXNS,null,null);};
+    reader.readAsText(file);
+  }
+}
+
+var progIv=null;
+function startProgress(){
+  var prog=0;
+  var msgs=['Reading your statement...','Extracting transactions...','Sending to AI...','Classifying income...','Almost done...'];
+  var mi=0;
+  progIv=setInterval(function(){
+    prog+=Math.random()*12+4;if(prog>88)prog=88;
+    document.getElementById('prog').style.width=prog+'%';
+    if(mi<msgs.length){document.getElementById('loading-msg').textContent=msgs[mi++];}
+  },700);
+}
+function updateMsg(msg){document.getElementById('loading-msg').textContent=msg;}
+function stopProgress(){clearInterval(progIv);document.getElementById('prog').style.width='100%';}
+
+function loadDemo(){
+  document.getElementById('scan-upload-view').style.display='none';
+  document.getElementById('scan-loading-view').style.display='block';
+  document.getElementById('file-type-label').textContent='Demo statement — 10 sample transactions';
+  startProgress();
+  setTimeout(function(){analyseWithAI(DEMO_TXNS,null,null);},2500);
+}
+
+// ── AI ANALYSIS ─────────────────────────────────────────
+function analyseWithAI(txns,iv,rawText){
+  var prompt;
+  if(rawText){
+    prompt='You are a UK tax assistant. I will give you raw text extracted from a bank statement. Please:\n1. Extract all INCOMING transactions (credits/payments received)\n2. For each, determine if it is TRADE income (freelance, self-employment, selling goods/services regularly) or GIFT_OR_PERSONAL (gifts, bill splits, personal item sales, family transfers, reimbursements)\n3. Return ONLY a JSON array with no preamble or markdown. Each object: {"date":"YYYY-MM-DD or as found","desc":"transaction description","amount":number,"classification":"TRADE" or "GIFT_OR_PERSONAL","confidence":"HIGH" or "MEDIUM" or "LOW","reason":"one sentence"}\n\nBank statement text:\n'+rawText.substring(0,6000);
+  } else {
+    prompt='You are a UK tax assistant. Analyse these bank transactions and classify each as TRADE (self-employment/freelance income, selling goods or services as a business activity) or GIFT_OR_PERSONAL (personal gifts, family transfers, bill splits, selling personal belongings, reimbursements).\nRespond ONLY with a JSON array, no preamble, no markdown. Each object: {"id":N,"classification":"TRADE" or "GIFT_OR_PERSONAL","confidence":"HIGH" or "MEDIUM" or "LOW","reason":"one sentence"}\nTransactions: '+JSON.stringify(txns.map(function(t,i){return{id:i,desc:t.desc,amount:t.amount,context:t.raw};}));
+  }
+
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-calls':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    stopProgress();
+    var results=[];
+    try{
+      var txt=data.content[0].text.replace(/```json|```/g,'').trim();
+      results=JSON.parse(txt);
+    }catch(e){results=[];}
+
+    if(rawText&&results.length){
+      // Raw text mode — AI returns full transaction objects
+      var parsed=results.map(function(r){
+        return{date:r.date||'2025-01-01',desc:r.desc||'Unknown',amount:parseFloat(r.amount)||0,dir:'in',raw:r.desc,classification:r.classification,confidence:r.confidence,reason:r.reason,userChoice:r.classification==='TRADE'?'trade':'gift'};
+      }).filter(function(t){return t.amount>0;});
+      setTimeout(function(){showScanResults(parsed,null);},400);
+    } else if(txns){
+      setTimeout(function(){showScanResults(txns,results.length?results:fallbackClassify(txns));},400);
+    } else {
+      setTimeout(function(){showScanResults(DEMO_TXNS,fallbackClassify(DEMO_TXNS));},400);
+    }
+  }).catch(function(){
+    stopProgress();
+    var src=txns||DEMO_TXNS;
+    setTimeout(function(){showScanResults(src,fallbackClassify(src));},400);
+  });
+}
+
+function fallbackClassify(txns){
+  return txns.map(function(t,i){
+    var isPersonal=/mum|dad|gift|birthday|split|dinner|sofa|gumtree|uncle|friend|family|personal/i.test((t.desc||'')+(t.raw||''));
+    return{id:i,classification:isPersonal?'GIFT_OR_PERSONAL':'TRADE',confidence:'LOW',reason:isPersonal?'Appears to be a personal transfer or gift — please verify.':'Could be trade income — please confirm manually.'};
+  });
+}
+
+function showScanResults(txns,results){
+  document.getElementById('scan-loading-view').style.display='none';
+  document.getElementById('scan-results-view').style.display='block';
+
+  if(results){
+    scannedTxns=txns.map(function(t,i){
+      var r=results.find(function(x){return x.id===i;})||{classification:'TRADE',confidence:'LOW',reason:'Could not classify.'};
+      return Object.assign({},t,{classification:r.classification,confidence:r.confidence,reason:r.reason,userChoice:r.classification==='TRADE'?'trade':'gift'});
+    });
+  } else {
+    // Already fully formed from PDF path
+    scannedTxns=txns;
+  }
+
+  document.getElementById('sc-total').textContent=scannedTxns.length;
+  document.getElementById('sc-flagged').textContent=scannedTxns.filter(function(t){return t.classification==='TRADE';}).length;
+  document.getElementById('sc-added').textContent=addedCount;
+  renderTxnList();
+}
+
+function renderTxnList(){
+  var h='';
+  if(!scannedTxns.length){document.getElementById('txn-list').innerHTML='<div style="padding:20px;text-align:center;color:#aaa">No incoming transactions found in this statement.</div>';return;}
+  scannedTxns.forEach(function(t,i){
+    var confClass=t.confidence==='HIGH'?'conf-high':t.confidence==='MEDIUM'?'conf-med':'conf-low';
+    var confLabel=t.confidence==='HIGH'?'High confidence':t.confidence==='MEDIUM'?'Review suggested':'Unclear';
+    var tSel=t.userChoice==='trade'?' sel':'';
+    var gSel=t.userChoice==='gift'?' sel':'';
+    var reasonClass=t.userChoice==='trade'?' trade-r':t.userChoice==='gift'?' gift-r':'';
+    var opacity=t.userChoice==='skip'?'opacity:0.4':'';
+    h+='<div class="txn-card" id="txn-'+i+'" style="'+opacity+'">';
+    h+='<div class="txn-top"><span class="txn-desc">'+t.desc+'</span><span class="txn-amt in">+'+fmt(t.amount)+'</span></div>';
+    h+='<div class="txn-meta"><span>'+t.date+'</span><span class="'+confClass+'">'+confLabel+'</span></div>';
+    h+='<div class="txn-reason'+reasonClass+'">'+t.reason+'</div>';
+    h+='<div class="txn-actions"><button class="tg-btn trade-btn'+tSel+'" onclick="setChoice('+i+',\'trade\')">&#10003; Trade income</button><button class="tg-btn gift-btn'+gSel+'" onclick="setChoice('+i+',\'gift\')">&#10003; Gift / personal</button><button class="tg-btn skip-btn" onclick="setChoice('+i+',\'skip\')">Skip</button></div>';
+    h+='</div>';
+  });
+  document.getElementById('txn-list').innerHTML=h;
+}
+
+function setChoice(i,choice){
+  scannedTxns[i].userChoice=choice;
+  var card=document.getElementById('txn-'+i);
+  var btns=card.querySelectorAll('.tg-btn');
+  btns[0].classList.toggle('sel',choice==='trade');
+  btns[1].classList.toggle('sel',choice==='gift');
+  card.style.opacity=choice==='skip'?'0.4':'1';
+  var rc=card.querySelector('.txn-reason');
+  rc.className='txn-reason'+(choice==='trade'?' trade-r':choice==='gift'?' gift-r':'');
+}
+
+function finaliseScan(){
+  var trades=scannedTxns.filter(function(t){return t.userChoice==='trade';});
+  if(!trades.length){toast('No trades selected — mark at least one as trade income first');return;}
+  trades.forEach(function(t){
+    var num='INV-SC'+nextN;
+    var netAmt=parseFloat((t.amount/1.2).toFixed(2));
+    saveInv({num:num,client:t.desc,date:t.date,lines:[{d:'Income: '+t.desc,q:1,p:netAmt,v:20}]});
+  });
+  addedCount+=trades.length;
+  document.getElementById('sc-added').textContent=addedCount;
+  toast(trades.length+' trade(s) added as invoices!');
+  renderDash();
+}
+
+function exportCSV(){
+  if(!scannedTxns.length){toast('No transactions to export');return;}
+  var rows=['Date,Description,Amount,AI Classification,Confidence,Reason,Your Decision'];
+  scannedTxns.forEach(function(t){rows.push([t.date,'"'+(t.desc||'').replace(/"/g,'')+'",',t.amount,t.classification,t.confidence,'"'+(t.reason||'').replace(/"/g,'')+'",',t.userChoice].join(','));});
+  var blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='statement-review-'+new Date().toISOString().split('T')[0]+'.csv';a.click();
+}
+
+function resetScan(){
+  document.getElementById('scan-results-view').style.display='none';
+  document.getElementById('scan-upload-view').style.display='block';
+  document.getElementById('file-in').value='';
+  scannedTxns=[];
+}
+
+function doSubmit(){toast('Marked as submitted. File officially at gov.uk/send-vat-return');}
+
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
+
+// ── PERSISTENCE ─────────────────────────────────────────
+function saveData(){
+  try{localStorage.setItem('mtd_invoices',JSON.stringify(invoices));localStorage.setItem('mtd_nextN',nextN);}catch(e){}
+}
+function loadData(){
+  try{
+    var inv=localStorage.getItem('mtd_invoices');
+    var nn=localStorage.getItem('mtd_nextN');
+    if(inv)invoices=JSON.parse(inv);
+    if(nn)nextN=parseInt(nn);
+  }catch(e){}
+}
+
+// ── PERIOD SETTINGS ──────────────────────────────────────
+var vatPeriods=[
+  {label:'Jan–Mar 2025',value:'Q1-2025'},
+  {label:'Apr–Jun 2025',value:'Q2-2025'},
+  {label:'Jul–Sep 2025',value:'Q3-2025'},
+  {label:'Oct–Dec 2025',value:'Q4-2025'},
+  {label:'Jan–Mar 2026',value:'Q1-2026'},
+  {label:'Apr–Jun 2026',value:'Q2-2026'},
+];
+var currentPeriod=localStorage.getItem('mtd_period')||'Q1-2025';
+function getPeriodLabel(){var p=vatPeriods.find(function(x){return x.value===currentPeriod;});return p?p.label:'Jan–Mar 2025';}
+function updatePeriodLabel(){var el=document.getElementById('period-label');if(el)el.textContent='VAT Period: '+getPeriodLabel();}
+
+// Patch saveInv to auto-save
+var _origSaveInv=saveInv;
+saveInv=function(prefill){
+  _origSaveInv(prefill);
+  saveData();
+};
+
+// ── SETTINGS PANEL ───────────────────────────────────────
+function openSettings(){
+  var overlay=document.createElement('div');
+  overlay.id='settings-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:1000;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px;width:420px;max-width:95vw;box-shadow:0 8px 40px rgba(0,0,0,0.18)">'
+    +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">'
+    +'<div style="font-size:16px;font-weight:600">Settings</div>'
+    +'<button onclick="closeSettings()" style="border:none;background:transparent;font-size:20px;cursor:pointer;color:#888;padding:0 4px">&times;</button>'
+    +'</div>'
+    +'<div style="margin-bottom:18px">'
+    +'<label style="font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;display:block;margin-bottom:6px">VAT Period</label>'
+    +'<select id="set-period" style="width:100%">'+vatPeriods.map(function(p){return'<option value="'+p.value+'"'+(p.value===currentPeriod?' selected':'')+'>'+p.label+'</option>';}).join('')+'</select>'
+    +'</div>'
+    +'<div style="margin-bottom:18px">'
+    +'<label style="font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;display:block;margin-bottom:6px">Your Business Name</label>'
+    +'<input id="set-bizname" placeholder="e.g. Jane Smith Consulting" value="'+(localStorage.getItem('mtd_bizname')||'')+'">'
+    +'</div>'
+    +'<div style="margin-bottom:22px">'
+    +'<label style="font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;display:block;margin-bottom:6px">Your VAT Number (optional)</label>'
+    +'<input id="set-vatnum" placeholder="GB 123 4567 89" value="'+(localStorage.getItem('mtd_vatnum')||'')+'">'
+    +'</div>'
+    +'<div style="background:#fff5f5;border:1px solid #ffd0d0;border-radius:7px;padding:12px 14px;margin-bottom:20px">'
+    +'<div style="font-size:12px;color:#a32d2d;font-weight:600;margin-bottom:4px">&#9888; Danger zone</div>'
+    +'<div style="font-size:12px;color:#888;margin-bottom:10px">Clear all saved invoices. This cannot be undone.</div>'
+    +'<button onclick="clearAllData()" style="padding:7px 16px;background:#a32d2d;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Clear all data</button>'
+    +'</div>'
+    +'<div style="display:flex;gap:10px;justify-content:flex-end">'
+    +'<button onclick="closeSettings()" style="padding:9px 18px;background:transparent;color:#666;border:1px solid #e0e0d8;border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit">Cancel</button>'
+    +'<button onclick="applySettings()" style="padding:9px 22px;background:#042C53;color:#B5D4F4;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Save settings</button>'
+    +'</div>'
+    +'</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeSettings();});
+}
+function closeSettings(){var o=document.getElementById('settings-overlay');if(o)o.remove();}
+function applySettings(){
+  currentPeriod=document.getElementById('set-period').value;
+  localStorage.setItem('mtd_period',currentPeriod);
+  var biz=document.getElementById('set-bizname').value;
+  var vat=document.getElementById('set-vatnum').value;
+  localStorage.setItem('mtd_bizname',biz);
+  localStorage.setItem('mtd_vatnum',vat);
+  updatePeriodLabel();
+  closeSettings();
+  toast('Settings saved');
+  renderDash();
+}
+function clearAllData(){
+  if(confirm('Clear ALL invoices and data? This cannot be undone.')){
+    invoices=[];nextN=1;saveData();
+    closeSettings();renderDash();renderInvList();
+    toast('All data cleared');
+  }
+}
+
+// ── EXPORT ALL INVOICES ──────────────────────────────────
+function exportAllInvoices(){
+  if(!invoices.length){toast('No invoices to export');return;}
+  var rows=['Invoice Number,Client,Date,Net,VAT,Total,Status'];
+  invoices.forEach(function(inv){var c=ci(inv);rows.push([inv.id,'"'+inv.client+'"',inv.date,c.net.toFixed(2),c.vat.toFixed(2),c.tot.toFixed(2),inv.status].join(','));});
+  var blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='invoices-'+new Date().toISOString().split('T')[0]+'.csv';a.click();
+}
+
+loadData();
+updatePeriodLabel();
+renderDash();
+initCreate();
+</script>
+</body>
+</html>
