@@ -349,9 +349,100 @@ function renderInvList(){
   if(!invoices.length){el.innerHTML='';ne.style.display='block';return;}
   ne.style.display='none';
   var h='';
-  invoices.forEach(function(inv){var c=ci(inv);var p=inv.status==='paid'?'paid':inv.status==='pending'?'pend':'draft';var l=inv.status==='paid'?'Paid':inv.status==='pending'?'Pending':'Draft';h+='<div class="irow"><span class="inv-n">'+inv.id+'</span><span>'+inv.client+'</span><span>'+inv.date+'</span><span>'+fmt(c.net)+'</span><span>'+fmt(c.vat)+'</span><span class="pill '+p+'">'+l+'</span></div>';});
+  invoices.forEach(function(inv,i){
+    var c=ci(inv);
+    var p=inv.status==='paid'?'paid':inv.status==='pending'?'pend':'draft';
+    var l=inv.status==='paid'?'Paid':inv.status==='pending'?'Pending':'Draft';
+    h+='<div class="irow" style="cursor:pointer" onclick="openInvDetail('+i+')">'
+      +'<span class="inv-n">'+inv.id+'</span>'
+      +'<span>'+inv.client+'</span>'
+      +'<span>'+inv.date+'</span>'
+      +'<span>'+fmt(c.net)+'</span>'
+      +'<span>'+fmt(c.vat)+'</span>'
+      +'<span class="pill '+p+'">'+l+'</span>'
+      +'</div>';
+  });
   el.innerHTML=h;
 }
+
+function openInvDetail(i){
+  var inv=invoices[i];
+  var c=ci(inv);
+  var overlay=document.createElement('div');
+  overlay.id='inv-detail-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:1000;display:flex;align-items:center;justify-content:center';
+  
+  var statusBtns='';
+  ['pending','paid','draft'].forEach(function(s){
+    var label=s.charAt(0).toUpperCase()+s.slice(1);
+    var active=inv.status===s;
+    statusBtns+='<button onclick="setInvStatus('+i+',''+s+'')" style="padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid '+(active?'#042C53':'#e0e0d8')+';background:'+(active?'#042C53':'transparent')+';color:'+(active?'#B5D4F4':'#666')+'">'+label+'</button>';
+  });
+
+  var lines='';
+  inv.lines.forEach(function(l){
+    lines+='<tr><td style="padding:7px 0;font-size:13px;color:#444">'+l.d+'</td><td style="padding:7px 0;font-size:13px;text-align:center">'+l.q+'</td><td style="padding:7px 0;font-size:13px;text-align:right">'+fmt(l.p)+'</td><td style="padding:7px 0;font-size:13px;text-align:right">'+fmt(l.q*l.p)+'</td></tr>';
+  });
+
+  overlay.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.18)">'
+    +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">'
+    +'<div><div style="font-size:16px;font-weight:600">'+inv.id+'</div><div style="font-size:12px;color:#888;margin-top:2px">'+inv.client+'</div></div>'
+    +'<button onclick="closeInvDetail()" style="border:none;background:transparent;font-size:22px;cursor:pointer;color:#888;padding:0 4px">&times;</button>'
+    +'</div>'
+    +'<table style="width:100%;border-collapse:collapse;margin-bottom:16px">'
+    +'<tr style="border-bottom:1px solid #e8e8e4"><th style="text-align:left;font-size:11px;color:#888;font-weight:400;padding-bottom:6px">Description</th><th style="font-size:11px;color:#888;font-weight:400;text-align:center;padding-bottom:6px">Qty</th><th style="font-size:11px;color:#888;font-weight:400;text-align:right;padding-bottom:6px">Price</th><th style="font-size:11px;color:#888;font-weight:400;text-align:right;padding-bottom:6px">Amount</th></tr>'
+    +lines
+    +'</table>'
+    +'<div style="background:#fafaf8;border-radius:7px;padding:12px 14px;margin-bottom:20px">'
+    +'<div style="display:flex;justify-content:space-between;font-size:13px;color:#888;padding:3px 0"><span>Net</span><span>'+fmt(c.net)+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;font-size:13px;color:#888;padding:3px 0"><span>VAT</span><span>'+fmt(c.vat)+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;font-size:15px;font-weight:600;color:#1a1a1a;padding:8px 0 3px;border-top:1px solid #e8e8e4;margin-top:6px"><span>Total</span><span>'+fmt(c.tot)+'</span></div>'
+    +'</div>'
+    +'<div style="margin-bottom:20px">'
+    +'<div style="font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:10px">Payment status</div>'
+    +'<div style="display:flex;gap:8px" id="status-btns-'+i+'">'+statusBtns+'</div>'
+    +'</div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end">'
+    +'<button onclick="deleteInv('+i+')" style="padding:9px 16px;background:transparent;color:#a32d2d;border:1px solid #f09595;border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit">Delete</button>'
+    +'<button onclick="closeInvDetail()" style="padding:9px 22px;background:#042C53;color:#B5D4F4;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">Done</button>'
+    +'</div>'
+    +'</div>';
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeInvDetail();});
+}
+
+function setInvStatus(i,status){
+  invoices[i].status=status;
+  saveData();
+  // Update buttons in modal
+  var container=document.getElementById('status-btns-'+i);
+  if(container){
+    var btns=container.querySelectorAll('button');
+    var statuses=['pending','paid','draft'];
+    btns.forEach(function(btn,j){
+      var active=statuses[j]===status;
+      btn.style.borderColor=active?'#042C53':'#e0e0d8';
+      btn.style.background=active?'#042C53':'transparent';
+      btn.style.color=active?'#B5D4F4':'#666';
+    });
+  }
+  renderDash();
+  toast('Invoice marked as '+status);
+}
+
+function deleteInv(i){
+  if(confirm('Delete invoice '+invoices[i].id+'? This cannot be undone.')){
+    invoices.splice(i,1);
+    saveData();
+    closeInvDetail();
+    renderInvList();
+    renderDash();
+    toast('Invoice deleted');
+  }
+}
+
+function closeInvDetail(){var o=document.getElementById('inv-detail-overlay');if(o)o.remove();}
 
 function renderRet(){
   var b=boxes();
