@@ -1197,36 +1197,48 @@ function fmtWiseDate(d){
 }
 
 function parseWise(lines,headers){
+  var iId=headers.indexOf('transferwise id');
   var iAmt=headers.indexOf('amount');
   var iDate=headers.indexOf('date');
   var iDesc=headers.indexOf('description');
   var iRef=headers.indexOf('payment reference');
   var iPayer=headers.indexOf('payer name');
   var iPayee=headers.indexOf('payee name');
+  var iMerchant=headers.indexOf('merchant');
   var iType=headers.indexOf('transaction type');
   var txns=[];
   for(var i=1;i<lines.length;i++){
     var c=splitCSVLine(lines[i]);
     if(!c||c.length<4)continue;
-    var amt=parseFloat(c[iAmt]);
+    var amtRaw=c[iAmt]||'0';
+    var amt=parseFloat(amtRaw);
     if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var payer=c[iPayer]||'';
-    var payee=c[iPayee]||'';
-    var ref=c[iRef]||'';
-    var desc=c[iDesc]||'';
-    // Skip self transfers to own account
-    if(dir==='in'&&SELF_PATTERNS.test(payer)&&/revolut|wise/i.test(ref+desc))continue;
-    var counterparty=dir==='in'?(payer||desc):(payee||desc);
+    var payer=(c[iPayer]||'').trim();
+    var payee=(c[iPayee]||'').trim();
+    var merchant=(iMerchant>=0?c[iMerchant]||'':'').trim();
+    var ref=(c[iRef]||'').trim();
+    var desc=(c[iDesc]||'').trim();
+    // Counterparty: for income show who paid us, for expense show who we paid
+    var counterparty=dir==='in'
+      ?(payer||desc)
+      :(merchant||payee||desc);
+    // Date: Wise format is DD-MM-YYYY -> convert to YYYY-MM-DD
+    var dateRaw=(c[iDate]||'').trim();
+    var dateParts=dateRaw.split('-');
+    var isoDate=dateParts.length===3&&dateParts[2].length===4
+      ?(dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0])
+      :dateRaw;
     txns.push({
-      date:fmtWiseDate(c[iDate]||''),
+      date:isoDate,
+      counterparty:counterparty,
       desc:desc,
-      payer:dir==='in'?payer:payee,
+      payer:dir==='in'?payer:'',
+      payee:dir==='out'?(merchant||payee):'',
       ref:ref,
       amount:Math.abs(amt),
       dir:dir,
       bank:'Wise',
-      raw:lines[i],
       choice:'unreviewed'
     });
   }
@@ -1342,13 +1354,11 @@ function updateScanStats(){
   document.getElementById('sc-added').textContent=scAddedCount;
 }
 
-function filterTxns(f){
+function filterTxns(btn,f){
   scFilter=f;
-  document.querySelectorAll('#sc-filter-row button').forEach(function(b){
-    b.style.borderColor='';b.style.color='';
-  });
-  event.target.style.borderColor='#042C53';
-  event.target.style.color='#042C53';
+  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('on-filter');b.style.background='';b.style.color='';b.style.borderColor='';});
+  btn.classList.add('on-filter');
+  btn.style.background='#042C53';btn.style.color='#B5D4F4';btn.style.borderColor='#042C53';
   renderTxns();
 }
 
@@ -1357,11 +1367,13 @@ function renderTxns(){
     if(scFilter==='income')return t.dir==='in';
     if(scFilter==='expense')return t.dir==='out';
     if(scFilter==='unreviewed')return t.choice==='unreviewed';
+    if(scFilter==='business')return t.choice==='business';
+    if(scFilter==='personal')return t.choice==='personal';
     return true;
   });
 
   if(!filtered.length){
-    document.getElementById('sc-txns').innerHTML='<div style="text-align:center;padding:30px;color:#aaa">No transactions match this filter</div>';
+    document.getElementById('sc-txns').innerHTML='<div style="text-align:center;padding:30px;color:#aaa;font-size:13px">No transactions match this filter</div>';
     return;
   }
 
@@ -1369,30 +1381,37 @@ function renderTxns(){
     var i=scanned.indexOf(t);
     var isIn=t.dir==='in';
     var amtColor=isIn?'#3B6D11':'#A32D2D';
-    var amtSign=isIn?'+':'-';
+    var amtSign=isIn?'+':'−';
     var dirLabel=isIn
-      ?'<span style="background:#EAF3DE;color:#3B6D11;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600">Income</span>'
-      :'<span style="background:#FCEBEB;color:#A32D2D;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600">Expense</span>';
-
+      ?'<span style="background:#EAF3DE;color:#3B6D11;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700">&#8593; Income</span>'
+      :'<span style="background:#FCEBEB;color:#A32D2D;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700">&#8595; Expense</span>';
     var biz=t.choice==='business';
     var per=t.choice==='personal';
     var skip=t.choice==='skip';
-    var unrev=t.choice==='unreviewed';
+    var cardStyle='';
+    if(biz)cardStyle='border-color:#3B6D11;border-width:2px';
+    else if(per)cardStyle='border-color:#D4537E;border-width:2px';
+    else if(skip)cardStyle='opacity:0.35';
 
-    var meta=t.date+'&nbsp;&nbsp;'+dirLabel+'&nbsp;&nbsp;<span style="color:#888;font-size:11px">'+escHtml(t.bank)+'</span>';
-    if(t.payer&&t.payer!==t.desc)meta+='&nbsp;&nbsp;<span style="font-size:11px;color:#555">From: <strong>'+escHtml(t.payer)+'</strong></span>';
-    if(t.ref)meta+='&nbsp;&nbsp;<span style="font-size:11px;color:#888">Ref: '+escHtml(t.ref)+'</span>';
+    // Main label: who sent / who received
+    var mainLabel=t.counterparty||t.payer||t.payee||t.desc||'Unknown';
 
-    var cardBorder=biz?'border-color:#3B6D11':per?'border-color:#D4537E':'';
-    var cardBg=skip?'opacity:0.4':'';
+    // Build meta row
+    var metaParts=[];
+    metaParts.push('<span style="font-weight:600;color:#1a1a1a">'+escHtml(t.date)+'</span>');
+    metaParts.push(dirLabel);
+    metaParts.push('<span style="font-size:11px;color:#aaa">via '+escHtml(t.bank||'Bank')+'</span>');
+    if(t.payer&&isIn)metaParts.push('<span style="font-size:11px;color:#555"><strong>From:</strong> '+escHtml(t.payer)+'</span>');
+    if(t.payee&&!isIn)metaParts.push('<span style="font-size:11px;color:#555"><strong>To:</strong> '+escHtml(t.payee)+'</span>');
+    if(t.ref)metaParts.push('<span style="font-size:11px;color:#888"><strong>Ref:</strong> '+escHtml(t.ref)+'</span>');
 
-    return'<div class="txcard" id="tx-'+i+'" style="'+cardBorder+';'+cardBg+'">'
+    return'<div class="txcard" id="tx-'+i+'" style="'+cardStyle+'">'
       +'<div class="txhead">'
-      +'<span class="txdesc">'+escHtml(t.payer||t.desc)+'</span>'
-      +'<span style="font-size:14px;font-weight:700;color:'+amtColor+'">'+amtSign+fmt(t.amount)+'</span>'
+      +'<span class="txdesc" style="font-size:13px;font-weight:700">'+escHtml(mainLabel)+'</span>'
+      +'<span style="font-size:15px;font-weight:700;color:'+amtColor+'">'+amtSign+'&nbsp;'+fmt(t.amount)+'</span>'
       +'</div>'
-      +'<div class="txmeta" style="flex-wrap:wrap;gap:4px;line-height:2.2">'+meta+'</div>'
-      +(t.desc&&t.desc!==(t.payer||'')&&t.desc.length>3?'<div style="font-size:11px;color:#888;margin-bottom:8px;padding:0 1px">'+escHtml(t.desc)+'</div>':'')
+      +'<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:5px 0 6px;font-size:12px">'+metaParts.join('')+'</div>'
+      +(t.desc&&t.desc!==mainLabel?'<div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5;padding:5px 8px;background:#F8F8F4;border-radius:4px">'+escHtml(t.desc)+'</div>':'')
       +'<div class="txactions">'
       +'<button class="txbtn trade'+(biz?' on':'')+'" onclick="setTx('+i+','business')">&#10003; Business</button>'
       +'<button class="txbtn gift'+(per?' on':'')+'" onclick="setTx('+i+','personal')">&#10003; Personal</button>'
