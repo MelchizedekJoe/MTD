@@ -141,6 +141,7 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
     <button class="nb on" onclick="goTo('dash',this)">Dashboard</button>
     <button class="nb" onclick="goTo('invoices',this)">Invoices</button>
     <button class="nb" onclick="goTo('payments',this)">Payments</button>
+    <button class="nb" onclick="goTo('expenses',this)">Expenses</button>
     <button class="nb" onclick="goTo('scanner',this)">Statement Scanner</button>
     <button class="nb" onclick="goTo('mtd',this)">MTD Return</button>
   </nav>
@@ -193,75 +194,82 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
   </div>
 
   <!-- STATEMENT SCANNER -->
-  <div id="pg-scanner" class="pg">
-    <!-- UPLOAD -->
-    <div id="sc-upload">
+  <div id="pg-scanner" class="pg" style="padding:0">
+    <div id="sc-upload" style="padding:22px">
       <div style="font-size:16px;font-weight:700;margin-bottom:14px">Statement Scanner</div>
-      <div class="info">&#128161; Upload your bank statement CSV or PDF. Every transaction shown — income and expenses. Mark each as <strong>Business</strong> or <strong>Personal</strong>. AI will suggest categories when your API key is set in Settings.</div>
+      <div class="info">&#128161; Upload your bank statement CSV or PDF. Every transaction is shown. Categorise each one — once done it moves to its group automatically. AI will pre-suggest categories if your API key is set in Settings.</div>
       <div class="upload-zone" id="dropzone" onclick="document.getElementById('filein').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="onDrop(event)">
         <input type="file" id="filein" accept=".csv,.txt,.pdf" onchange="onFile(this.files[0])">
         <div style="font-size:36px;margin-bottom:12px">&#128196;</div>
         <div class="upload-title">Upload your bank statement</div>
-        <div class="upload-sub">
-          Drag &amp; drop or click to browse<br>
-          <strong>CSV</strong> (recommended) &middot; <strong>PDF</strong> &middot; Wise, Revolut, Monzo, Starling, Barclays, HSBC, NatWest, Lloyds, Santander, Nationwide
-        </div>
+        <div class="upload-sub">Drag &amp; drop or click to browse<br><strong>CSV recommended</strong> &middot; PDF supported &middot; Wise, Revolut, Monzo, Starling, Barclays, HSBC, NatWest, Lloyds, Santander, Nationwide</div>
       </div>
       <div style="background:#F5F5F0;border-radius:7px;padding:12px 16px;font-size:12px;color:#666;line-height:2">
-        <strong>Wise:</strong> Statements &rarr; Download &rarr; CSV &nbsp;|&nbsp;
-        <strong>Revolut:</strong> Statements &rarr; Export CSV &nbsp;|&nbsp;
-        <strong>Monzo:</strong> Account &rarr; Export Transactions &nbsp;|&nbsp;
-        <strong>Barclays/HSBC/NatWest/Lloyds:</strong> Online Banking &rarr; Statements &rarr; Export CSV
+        <strong>Wise:</strong> Statements &rarr; CSV &nbsp;&nbsp;<strong>Revolut:</strong> Statements &rarr; Export CSV &nbsp;&nbsp;<strong>Monzo:</strong> Account &rarr; Export Transactions &nbsp;&nbsp;<strong>Barclays/HSBC/NatWest/Lloyds:</strong> Online Banking &rarr; Statements &rarr; Export CSV
       </div>
     </div>
-    <!-- LOADING -->
-    <div id="sc-loading" style="display:none">
+    <div id="sc-loading" style="display:none;padding:22px">
       <div style="font-size:16px;font-weight:700;margin-bottom:6px">Reading statement&hellip;</div>
       <div style="font-size:12px;color:#888;margin-bottom:12px" id="sc-file-label"></div>
       <div class="progbar"><div class="progfill" id="sc-prog" style="width:0%"></div></div>
       <div class="loading-row"><div class="spinner"></div><span id="sc-msg">Extracting transactions&hellip;</span></div>
     </div>
-    <!-- RESULTS -->
     <div id="sc-results" style="display:none">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-        <div style="font-size:16px;font-weight:700">All Transactions</div>
-        <button class="btn secondary sm" onclick="resetScanner()">&#8592; Upload another</button>
-      </div>
-      <div class="scanstats">
-        <div class="scstat"><div class="scv" id="sc-total">0</div><div class="scl">Total</div></div>
-        <div class="scstat"><div class="scv" id="sc-income" style="color:#3B6D11">0</div><div class="scl">Income</div></div>
-        <div class="scstat"><div class="scv" id="sc-expense" style="color:#A32D2D">0</div><div class="scl">Expenses</div></div>
-        <div class="scstat"><div class="scv" id="sc-business" style="color:#042C53">0</div><div class="scl">Business</div></div>
-      </div>
-      <!-- BULK ACTION BAR -->
-      <div class="bulk-bar" id="bulk-bar">
-        <span id="bulk-count">0 selected</span>
-        <button class="btn primary sm" onclick="bulkMark('business')">Mark Business</button>
-        <button class="btn sm" style="background:#FBEAF0;color:#993556;border:1px solid #D4537E" onclick="bulkMark('personal')">Mark Personal</button>
-        <button class="btn danger sm" onclick="bulkDelete()">Delete</button>
-        <button class="btn secondary sm" onclick="clearSelection()">Clear</button>
-      </div>
-      <!-- FILTERS -->
-      <div class="sc-filters">
-        <button class="sc-filter active" onclick="setFilter('all',this)">All</button>
-        <button class="sc-filter" onclick="setFilter('income',this)">&#8593; Income</button>
-        <button class="sc-filter" onclick="setFilter('expense',this)">&#8595; Expenses</button>
-        <button class="sc-filter" onclick="setFilter('business',this)">Business</button>
-        <button class="sc-filter" onclick="setFilter('personal',this)">Personal</button>
-        <button class="sc-filter" onclick="setFilter('uncat',this)">Uncategorised</button>
-      </div>
-      <!-- TABLE -->
-      <div style="border:1px solid #E0E0D8;border-radius:8px;overflow:hidden">
-        <div class="txrow hdr">
-          <input type="checkbox" id="sel-all" onchange="toggleSelectAll(this.checked)" title="Select all">
-          <span>Date</span><span>Description / Payer</span><span>Amount</span><span>Category</span><span>Action</span>
+      <!-- STICKY HEADER -->
+      <div style="position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #E0E0D8;padding:14px 22px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-size:15px;font-weight:700">Statement Review</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn secondary sm" onclick="exportScanCSV()">&#8595; Export</button>
+            <button class="btn secondary sm" onclick="resetScanner()">Upload another</button>
+          </div>
         </div>
-        <div id="sc-txns"></div>
+        <!-- PILL FILTERS -->
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+          <div class="sc-stat-pill" id="pill-all" onclick="setFilter('all')" style="background:#1a1a1a;color:#fff"><span id="cnt-all">0</span>&nbsp;All</div>
+          <div class="sc-stat-pill" id="pill-uncat" onclick="setFilter('uncat')" style="background:#FFF8E8;color:#854F0B;border:1px solid #FAC775"><span id="cnt-uncat">0</span>&nbsp;&#9888; To review</div>
+          <div class="sc-stat-pill" id="pill-biz-in" onclick="setFilter('business_income')" style="background:#E6F1FB;color:#042C53"><span id="cnt-biz-in">0</span>&nbsp;&#128200; Business income</div>
+          <div class="sc-stat-pill" id="pill-biz-ex" onclick="setFilter('business_expense')" style="background:#EAF3DE;color:#3B6D11"><span id="cnt-biz-ex">0</span>&nbsp;&#128179; Business expense</div>
+          <div class="sc-stat-pill" id="pill-pers" onclick="setFilter('personal')" style="background:#FBEAF0;color:#993556"><span id="cnt-pers">0</span>&nbsp;&#128100; Personal</div>
+          <div class="sc-stat-pill" id="pill-transfer" onclick="setFilter('transfer')" style="background:#F0F0E8;color:#666"><span id="cnt-transfer">0</span>&nbsp;&#8646; Own transfers</div>
+        </div>
+        <!-- BULK BAR -->
+        <div id="bulk-bar" style="display:none;align-items:center;gap:7px;flex-wrap:wrap;padding:9px 12px;background:#EEF6FC;border-radius:7px">
+          <span style="font-weight:700;color:#042C53;font-size:13px" id="bulk-count">0 selected</span>
+          <button class="sc-action-btn biz-in" onclick="bulkMark('business_income')">&#128200; Business Income</button>
+          <button class="sc-action-btn biz-ex" onclick="bulkMark('business_expense')">&#128179; Business Expense</button>
+          <button class="sc-action-btn pers" onclick="bulkMark('personal')">&#128100; Personal</button>
+          <button class="sc-action-btn trf" onclick="bulkMark('transfer')">&#8646; Own Transfer</button>
+          <button class="sc-action-btn del" onclick="bulkDelete()">&#128465; Delete</button>
+          <button class="sc-action-btn clr" onclick="clearSel()" style="margin-left:auto">&#10005; Clear selection</button>
+        </div>
       </div>
-      <div class="btnrow" style="margin-top:16px">
-        <button class="btn secondary" onclick="exportScanCSV()">Export CSV</button>
-        <button class="btn primary" onclick="addBusinessIncome()">Add business income as invoices</button>
+      <!-- TRANSACTION LIST -->
+      <div style="padding-bottom:80px" id="sc-txns"></div>
+      <div id="sc-empty" style="display:none;text-align:center;padding:50px;color:#aaa">
+        <div style="font-size:40px;margin-bottom:12px">&#10003;</div>
+        <div style="font-size:15px;font-weight:700;color:#888;margin-bottom:6px">All done here!</div>
+        <div style="font-size:13px">All transactions in this view are categorised</div>
       </div>
+      <!-- BOTTOM BAR -->
+      <div style="position:sticky;bottom:0;background:#fff;border-top:1px solid #E0E0D8;padding:12px 22px;display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:12px;color:#888"><span id="sc-remaining">0</span> uncategorised remaining</div>
+        <button class="btn primary" onclick="addBusinessIncome()">Add business income as invoices &rarr;</button>
+      </div>
+    </div>
+  </div>
+  <!-- EXPENSES -->
+  <div id="pg-expenses" class="pg">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:16px;font-weight:700">Expenses</div>
+      <button class="btn primary" onclick="openExpenseModal(null,-1)">+ Add Expense</button>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th style="padding:12px 16px">Date</th><th>Paid to</th><th>Description</th><th>Category</th><th>Amount</th><th>Receipt</th><th>VAT</th></tr></thead>
+        <tbody id="exp-body"></tbody>
+      </table>
+      <div id="exp-empty" class="empty"><div class="empty-icon">&#128179;</div><div class="empty-text">No expenses recorded yet</div><div class="empty-sub">Add expenses manually or convert from the Statement Scanner</div></div>
     </div>
   </div>
 
@@ -361,6 +369,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/p
 
 // ── STATE ─────────────────────────────────────────────
 var invoices=[];
+var expenses=[];
+var scanHistory=[];  // stores fingerprints of scanned date ranges + accounts
 var settings={biz:'',vat:'',period:'Q1-2026',key:''};
 var editIdx=-1;
 var detailIdx=-1;
@@ -370,8 +380,26 @@ var scFilter='all';
 var selectedRows=new Set();
 
 // ── PERSIST ───────────────────────────────────────────
-function save(){try{localStorage.setItem('mtd_v3_inv',JSON.stringify(invoices));localStorage.setItem('mtd_v3_set',JSON.stringify(settings));}catch(e){}}
-function load(){try{var i=localStorage.getItem('mtd_v3_inv');var s=localStorage.getItem('mtd_v3_set');if(i)invoices=JSON.parse(i);if(s)settings=Object.assign(settings,JSON.parse(s));}catch(e){}}
+function save(){
+  try{
+    localStorage.setItem('mtd_v3_inv',JSON.stringify(invoices));
+    localStorage.setItem('mtd_v3_set',JSON.stringify(settings));
+    localStorage.setItem('mtd_v3_exp',JSON.stringify(expenses));
+    localStorage.setItem('mtd_v3_hist',JSON.stringify(scanHistory));
+  }catch(e){}
+}
+function load(){
+  try{
+    var i=localStorage.getItem('mtd_v3_inv');
+    var s=localStorage.getItem('mtd_v3_set');
+    var e=localStorage.getItem('mtd_v3_exp');
+    var h=localStorage.getItem('mtd_v3_hist');
+    if(i)invoices=JSON.parse(i);
+    if(s)settings=Object.assign(settings,JSON.parse(s));
+    if(e)expenses=JSON.parse(e);
+    if(h)scanHistory=JSON.parse(h);
+  }catch(e){}
+}
 
 // ── HELPERS ───────────────────────────────────────────
 function fmt(n){return'£'+(parseFloat(n)||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
@@ -391,6 +419,7 @@ function goTo(pg,el){
   if(pg==='dash')renderDash();
   if(pg==='invoices')renderInvoices();
   if(pg==='payments')renderPayments();
+  if(pg==='expenses')renderExpenses();
   if(pg==='mtd')renderMTD();
 }
 
@@ -434,6 +463,40 @@ function renderPayments(){
 }
 function quickPay(i){invoices[i].status='paid';save();renderPayments();renderDash();toast('Invoice '+invoices[i].id+' marked as paid');}
 
+// ── EXPENSES ──────────────────────────────────────────
+function renderExpenses(){
+  var tbody=document.getElementById('exp-body');
+  var empty=document.getElementById('exp-empty');
+  if(!expenses.length){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  var catLabels={software:'Software',travel:'Travel',equipment:'Equipment',marketing:'Marketing',office:'Office',professional:'Professional',phone:'Phone & Internet',training:'Training',other:'Other'};
+  tbody.innerHTML=expenses.map(function(exp,i){
+    var receiptHtml=exp.receiptData
+      ?'<img src="'+exp.receiptData+'" style="width:32px;height:32px;object-fit:cover;border-radius:4px;border:1px solid #E0E0D8;cursor:pointer" onclick="viewReceipt('+i+')" title="View receipt">'
+      :exp.receiptName
+        ?'<span style="font-size:11px;color:#185FA5;cursor:pointer" onclick="viewReceipt('+i+')">&#128196; View</span>'
+        :'<span style="font-size:11px;color:#aaa">None</span>';
+    return'<tr>'
+      +'<td style="padding:10px 16px">'+(exp.date||'')+'</td>'
+      +'<td><strong>'+esc(exp.payee||'')+'</strong></td>'
+      +'<td style="color:#666;font-size:12px">'+esc(exp.desc||'')+'</td>'
+      +'<td><span class="pill draft" style="font-size:10px">'+(catLabels[exp.cat]||exp.cat||'')+'</span></td>'
+      +'<td><strong style="color:#A32D2D">'+fmt(exp.amount)+'</strong></td>'
+      +'<td>'+receiptHtml+'</td>'
+      +'<td style="font-size:11px;color:#888">'+exp.vat+'%</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function viewReceipt(i){
+  var exp=expenses[i];
+  if(!exp)return;
+  if(exp.receiptData){
+    var w=window.open('','_blank');
+    w.document.write('<img src="'+exp.receiptData+'" style="max-width:100%;height:auto">');
+  }
+}
+
 // ── INVOICE FORM ──────────────────────────────────────
 function openNewInvoice(){
   editIdx=-1;lines=[{d:'',q:1,p:0,v:0}];
@@ -464,6 +527,13 @@ function saveInvoice(){
   var idx=parseInt(document.getElementById('f-edit-idx').value);
   if(!isNaN(idx)&&idx>=0){inv.status=invoices[idx].status;invoices[idx]=inv;}else invoices.push(inv);
   save();closeModal('inv-modal');renderInvoices();renderDash();toast('Invoice '+num+' saved');
+  // If created from scanner, mark that transaction as converted
+  var scanIdx=document.getElementById('f-num').dataset.fromScanIdx;
+  if(scanIdx!==undefined&&scanIdx!==''){
+    var si=parseInt(scanIdx);
+    if(scanned[si]){scanned[si].convertedToInvoice=true;renderTxns();}
+    delete document.getElementById('f-num').dataset.fromScanIdx;
+  }
 }
 
 // ── DETAIL MODAL ──────────────────────────────────────
@@ -507,12 +577,14 @@ document.querySelectorAll('.modal-bg').forEach(function(bg){bg.addEventListener(
 // SCANNER
 // ══════════════════════════════════════════════════════
 var progIv=null;
+var scFilter='all';
+var selectedRows=new Set();
 
 function startProg(filename){
   document.getElementById('sc-file-label').textContent='Reading: '+filename;
   var p=0,mi=0;
-  var msgs=['Parsing file...','Reading transactions...','Extracting dates and amounts...','Identifying counterparties...','Done!'];
-  progIv=setInterval(function(){p+=Math.random()*18+6;if(p>90)p=90;document.getElementById('sc-prog').style.width=p+'%';if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];},600);
+  var msgs=['Parsing file...','Reading all transactions...','Extracting dates and amounts...','Identifying counterparties...','Running AI analysis...'];
+  progIv=setInterval(function(){p+=Math.random()*15+5;if(p>90)p=90;document.getElementById('sc-prog').style.width=p+'%';if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];},700);
 }
 function stopProg(){clearInterval(progIv);document.getElementById('sc-prog').style.width='100%';}
 
@@ -524,14 +596,8 @@ function onFile(file){
   document.getElementById('sc-loading').style.display='block';
   startProg(file.name);
   var name=file.name.toLowerCase();
-  if(name.endsWith('.pdf')){
-    readPDF(file);
-  } else {
-    var r=new FileReader();
-    r.onload=function(e){processCSV(e.target.result,file.name);};
-    r.onerror=function(){stopProg();toast('Could not read file');resetScanner();};
-    r.readAsText(file);
-  }
+  if(name.endsWith('.pdf')){readPDF(file);}
+  else{var r=new FileReader();r.onload=function(e){processCSV(e.target.result,file.name);};r.onerror=function(){stopProg();toast('Could not read file');resetScanner();};r.readAsText(file);}
 }
 
 // ── PDF ───────────────────────────────────────────────
@@ -891,145 +957,237 @@ function maybeAIClassify(txns){
 
 // ── RESULTS ───────────────────────────────────────────
 function showScanResults(txns){
+  // Check for duplicates against scan history
+  var dups=checkDuplicates(txns);
+  if(dups.length>0){
+    txns.forEach(function(t){t.isDuplicate=false;t.dupRange='';});
+    dups.forEach(function(d){txns[d.idx].isDuplicate=true;txns[d.idx].dupRange=d.range;});
+    toast(dups.length+' transaction(s) may already be recorded from a previous scan — flagged in yellow');
+  }
+  // Save fingerprint to history
+  saveScanToHistory(txns);
   scanned=txns;
   selectedRows=new Set();
+  scFilter='all';
   document.getElementById('sc-loading').style.display='none';
   document.getElementById('sc-results').style.display='block';
-  scFilter='all';
-  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('active');});
-  document.querySelector('.sc-filter').classList.add('active');
-  updateStats();
+  updatePills();
   renderTxns();
 }
 
-function updateStats(){
-  var income=scanned.filter(function(t){return t.dir==='in';}).length;
-  var expense=scanned.filter(function(t){return t.dir==='out';}).length;
-  var biz=scanned.filter(function(t){return t.cat==='business_income'||t.cat==='business_expense';}).length;
-  document.getElementById('sc-total').textContent=scanned.length;
-  document.getElementById('sc-income').textContent=income;
-  document.getElementById('sc-expense').textContent=expense;
-  document.getElementById('sc-business').textContent=biz;
+function getCounts(){
+  var counts={all:scanned.length,uncat:0,business_income:0,business_expense:0,personal:0,transfer:0};
+  scanned.forEach(function(t){
+    if(t.cat==='uncat')counts.uncat++;
+    else if(t.cat==='business_income')counts.business_income++;
+    else if(t.cat==='business_expense')counts.business_expense++;
+    else if(t.cat==='personal'||t.cat==='personal_income'||t.cat==='personal_expense')counts.personal++;
+    else if(t.cat==='transfer')counts.transfer++;
+  });
+  return counts;
 }
 
-function setFilter(f,btn){
+function updatePills(){
+  var c=getCounts();
+  document.getElementById('cnt-all').textContent=c.all;
+  document.getElementById('cnt-uncat').textContent=c.uncat;
+  document.getElementById('cnt-biz-in').textContent=c.business_income;
+  document.getElementById('cnt-biz-ex').textContent=c.business_expense;
+  document.getElementById('cnt-pers').textContent=c.personal;
+  document.getElementById('cnt-transfer').textContent=c.transfer;
+  document.getElementById('sc-remaining').textContent=c.uncat;
+  // Highlight active pill
+  ['all','uncat','biz-in','biz-ex','pers','transfer'].forEach(function(k){
+    var el=document.getElementById('pill-'+k);
+    if(el)el.classList.remove('active');
+  });
+  var filterToPill={all:'all',uncat:'uncat',business_income:'biz-in',business_expense:'biz-ex',personal:'pers',transfer:'transfer'};
+  var activePill=filterToPill[scFilter]||'all';
+  var el=document.getElementById('pill-'+activePill);
+  if(el)el.classList.add('active');
+}
+
+function setFilter(f){
   scFilter=f;
-  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
+  selectedRows=new Set();
+  updatePills();
   renderTxns();
+  updateBulkBar();
 }
 
 function getFiltered(){
-  return scanned.filter(function(t,i){
-    if(scFilter==='income')return t.dir==='in';
-    if(scFilter==='expense')return t.dir==='out';
-    if(scFilter==='business')return t.cat==='business_income'||t.cat==='business_expense';
-    if(scFilter==='personal')return t.cat==='personal_income'||t.cat==='personal_expense';
+  return scanned.filter(function(t){
     if(scFilter==='uncat')return t.cat==='uncat';
-    return true;
+    if(scFilter==='business_income')return t.cat==='business_income';
+    if(scFilter==='business_expense')return t.cat==='business_expense';
+    if(scFilter==='personal')return t.cat==='personal'||t.cat==='personal_income'||t.cat==='personal_expense';
+    if(scFilter==='transfer')return t.cat==='transfer';
+    return true; // all
   });
+}
+
+function catLabel(cat){
+  if(cat==='business_income')return'Business Income';
+  if(cat==='business_expense')return'Business Expense';
+  if(cat==='personal'||cat==='personal_income'||cat==='personal_expense')return'Personal';
+  if(cat==='transfer')return'Own Transfer';
+  return'Uncategorised';
 }
 
 function renderTxns(){
   var filtered=getFiltered();
-  if(!filtered.length){document.getElementById('sc-txns').innerHTML='<div style="text-align:center;padding:30px;color:#aaa;font-size:13px">No transactions match this filter</div>';return;}
-  document.getElementById('sc-txns').innerHTML=filtered.map(function(t){
+  var empty=document.getElementById('sc-empty');
+  var list=document.getElementById('sc-txns');
+  if(!filtered.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  list.innerHTML=filtered.map(function(t){
     var i=scanned.indexOf(t);
     var isIn=t.dir==='in';
-    var amtCls=isIn?'tx-amt-in':'tx-amt-out';
+    var amtCls=isIn?'tx-dir-in':'tx-dir-out';
     var amtSign=isIn?'+':'−';
-    var dirBadge=isIn?'<span class="tx-badge income">&#8593; Income</span>':'<span class="tx-badge expense">&#8595; Expense</span>';
-    var catBadge='';
-    if(t.cat==='business_income')catBadge='<span class="tx-badge business">Business &#8593;</span>';
-    else if(t.cat==='business_expense')catBadge='<span class="tx-badge business">Business &#8595;</span>';
-    else if(t.cat==='personal_income'||t.cat==='personal_expense')catBadge='<span class="tx-badge personal">Personal</span>';
-    else if(t.cat==='transfer')catBadge='<span class="tx-badge" style="background:#F5F5F0;color:#666">Transfer</span>';
-    var aiInfo='';
-    if(t.aiConf){var confCls=t.aiConf==='high'?'ai-high':t.aiConf==='medium'?'ai-med':'ai-low';aiInfo='<span class="ai-badge '+confCls+'">AI: '+t.aiConf+'</span>';}
     var isSel=selectedRows.has(i);
-    var label=t.counterparty||t.desc||'Unknown';
-    var subLabel=t.ref?(t.ref!==label?'Ref: '+t.ref:''):'';
-    if(!subLabel&&t.desc&&t.desc!==label)subLabel=t.desc.substring(0,50);
-    return'<div class="txrow'+(isSel?' selected':'')+'" id="txrow-'+i+'" onclick="rowClick(event,'+i+')">'
-      +'<input type="checkbox" '+(isSel?'checked':'')+' onclick="event.stopPropagation();toggleRow('+i+')" style="cursor:pointer">'
-      +'<span style="font-size:11px;color:#888">'+esc(t.date)+'</span>'
-      +'<div><div style="font-weight:600;font-size:13px">'+esc(label)+'</div>'
-      +(subLabel?'<div style="font-size:11px;color:#888;margin-top:1px">'+esc(subLabel)+'</div>':'')
-      +'<div style="margin-top:3px">'+dirBadge+'&nbsp;'+catBadge+aiInfo+'</div></div>'
-      +'<span class="'+amtCls+'">'+amtSign+fmt(t.amount)+'</span>'
-      +'<select class="cat-select" onchange="setCat('+i+',this.value)" onclick="event.stopPropagation()">'
-      +'<option value="uncat"'+(t.cat==='uncat'?' selected':'')+'>Uncategorised</option>'
-      +'<option value="business_income"'+(t.cat==='business_income'?' selected':'')+'>Business Income</option>'
-      +'<option value="business_expense"'+(t.cat==='business_expense'?' selected':'')+'>Business Expense</option>'
-      +'<option value="personal_income"'+(t.cat==='personal_income'?' selected':'')+'>Personal Income</option>'
-      +'<option value="personal_expense"'+(t.cat==='personal_expense'?' selected':'')+'>Personal Expense</option>'
-      +'<option value="transfer"'+(t.cat==='transfer'?' selected':'')+'>Own Transfer</option>'
-      +'</select>'
-      +'<span style="font-size:11px;color:#aaa">'+esc(t.bank||'')+'</span>'
+    var label=t.counterparty||t.payer||t.desc||'Unknown';
+    var sub=[];
+    if(t.date)sub.push(t.date);
+    if(t.ref&&t.ref!==label)sub.push('Ref: '+t.ref);
+    if(t.bank)sub.push(t.bank);
+    var isUncategorised=t.cat==='uncat';
+
+    // AI info
+    var aiHtml='';
+    if(t.aiConf&&t.aiReason){
+      aiHtml='<div style="font-size:11px;color:#888;margin-top:4px;padding:4px 8px;background:#FAFAF8;border-radius:4px;border-left:2px solid #E0E0D8">'
+        +'&#129504; AI: <strong>'+catLabel(t.cat)+'</strong>'
+        +'<span class="ai-conf '+t.aiConf+'">'+t.aiConf+'</span>'
+        +' &mdash; '+esc(t.aiReason)+'</div>';
+    }
+
+    // Quick category buttons (only show when uncategorised)
+    var qcHtml='';
+    if(isUncategorised){
+      qcHtml='<div class="quick-cats">'
+        +'<button class="qc qc-bi" onclick="event.stopPropagation();quickCat('+i+','business_income')">&#128200; Business Income</button>'
+        +'<button class="qc qc-be" onclick="event.stopPropagation();quickCat('+i+','business_expense')">&#128179; Business Expense</button>'
+        +'<button class="qc qc-p" onclick="event.stopPropagation();quickCat('+i+','personal')">&#128100; Personal</button>'
+        +'<button class="qc qc-t" onclick="event.stopPropagation();quickCat('+i+','transfer')">&#8646; Own Transfer</button>'
+        +'</div>';
+    }else{
+      // Show current category with change option
+      qcHtml='<div style="margin-top:6px;display:flex;align-items:center;gap:8px">'
+        +'<span class="cat-tag '+t.cat+'">'+catLabel(t.cat)+'</span>'
+        +'<button class="qc qc-t" style="font-size:10px;padding:2px 8px" onclick="event.stopPropagation();quickCat('+i+','uncat')">&#9998; Change</button>'
+        +'</div>';
+    }
+
+    // Duplicate flag
+    var dupHtml=t.isDuplicate?'<span class="dup-flag" title="This transaction appears in a previous scan ('+t.dupRange+')">&#9888; Already scanned</span>':'';
+
+    // Convert buttons (show after categorised)
+    var convertHtml='';
+    if(!isUncategorised){
+      if(t.dir==='in'&&!t.convertedToInvoice){
+        convertHtml+='<button class="convert-btn" onclick="event.stopPropagation();convertToInvoice('+i+')" style="margin-top:6px">&#128196; Convert to invoice</button>';
+      }
+      if(t.dir==='out'&&!t.convertedToExpense){
+        convertHtml+='<button class="convert-btn" onclick="event.stopPropagation();convertToExpense('+i+')" style="background:#EAF3DE;color:#3B6D11;border-color:#C0DD97;margin-top:6px">&#128248; Record as expense</button>';
+      }
+      if(t.convertedToInvoice){convertHtml+='<span class="converted-tag">&#10003; Invoice created</span>';}
+      if(t.convertedToExpense){convertHtml+='<span class="converted-tag" style="background:#EAF3DE;color:#3B6D11">&#10003; Expense recorded</span>';}
+    }
+
+    return'<div class="tx-item'+(isSel?' sel':'')+'" id="txi-'+i+'" onclick="rowClick(event,'+i+')">'
+      +'<input type="checkbox" '+(isSel?'checked':'')+' onclick="event.stopPropagation();toggleRow('+i+')" style="cursor:pointer;margin-top:2px">'
+      +'<div>'
+        +'<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">'
+          +'<div style="font-weight:700;font-size:13px;flex:1">'+esc(label)+dupHtml+'</div>'
+          +'<div class="'+amtCls+'">'+amtSign+fmt(t.amount)+'</div>'
+        +'</div>'
+        +'<div style="font-size:11px;color:#aaa;margin-top:2px">'+sub.map(esc).join(' &middot; ')+'</div>'
+        +aiHtml+qcHtml+convertHtml
+      +'</div>'
+      +'<div></div>'
       +'</div>';
   }).join('');
   updateBulkBar();
 }
 
-function rowClick(e,i){if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT'||e.target.tagName==='OPTION')return;toggleRow(i);}
+function quickCat(i,cat){
+  scanned[i].cat=cat;
+  updatePills();
+  // If we are in a specific filter, re-render to remove this item from view
+  // with a smooth animation
+  var el=document.getElementById('txi-'+i);
+  if(el&&scFilter!=='all'){
+    el.style.transition='opacity .2s,transform .2s';
+    el.style.opacity='0';
+    el.style.transform='translateX(8px)';
+    setTimeout(function(){renderTxns();},200);
+  }else{
+    // Just re-render the item in place
+    renderTxns();
+  }
+}
+
+function rowClick(e,i){
+  if(e.target.tagName==='BUTTON'||e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='OPTION')return;
+  toggleRow(i);
+}
 
 function toggleRow(i){
   if(selectedRows.has(i))selectedRows.delete(i);else selectedRows.add(i);
-  var row=document.getElementById('txrow-'+i);
-  if(row){row.classList.toggle('selected',selectedRows.has(i));var cb=row.querySelector('input[type=checkbox]');if(cb)cb.checked=selectedRows.has(i);}
+  var el=document.getElementById('txi-'+i);
+  if(el){el.classList.toggle('sel',selectedRows.has(i));var cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=selectedRows.has(i);}
   updateBulkBar();
-}
-
-function toggleSelectAll(checked){
-  var filtered=getFiltered();
-  filtered.forEach(function(t){var i=scanned.indexOf(t);if(checked)selectedRows.add(i);else selectedRows.delete(i);});
-  renderTxns();
 }
 
 function updateBulkBar(){
   var bar=document.getElementById('bulk-bar');
   var count=selectedRows.size;
-  if(count>0){bar.classList.add('show');document.getElementById('bulk-count').textContent=count+' selected';}
-  else{bar.classList.remove('show');}
+  bar.style.display=count>0?'flex':'none';
+  document.getElementById('bulk-count').textContent=count+' selected';
 }
 
 function bulkMark(cat){
-  selectedRows.forEach(function(i){if(scanned[i])scanned[i].cat=cat==='business'?'business_income':cat;});
+  var count=selectedRows.size;
+  selectedRows.forEach(function(i){if(scanned[i])scanned[i].cat=cat;});
   selectedRows=new Set();
-  updateStats();renderTxns();
-  document.getElementById('sel-all').checked=false;
-  toast('Updated '+selectedRows.size+' transactions');
+  updatePills();
+  renderTxns();
+  updateBulkBar();
+  toast(count+' transactions marked as '+catLabel(cat));
 }
 
 function bulkDelete(){
-  if(!confirm('Delete '+selectedRows.size+' selected transaction(s)?'))return;
+  if(!confirm('Delete '+selectedRows.size+' selected transactions? This cannot be undone.'))return;
+  var count=selectedRows.size;
   var toDelete=Array.from(selectedRows).sort(function(a,b){return b-a;});
   toDelete.forEach(function(i){scanned.splice(i,1);});
   selectedRows=new Set();
-  updateStats();renderTxns();toast('Deleted transactions');
+  updatePills();renderTxns();updateBulkBar();
+  toast(count+' transactions deleted');
 }
 
-function clearSelection(){selectedRows=new Set();document.getElementById('sel-all').checked=false;renderTxns();}
-
-function setCat(i,cat){scanned[i].cat=cat;updateStats();}
+function clearSel(){selectedRows=new Set();updateBulkBar();renderTxns();}
 
 function addBusinessIncome(){
   var biz=scanned.filter(function(t){return t.cat==='business_income';});
-  if(!biz.length){toast('No transactions marked as Business Income — categorise some first');return;}
-  var added=0;
+  if(!biz.length){toast('No transactions marked as Business Income — categorise some income first');return;}
   biz.forEach(function(t){
-    var id='SC-'+t.date+'-'+Math.floor(Math.random()*999);
-    invoices.push({id:id,client:t.counterparty||t.desc||'Unknown',date:t.date||new Date().toISOString().split('T')[0],lines:[{d:(t.ref||t.desc||'Income'),q:1,p:t.amount,v:0}],status:'pending',terms:'receipt'});
-    added++;
+    var id='SC-'+t.date.replace(/-/g,'')+'-'+Math.floor(Math.random()*9999);
+    invoices.push({id:id,client:t.counterparty||t.desc||'Unknown',date:t.date||new Date().toISOString().split('T')[0],lines:[{d:t.ref||t.desc||'Business income',q:1,p:t.amount,v:0}],status:'pending',terms:'receipt'});
   });
-  save();renderDash();toast(added+' business income transaction(s) added as invoices');
+  save();renderDash();
+  toast(biz.length+' business income transaction(s) added as invoices');
 }
 
 function exportScanCSV(){
   if(!scanned.length){toast('Nothing to export');return;}
-  var rows=['Date,Counterparty,Description,Reference,Amount,Direction,Bank,Category,AI Reason'];
-  scanned.forEach(function(t){rows.push([t.date,'"'+(t.counterparty||'').replace(/"/g,'')+'",','"'+(t.desc||'').replace(/"/g,'')+'",','"'+(t.ref||'').replace(/"/g,'')+'",',t.amount,t.dir,t.bank||'',t.cat||'uncat','"'+(t.aiReason||'').replace(/"/g,'')+'",'].join(','));});
-  dlCSV(rows.join('\n'),'statement-reviewed-'+new Date().toISOString().split('T')[0]+'.csv');
+  var rows=['Date,Counterparty,Reference,Amount,Direction,Bank,Category,AI Confidence,AI Reason'];
+  scanned.forEach(function(t){
+    rows.push([t.date,'"'+(t.counterparty||'').replace(/"/g,'')+'",','"'+(t.ref||'').replace(/"/g,'')+'",',t.amount,t.dir==='in'?'Income':'Expense',t.bank||'',catLabel(t.cat||'uncat'),t.aiConf||'','"'+(t.aiReason||'').replace(/"/g,'')+'",'].join(','));
+  });
+  dlCSV(rows.join('\n'),'statement-'+new Date().toISOString().split('T')[0]+'.csv');
 }
 
 function resetScanner(){
@@ -1038,11 +1196,207 @@ function resetScanner(){
   document.getElementById('sc-upload').style.display='block';
   document.getElementById('filein').value='';
   document.getElementById('sc-prog').style.width='0%';
-  scanned=[];selectedRows=new Set();
+  scanned=[];selectedRows=new Set();scFilter='all';
 }
 
 // ── TOAST ──────────────────────────────────────────────
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
+
+// ══════════════════════════════════════════════════════
+// SCAN HISTORY & DUPLICATE DETECTION
+// ══════════════════════════════════════════════════════
+function buildScanFingerprint(txns){
+  // Build a fingerprint: sorted list of "date|counterparty|amount" for all transactions
+  var fp=txns.map(function(t){return(t.date||'')+'|'+(t.counterparty||t.desc||'')+'|'+(t.amount||0);}).sort();
+  // Date range
+  var dates=txns.map(function(t){return t.date||'';}).filter(Boolean).sort();
+  var minDate=dates[0]||'';
+  var maxDate=dates[dates.length-1]||'';
+  return{
+    dateRange:minDate+' to '+maxDate,
+    count:txns.length,
+    hash:simpleHash(fp.join(',')),
+    scannedAt:new Date().toISOString(),
+    transactions:fp
+  };
+}
+
+function simpleHash(str){
+  var h=0;
+  for(var i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i);h=h&h;}
+  return Math.abs(h).toString(36);
+}
+
+function checkDuplicates(txns){
+  // Returns array of indices that match previously scanned transactions
+  var known={};
+  scanHistory.forEach(function(scan){
+    (scan.transactions||[]).forEach(function(fp){known[fp]=scan.dateRange;});
+  });
+  var dups=[];
+  txns.forEach(function(t,i){
+    var fp=(t.date||'')+'|'+(t.counterparty||t.desc||'')+'|'+(t.amount||0);
+    if(known[fp])dups.push({idx:i,range:known[fp]});
+  });
+  return dups;
+}
+
+function saveScanToHistory(txns){
+  var fp=buildScanFingerprint(txns);
+  // Check if same hash already stored
+  var exists=scanHistory.some(function(h){return h.hash===fp.hash;});
+  if(!exists){
+    scanHistory.push(fp);
+    if(scanHistory.length>20)scanHistory=scanHistory.slice(-20); // keep last 20
+    save();
+  }
+  return fp;
+}
+
+// ══════════════════════════════════════════════════════
+// CONVERT TRANSACTION TO INVOICE
+// ══════════════════════════════════════════════════════
+function convertToInvoice(i){
+  var t=scanned[i];
+  if(!t)return;
+  var num='INV-'+t.date.replace(/-/g,'')+'-'+Math.floor(Math.random()*999);
+  var client=t.counterparty||t.payer||t.desc||'Unknown';
+  var desc=t.ref||t.desc||'Payment received';
+  lines=[{d:desc,q:1,p:t.amount,v:0}];
+  document.getElementById('inv-modal-title').textContent='Invoice from statement';
+  document.getElementById('f-num').value=num;
+  document.getElementById('f-date').value=t.date||new Date().toISOString().split('T')[0];
+  document.getElementById('f-client').value=client;
+  document.getElementById('f-cvat').value='';
+  document.getElementById('f-addr').value='';
+  document.getElementById('f-terms').value='receipt';
+  document.getElementById('f-vrate').value='0';
+  document.getElementById('f-edit-idx').value='';
+  renderLines();
+  // Store scan index so we can mark as converted after save
+  document.getElementById('f-num').dataset.fromScanIdx=i;
+  openModal('inv-modal');
+}
+
+// ══════════════════════════════════════════════════════
+// EXPENSES WITH RECEIPT ATTACHMENT
+// ══════════════════════════════════════════════════════
+function convertToExpense(i){
+  var t=scanned[i];
+  if(!t)return;
+  openExpenseModal(t,i);
+}
+
+function openExpenseModal(t,scanIdx){
+  // Create expense modal dynamically
+  var existing=document.getElementById('expense-modal');
+  if(existing)existing.remove();
+
+  var modal=document.createElement('div');
+  modal.id='expense-modal';
+  modal.className='modal-bg open';
+  modal.innerHTML='<div class="modal" style="width:520px">'
+    +'<div class="modal-head">'
+    +'<div><div class="modal-title">Record Expense</div><div class="modal-sub">Attach a receipt and save to your expense records</div></div>'
+    +'<button class="closebtn" onclick="document.getElementById('expense-modal').remove()">&times;</button>'
+    +'</div>'
+    +'<div class="fgrid">'
+    +'<div class="fg"><label>Date</label><input id="exp-date" value="'+(t?t.date||'':'')+'" placeholder="YYYY-MM-DD"></div>'
+    +'<div class="fg"><label>Amount</label><input id="exp-amount" type="number" step="0.01" value="'+(t?t.amount||'':'')+'" placeholder="0.00"></div>'
+    +'<div class="fg span2"><label>Paid to</label><input id="exp-payee" value="'+(t?t.counterparty||t.payee||'':'')+'" placeholder="Amazon, Starbucks etc."></div>'
+    +'<div class="fg span2"><label>Description / what was it for?</label><input id="exp-desc" value="'+(t?t.ref||t.desc||'':'')+'" placeholder="e.g. Software subscription, Travel to client meeting"></div>'
+    +'<div class="fg"><label>Category</label>'
+    +'<select id="exp-cat">'
+    +'<option value="software">Software & Subscriptions</option>'
+    +'<option value="travel">Travel & Transport</option>'
+    +'<option value="equipment">Equipment & Hardware</option>'
+    +'<option value="marketing">Marketing & Advertising</option>'
+    +'<option value="office">Office & Stationery</option>'
+    +'<option value="professional">Professional Services</option>'
+    +'<option value="phone">Phone & Internet</option>'
+    +'<option value="training">Training & Development</option>'
+    +'<option value="other">Other</option>'
+    +'</select></div>'
+    +'<div class="fg"><label>VAT on this expense</label>'
+    +'<select id="exp-vat"><option value="0">No VAT / 0%</option><option value="20">Standard 20%</option><option value="5">Reduced 5%</option></select>'
+    +'</div>'
+    +'</div>'
+    +'<div style="margin-top:4px">'
+    +'<label style="font-size:11px;color:#888;font-weight:600;display:block;margin-bottom:6px">Receipt (optional)</label>'
+    +'<div class="receipt-zone" onclick="document.getElementById('receipt-file').click()">'
+    +'<input type="file" id="receipt-file" accept="image/*,.pdf" style="display:none" onchange="previewReceipt(this)">'
+    +'<div id="receipt-preview"><div style="font-size:20px;margin-bottom:4px">&#128248;</div>Click to attach receipt image or PDF</div>'
+    +'</div>'
+    +'</div>'
+    +'<input type="hidden" id="exp-scan-idx" value="'+(scanIdx>=0?scanIdx:'')+'">'
+    +'<div class="btnrow">'
+    +'<button class="btn secondary" onclick="document.getElementById('expense-modal').remove()">Cancel</button>'
+    +'<button class="btn primary" onclick="saveExpense()">Save Expense</button>'
+    +'</div>'
+    +'</div>';
+  document.body.appendChild(modal);
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.remove();});
+}
+
+function previewReceipt(input){
+  if(!input.files||!input.files[0])return;
+  var file=input.files[0];
+  var preview=document.getElementById('receipt-preview');
+  if(file.type.startsWith('image/')){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      preview.innerHTML='<div class="receipt-thumb">'
+        +'<img src="'+e.target.result+'" alt="Receipt">'
+        +'<div><div style="font-weight:600;font-size:12px">'+esc(file.name)+'</div>'
+        +'<div style="font-size:11px;color:#888">'+Math.round(file.size/1024)+'KB &middot; Click to change</div></div>'
+        +'</div>';
+      // Store base64 for saving
+      preview.dataset.receiptData=e.target.result;
+      preview.dataset.receiptName=file.name;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    preview.innerHTML='<div class="receipt-thumb">'
+      +'<div style="width:36px;height:36px;background:#E6F1FB;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px">&#128196;</div>'
+      +'<div><div style="font-weight:600;font-size:12px">'+esc(file.name)+'</div>'
+      +'<div style="font-size:11px;color:#888">PDF receipt &middot; Click to change</div></div>'
+      +'</div>';
+    preview.dataset.receiptName=file.name;
+  }
+}
+
+function saveExpense(){
+  var date=document.getElementById('exp-date').value;
+  var amount=parseFloat(document.getElementById('exp-amount').value)||0;
+  var payee=document.getElementById('exp-payee').value.trim();
+  var desc=document.getElementById('exp-desc').value.trim();
+  var cat=document.getElementById('exp-cat').value;
+  var vat=parseFloat(document.getElementById('exp-vat').value)||0;
+  var scanIdx=document.getElementById('exp-scan-idx').value;
+  var preview=document.getElementById('receipt-preview');
+  var receiptData=preview?preview.dataset.receiptData||'':'';
+  var receiptName=preview?preview.dataset.receiptName||'':'';
+  if(!payee&&!desc){toast('Please add a description');return;}
+  if(!amount){toast('Please enter an amount');return;}
+  var expense={
+    id:'EXP-'+Date.now(),
+    date:date,payee:payee,desc:desc,
+    amount:amount,cat:cat,vat:vat,
+    receiptName:receiptName,
+    receiptData:receiptData,  // base64 image stored locally
+    createdAt:new Date().toISOString()
+  };
+  expenses.push(expense);
+  // Mark the scanned transaction as converted
+  if(scanIdx!==''&&scanned[parseInt(scanIdx)]){
+    scanned[parseInt(scanIdx)].convertedToExpense=true;
+    scanned[parseInt(scanIdx)].expenseId=expense.id;
+  }
+  save();
+  document.getElementById('expense-modal').remove();
+  renderTxns();
+  toast('Expense saved'+(receiptName?' with receipt':''));
+}
 
 // ── INIT ──────────────────────────────────────────────
 load();renderDash();
