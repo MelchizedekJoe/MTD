@@ -9,40 +9,36 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,sans-serif;background:#F5F5F0;color:#1a1a1a;font-size:14px;min-height:100vh}
 .app{max-width:960px;margin:0 auto;background:#fff;min-height:100vh;border:1px solid #E0E0D8}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #E0E0D8;flex-wrap:wrap;gap:10px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #E0E0D8;background:#fff;flex-wrap:wrap;gap:10px}
 .brand{display:flex;align-items:center;gap:10px}
-.bmark{width:34px;height:34px;background:#042C53;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#B5D4F4;font-size:9px;font-weight:700;letter-spacing:0.5px}
+.bmark{width:34px;height:34px;background:#042C53;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#B5D4F4;font-size:9px;font-weight:700;letter-spacing:.5px}
 .bname{font-size:15px;font-weight:700}.bsub{font-size:11px;color:#888;margin-top:1px}
-.top-right{display:flex;gap:8px}
 .tbtn{padding:6px 12px;border:1px solid #E0E0D8;border-radius:5px;background:#F5F5F0;color:#666;font-size:11px;cursor:pointer;font-family:inherit}
 .tbtn:hover{background:#E8E8E0}
 .nav{display:flex;border-bottom:1px solid #E0E0D8;background:#FAFAF8;overflow-x:auto}
-.nb{padding:12px 20px;border:none;background:transparent;font-size:13px;color:#888;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s}
-.nb:hover{color:#1a1a1a;background:#F0F0E8}
-.nb.on{color:#042C53;font-weight:700;border-bottom:2px solid #042C53;background:#fff}
-.pg{display:none;padding:24px}.pg.on{display:block}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat{background:#F5F5F0;border-radius:8px;padding:14px 16px}
-.sl{font-size:11px;color:#888;margin-bottom:5px}.sv{font-size:22px;font-weight:700}.ss{font-size:11px;color:#aaa;margin-top:2px}
+.nb{padding:12px 18px;border:none;background:transparent;font-size:13px;color:#888;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.nb:hover{color:#1a1a1a}.nb.on{color:#042C53;font-weight:700;border-bottom:2px solid #042C53;background:#fff}
+.pg{display:none;padding:22px}.pg.on{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat{background:#F5F5F0;border-radius:8px;padding:13px 15px}
+.sl{font-size:11px;color:#888;margin-bottom:5px}.sv{font-size:21px;font-weight:700}.ss{font-size:11px;color:#aaa;margin-top:2px}
 .stat.blue{background:#E6F1FB;border:1px solid #B5D4F4}.stat.blue .sv{color:#042C53}.stat.blue .sl{color:#378ADD}
 .stat.green{background:#EAF3DE;border:1px solid #C0DD97}.stat.green .sv{color:#3B6D11}.stat.green .sl{color:#639922}
-.stat.red{background:#FCEBEB;border:1px solid #F09595}.stat.red .sv{color:#A32D2D}.stat.red .sl{color:#C04040}
-.card{border:1px solid #E0E0D8;border-radius:8px;padding:18px 20px;margin-bottom:14px}
-.card-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px}
+.card{border:1px solid #E0E0D8;border-radius:8px;padding:16px 20px;margin-bottom:14px;background:#fff}
+.card-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
 .tbl{width:100%;border-collapse:collapse;font-size:13px}
 .tbl th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:#888;border-bottom:1px solid #E0E0D8}
 .tbl td{padding:10px;border-bottom:1px solid #F0F0E8;vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
-.tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:#F8F8F4}
+.tbl tr.cl{cursor:pointer}.tbl tr.cl:hover td{background:#F8F8F4}
 .pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
 .pill.paid{background:#EAF3DE;color:#3B6D11}.pill.pending{background:#FAEEDA;color:#854F0B}
 .pill.draft{background:#F0F0E8;color:#666}.pill.overdue{background:#FCEBEB;color:#A32D2D}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .span2{grid-column:span 2}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fg label{font-size:11px;color:#888;font-weight:600}
+.fg{display:flex;flex-direction:column;gap:4px}.fg label{font-size:11px;color:#888;font-weight:600}
 input,select,textarea{width:100%;padding:9px 11px;border:1px solid #D8D8D0;border-radius:6px;font-size:13px;background:#fff;color:#1a1a1a;font-family:inherit;outline:none}
-input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,0.1)}
+input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,.1)}
 .lih{display:grid;grid-template-columns:1fr 60px 90px 70px 30px;gap:6px;padding:6px 8px;background:#F5F5F0;border-radius:5px;font-size:11px;color:#888;margin-bottom:5px}
 .lirow{display:grid;grid-template-columns:1fr 60px 90px 70px 30px;gap:6px;align-items:center;margin-bottom:5px}
 .lirow input,.lirow select{padding:6px 8px;font-size:12px}
@@ -51,296 +47,254 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
 .tots{background:#F5F5F0;border-radius:7px;padding:14px 16px;margin-top:14px}
 .trow{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:#888}
 .trow.big{border-top:1px solid #E0E0D8;margin-top:6px;padding-top:10px;font-size:16px;font-weight:700;color:#1a1a1a}
-.btn{padding:10px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all 0.15s}
+.btn{padding:10px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all .15s}
 .btn.primary{background:#042C53;color:#B5D4F4}.btn.primary:hover{background:#185FA5}
 .btn.secondary{background:transparent;color:#666;border:1px solid #E0E0D8}.btn.secondary:hover{background:#F5F5F0}
 .btn.danger{background:transparent;color:#A32D2D;border:1px solid #F09595}.btn.danger:hover{background:#FCEBEB}
 .btn.success{background:#3B6D11;color:#fff}.btn.success:hover{background:#27500A}
 .btn.sm{padding:6px 14px;font-size:12px}.btn.xs{padding:4px 10px;font-size:11px}
 .btnrow{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:#fff;border-radius:10px;padding:28px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 10px 50px rgba(0,0,0,0.2)}
+.modal{background:#fff;border-radius:10px;padding:28px;width:500px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 10px 50px rgba(0,0,0,.2)}
 .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
 .modal-title{font-size:16px;font-weight:700}.modal-sub{font-size:12px;color:#888;margin-top:2px}
 .closebtn{border:none;background:transparent;font-size:22px;cursor:pointer;color:#888;line-height:1;padding:0}
 .status-row{display:flex;gap:8px;flex-wrap:wrap}
-.sbtn{padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid #E0E0D8;background:transparent;color:#666;transition:all 0.15s}
+.sbtn{padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid #E0E0D8;background:transparent;color:#666;transition:all .15s}
+.sbtn:hover{border-color:#888}
 .sbtn.on-paid{border-color:#3B6D11;background:#EAF3DE;color:#3B6D11}
 .sbtn.on-pending{border-color:#854F0B;background:#FAEEDA;color:#854F0B}
 .sbtn.on-draft{border-color:#666;background:#F0F0E8;color:#666}
 .sbtn.on-overdue{border-color:#A32D2D;background:#FCEBEB;color:#A32D2D}
-.warn{background:#FAEEDA;border:1px solid #FAC775;border-radius:7px;padding:11px 14px;font-size:12px;color:#854F0B;margin-bottom:14px;line-height:1.6}
-.info{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:11px 14px;font-size:12px;color:#0C447C;margin-bottom:14px;line-height:1.6}
+.upload-zone{border:2px dashed #D0D0C8;border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px}
+.upload-zone:hover,.upload-zone.drag{border-color:#378ADD;background:#EEF6FC}
+.upload-zone input{display:none}
+.upload-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.upload-sub{font-size:12px;color:#888;line-height:1.8}
+.progbar{height:5px;background:#E0E0D8;border-radius:3px;margin:10px 0 18px;overflow:hidden}
+.progfill{height:100%;background:#378ADD;border-radius:3px;transition:width .5s}
+.loading-row{display:flex;align-items:center;gap:10px;color:#888;font-size:13px}
+.spinner{width:16px;height:16px;border:2px solid #E0E0D8;border-top-color:#378ADD;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scanstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.scstat{background:#F5F5F0;border-radius:6px;padding:11px;text-align:center;border:1px solid #E0E0D8}
+.scv{font-size:20px;font-weight:700}.scl{font-size:11px;color:#888;margin-top:2px}
 .vatgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .vatbox{border:1px solid #E0E0D8;border-radius:8px;padding:14px}
 .vbn{font-size:11px;font-weight:700;color:#185FA5;margin-bottom:4px}
-.vbl{font-size:11px;color:#888;margin-bottom:8px;line-height:1.5}
-.vbv{font-size:20px;font-weight:700}
+.vbl{font-size:11px;color:#888;margin-bottom:8px;line-height:1.5}.vbv{font-size:20px;font-weight:700}
 .vatbox.hi{background:#E6F1FB;border-color:#B5D4F4}.vatbox.hi .vbv{color:#042C53}
-.boxnum{display:inline-block;width:22px;height:22px;border-radius:4px;background:#E6F1FB;color:#185FA5;font-size:10px;text-align:center;line-height:22px;margin-right:6px;font-weight:700}
-.empty{text-align:center;padding:40px 20px;color:#aaa}
-.empty-icon{font-size:32px;margin-bottom:10px}
-.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999;max-width:320px}
+.warn{background:#FAEEDA;border:1px solid #FAC775;border-radius:7px;padding:11px 14px;font-size:12px;color:#854F0B;margin-bottom:14px;line-height:1.6}
+.info{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:11px 14px;font-size:12px;color:#0C447C;margin-bottom:14px;line-height:1.6}
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;max-width:320px}
 .toast.show{opacity:1}
-
-/* ── SCANNER STYLES ── */
-.upload-zone{border:2px dashed #D0D0C8;border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:14px}
-.upload-zone:hover,.upload-zone.drag{border-color:#378ADD;background:#EEF6FC}
-.upload-zone input{display:none}
-.progbar{height:5px;background:#E0E0D8;border-radius:3px;margin:10px 0 18px;overflow:hidden}
-.progfill{height:100%;background:#378ADD;border-radius:3px;transition:width 0.4s}
-.spinner{width:16px;height:16px;border:2px solid #E0E0D8;border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-.scstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.scstat{background:#F5F5F0;border-radius:6px;padding:12px;text-align:center;border:1px solid #E0E0D8}
-.scv{font-size:20px;font-weight:700}.scl{font-size:11px;color:#888;margin-top:2px}
-
-/* Transaction rows */
-.txrow{display:grid;grid-template-columns:90px 1fr 80px 70px 70px;align-items:center;padding:9px 12px;border-bottom:1px solid #F0F0E8;gap:8px;font-size:12px;cursor:pointer;transition:background 0.1s}
-.txrow:hover{background:#F8F8F4}
-.txrow.hdr{background:#F5F5F0;cursor:default;font-size:11px;color:#888;font-weight:600;border-radius:6px 6px 0 0}
+.empty{text-align:center;padding:40px 20px;color:#aaa}
+.empty-icon{font-size:32px;margin-bottom:10px}.empty-text{font-size:14px;margin-bottom:6px;color:#888}.empty-sub{font-size:12px}
+.boxnum{display:inline-block;width:22px;height:22px;border-radius:4px;background:#E6F1FB;color:#185FA5;font-size:10px;text-align:center;line-height:22px;margin-right:6px;font-weight:700}
+/* SCANNER SPECIFIC */
+.sc-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sc-filter{padding:6px 14px;border:1px solid #E0E0D8;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;background:#fff;color:#666;transition:all .15s}
+.sc-filter:hover{border-color:#888;color:#1a1a1a}
+.sc-filter.active{background:#042C53;color:#B5D4F4;border-color:#042C53}
+.txrow{display:grid;grid-template-columns:30px 110px 1fr 90px 110px 100px;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #F0F0E8;font-size:12px;cursor:pointer;transition:background .1s}
+.txrow:hover{background:#FAFAF8}
+.txrow.selected{background:#EEF6FC}
+.txrow.hdr{background:#F5F5F0;font-weight:700;color:#888;font-size:11px;cursor:default;border-radius:6px 6px 0 0}
 .txrow.hdr:hover{background:#F5F5F0}
-.txrow.credit .txamt{color:#3B6D11;font-weight:700}
-.txrow.debit .txamt{color:#A32D2D}
-.txrow.selected{background:#E6F1FB}
-.txrow.business{background:#EAF3DE}
-.txrow.personal{background:#FFF8F0}
-.txdesc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.txpill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
-.txpill.bus{background:#EAF3DE;color:#3B6D11}
-.txpill.per{background:#FAEEDA;color:#854F0B}
-.txpill.unk{background:#F0F0E8;color:#666}
-
-/* Detail panel */
-.tx-detail{background:#F8F8F4;border:1px solid #E0E0D8;border-radius:8px;padding:16px;margin-top:8px;display:none}
-.tx-detail.open{display:block}
-.tx-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;font-size:12px}
-.tx-detail-item{display:flex;flex-direction:column;gap:2px}
-.tx-detail-label{font-size:10px;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
-.tx-detail-value{color:#1a1a1a;font-weight:500}
-.cat-btns{display:flex;gap:8px;flex-wrap:wrap}
-.cat-btn{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid;transition:all 0.15s}
-.cat-btn.business{border-color:#3B6D11;color:#3B6D11;background:transparent}
-.cat-btn.business:hover,.cat-btn.business.on{background:#EAF3DE}
-.cat-btn.personal{border-color:#854F0B;color:#854F0B;background:transparent}
-.cat-btn.personal:hover,.cat-btn.personal.on{background:#FAEEDA}
-.cat-btn.ignore{border-color:#ccc;color:#888;background:transparent}
-.cat-btn.ignore:hover,.cat-btn.ignore.on{background:#F0F0E8}
-.filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.filter-btn{padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;border:1px solid #E0E0D8;background:transparent;color:#666;transition:all 0.15s}
-.filter-btn.on{background:#042C53;color:#B5D4F4;border-color:#042C53}
-.filter-btn:hover{background:#F0F0E8}
-.filter-btn.on:hover{background:#185FA5}
-
-@media(max-width:600px){
+.tx-amt-in{color:#3B6D11;font-weight:700}
+.tx-amt-out{color:#A32D2D;font-weight:700}
+.tx-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.tx-badge.income{background:#EAF3DE;color:#3B6D11}
+.tx-badge.expense{background:#FCEBEB;color:#A32D2D}
+.tx-badge.business{background:#E6F1FB;color:#042C53}
+.tx-badge.personal{background:#FBEAF0;color:#993556}
+.tx-badge.uncat{background:#F0F0E8;color:#666}
+.cat-select{padding:4px 8px;border:1px solid #D8D8D0;border-radius:4px;font-size:11px;font-family:inherit;background:#fff;cursor:pointer;width:100%}
+.bulk-bar{display:none;align-items:center;gap:10px;padding:10px 14px;background:#E6F1FB;border-radius:7px;margin-bottom:10px;font-size:13px;color:#042C53;font-weight:600}
+.bulk-bar.show{display:flex}
+.ai-badge{display:inline-block;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:700;margin-left:4px}
+.ai-high{background:#EAF3DE;color:#3B6D11}
+.ai-med{background:#FAEEDA;color:#854F0B}
+.ai-low{background:#F0F0E8;color:#666}
+@media(max-width:640px){
   .stats{grid-template-columns:1fr 1fr}
   .fgrid{grid-template-columns:1fr}.span2{grid-column:span 1}
-  .vatgrid{grid-template-columns:1fr}.scstats{grid-template-columns:1fr 1fr}
-  .txrow{grid-template-columns:70px 1fr 70px 55px}
-  .txrow .txcat{display:none}
+  .vatgrid{grid-template-columns:1fr}.scanstats{grid-template-columns:1fr 1fr}
+  .txrow{grid-template-columns:24px 80px 1fr 70px 80px}
 }
 </style>
 </head>
 <body>
 <div class="app">
-<div class="topbar">
-  <div class="brand">
-    <div class="bmark">MTD</div>
-    <div><div class="bname">MTD Filing Suite</div><div class="bsub">Making Tax Digital &middot; HMRC</div></div>
-  </div>
-  <div class="top-right">
-    <button class="tbtn" onclick="exportInvoices()">&#8595; Export CSV</button>
-    <button class="tbtn" onclick="openSettings()">&#9881; Settings</button>
-  </div>
-</div>
-
-<nav class="nav">
-  <button class="nb on" onclick="goTo('dash',this)">Dashboard</button>
-  <button class="nb" onclick="goTo('invoices',this)">Invoices</button>
-  <button class="nb" onclick="goTo('payments',this)">Payments</button>
-  <button class="nb" onclick="goTo('scanner',this)">Statement Scanner</button>
-  <button class="nb" onclick="goTo('mtd',this)">MTD Return</button>
-</nav>
-
-<!-- DASHBOARD -->
-<div id="pg-dash" class="pg on">
-  <div class="stats">
-    <div class="stat blue"><div class="sl">Total invoiced</div><div class="sv" id="d-total">£0</div><div class="ss">All invoices</div></div>
-    <div class="stat green"><div class="sl">Paid</div><div class="sv" id="d-paid">£0</div><div class="ss">Received</div></div>
-    <div class="stat"><div class="sl">Outstanding</div><div class="sv" id="d-owing">£0</div><div class="ss">Pending / overdue</div></div>
-    <div class="stat"><div class="sl">VAT owed</div><div class="sv" id="d-vat">£0</div><div class="ss">Box 1 &minus; Box 4</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Recent invoices</div>
-    <table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody id="d-inv-body"></tbody></table>
-    <div id="d-inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div style="color:#888">No invoices yet — go to Invoices to create one</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">VAT summary (boxes 1–9)</div>
-    <table class="tbl" id="d-vat-tbl"></table>
-  </div>
-</div>
-
-<!-- INVOICES -->
-<div id="pg-invoices" class="pg">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div style="font-size:16px;font-weight:700">Invoices</div>
-    <button class="btn primary" onclick="openNewInvoice()">+ New Invoice</button>
-  </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <table class="tbl">
-      <thead><tr><th style="padding:12px 16px">Invoice</th><th>Client</th><th>Date</th><th>Net</th><th>VAT</th><th>Total</th><th>Status</th><th></th></tr></thead>
-      <tbody id="inv-body"></tbody>
-    </table>
-    <div id="inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div style="color:#888">No invoices yet</div></div>
-  </div>
-</div>
-
-<!-- PAYMENTS -->
-<div id="pg-payments" class="pg">
-  <div style="font-size:16px;font-weight:700;margin-bottom:16px">Payments</div>
-  <div class="stats" style="grid-template-columns:repeat(3,1fr)">
-    <div class="stat green"><div class="sl">Total received</div><div class="sv" id="p-received">£0</div></div>
-    <div class="stat"><div class="sl">Awaiting payment</div><div class="sv" id="p-pending">£0</div></div>
-    <div class="stat red"><div class="sl">Overdue</div><div class="sv" id="p-overdue">£0</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">All invoices by payment status</div>
-    <table class="tbl">
-      <thead><tr><th>Invoice</th><th>Client</th><th>Due date</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
-      <tbody id="pay-body"></tbody>
-    </table>
-    <div id="pay-empty" class="empty" style="display:none"><div class="empty-icon">&#128176;</div><div style="color:#888">No invoices yet</div></div>
-  </div>
-</div>
-
-<!-- STATEMENT SCANNER -->
-<div id="pg-scanner" class="pg">
-
-  <!-- UPLOAD STATE -->
-  <div id="sc-upload">
-    <div style="font-size:16px;font-weight:700;margin-bottom:14px">Statement Scanner</div>
-    <div class="info">
-      Upload your bank statement (PDF or CSV). Every transaction — income and expenses — will be listed. You decide which ones are business and which are personal. Works with <strong>Wise, Revolut, Barclays, HSBC, NatWest, Monzo, Starling</strong> and all major UK banks.
+  <div class="topbar">
+    <div class="brand">
+      <div class="bmark">MTD</div>
+      <div><div class="bname">MTD Filing Suite</div><div class="bsub">Making Tax Digital &middot; HMRC</div></div>
     </div>
-    <div class="upload-zone" id="dropzone"
-      onclick="document.getElementById('filein').click()"
-      ondragover="event.preventDefault();this.classList.add('drag')"
-      ondragleave="this.classList.remove('drag')"
-      ondrop="onDrop(event)">
-      <input type="file" id="filein" accept=".csv,.txt,.pdf" onchange="onFile(this.files[0])">
-      <div style="font-size:36px;margin-bottom:12px">&#128196;</div>
-      <div style="font-size:15px;font-weight:700;margin-bottom:6px">Upload your bank statement</div>
-      <div style="font-size:12px;color:#888;line-height:1.8">
-        Drag &amp; drop or click to browse<br>
-        <strong>CSV recommended</strong> for most accurate results &middot; PDF also supported
+    <div style="display:flex;gap:8px">
+      <button class="tbtn" onclick="exportInvoices()">&#8595; Export</button>
+      <button class="tbtn" onclick="openSettings()">&#9881; Settings</button>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nb on" onclick="goTo('dash',this)">Dashboard</button>
+    <button class="nb" onclick="goTo('invoices',this)">Invoices</button>
+    <button class="nb" onclick="goTo('payments',this)">Payments</button>
+    <button class="nb" onclick="goTo('scanner',this)">Statement Scanner</button>
+    <button class="nb" onclick="goTo('mtd',this)">MTD Return</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div id="pg-dash" class="pg on">
+    <div class="stats">
+      <div class="stat blue"><div class="sl">Total invoiced</div><div class="sv" id="d-total">£0</div><div class="ss">All invoices</div></div>
+      <div class="stat green"><div class="sl">Paid</div><div class="sv" id="d-paid">£0</div><div class="ss">Received</div></div>
+      <div class="stat"><div class="sl">Outstanding</div><div class="sv" id="d-owing">£0</div><div class="ss">Pending / overdue</div></div>
+      <div class="stat"><div class="sl">VAT owed</div><div class="sv" id="d-vat">£0</div><div class="ss">Box 1 &minus; Box 4</div></div>
+    </div>
+    <div class="card"><div class="card-title">Recent invoices</div>
+      <table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody id="d-inv-body"></tbody></table>
+      <div id="d-inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div class="empty-text">No invoices yet</div><div class="empty-sub">Go to Invoices to create your first one</div></div>
+    </div>
+    <div class="card"><div class="card-title">VAT summary (this period)</div><table class="tbl" id="d-vat-tbl"></table></div>
+  </div>
+
+  <!-- INVOICES -->
+  <div id="pg-invoices" class="pg">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:16px;font-weight:700">Invoices</div>
+      <button class="btn primary" onclick="openNewInvoice()">+ New Invoice</button>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th style="padding:12px 16px">Invoice</th><th>Client</th><th>Date</th><th>Net</th><th>VAT</th><th>Total</th><th>Status</th><th></th></tr></thead>
+        <tbody id="inv-body"></tbody>
+      </table>
+      <div id="inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div class="empty-text">No invoices yet</div><div class="empty-sub">Click New Invoice to get started</div></div>
+    </div>
+  </div>
+
+  <!-- PAYMENTS -->
+  <div id="pg-payments" class="pg">
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px">Payments</div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat green"><div class="sl">Total received</div><div class="sv" id="p-received">£0</div></div>
+      <div class="stat"><div class="sl">Awaiting payment</div><div class="sv" id="p-pending">£0</div></div>
+      <div class="stat" style="background:#FCEBEB;border:1px solid #F09595"><div class="sl" style="color:#A32D2D">Overdue</div><div class="sv" style="color:#A32D2D" id="p-overdue">£0</div></div>
+    </div>
+    <div class="card"><div class="card-title">All invoices by payment status</div>
+      <table class="tbl">
+        <thead><tr><th>Invoice</th><th>Client</th><th>Due date</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="pay-body"></tbody>
+      </table>
+      <div id="pay-empty" class="empty" style="display:none"><div class="empty-icon">&#128176;</div><div class="empty-text">No invoices yet</div></div>
+    </div>
+  </div>
+
+  <!-- STATEMENT SCANNER -->
+  <div id="pg-scanner" class="pg">
+    <!-- UPLOAD -->
+    <div id="sc-upload">
+      <div style="font-size:16px;font-weight:700;margin-bottom:14px">Statement Scanner</div>
+      <div class="info">&#128161; Upload your bank statement CSV or PDF. Every transaction shown — income and expenses. Mark each as <strong>Business</strong> or <strong>Personal</strong>. AI will suggest categories when your API key is set in Settings.</div>
+      <div class="upload-zone" id="dropzone" onclick="document.getElementById('filein').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="onDrop(event)">
+        <input type="file" id="filein" accept=".csv,.txt,.pdf" onchange="onFile(this.files[0])">
+        <div style="font-size:36px;margin-bottom:12px">&#128196;</div>
+        <div class="upload-title">Upload your bank statement</div>
+        <div class="upload-sub">
+          Drag &amp; drop or click to browse<br>
+          <strong>CSV</strong> (recommended) &middot; <strong>PDF</strong> &middot; Wise, Revolut, Monzo, Starling, Barclays, HSBC, NatWest, Lloyds, Santander, Nationwide
+        </div>
       </div>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#E6F1FB;color:#185FA5;border:1px solid #B5D4F4">Wise CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#E6F1FB;color:#185FA5;border:1px solid #B5D4F4">Revolut CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Monzo CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Barclays CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Any bank PDF</span>
+      <div style="background:#F5F5F0;border-radius:7px;padding:12px 16px;font-size:12px;color:#666;line-height:2">
+        <strong>Wise:</strong> Statements &rarr; Download &rarr; CSV &nbsp;|&nbsp;
+        <strong>Revolut:</strong> Statements &rarr; Export CSV &nbsp;|&nbsp;
+        <strong>Monzo:</strong> Account &rarr; Export Transactions &nbsp;|&nbsp;
+        <strong>Barclays/HSBC/NatWest/Lloyds:</strong> Online Banking &rarr; Statements &rarr; Export CSV
       </div>
     </div>
-    <div style="font-size:12px;color:#888;background:#F5F5F0;border-radius:6px;padding:10px 14px;line-height:1.7">
-      <strong>How to export your Wise CSV:</strong> Wise app or website &rarr; Statements &rarr; Download &rarr; Select date range &rarr; CSV format
+    <!-- LOADING -->
+    <div id="sc-loading" style="display:none">
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">Reading statement&hellip;</div>
+      <div style="font-size:12px;color:#888;margin-bottom:12px" id="sc-file-label"></div>
+      <div class="progbar"><div class="progfill" id="sc-prog" style="width:0%"></div></div>
+      <div class="loading-row"><div class="spinner"></div><span id="sc-msg">Extracting transactions&hellip;</span></div>
     </div>
-  </div>
-
-  <!-- LOADING STATE -->
-  <div id="sc-loading" style="display:none">
-    <div style="font-size:16px;font-weight:700;margin-bottom:6px">Reading statement&hellip;</div>
-    <div style="font-size:12px;color:#888;margin-bottom:12px" id="sc-file-label"></div>
-    <div class="progbar"><div class="progfill" id="sc-prog" style="width:0%"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;color:#888;font-size:13px"><div class="spinner"></div><span id="sc-msg">Reading your statement&hellip;</span></div>
-  </div>
-
-  <!-- RESULTS STATE -->
-  <div id="sc-results" style="display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:16px;font-weight:700">All transactions</div>
-      <div style="display:flex;gap:8px">
+    <!-- RESULTS -->
+    <div id="sc-results" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:16px;font-weight:700">All Transactions</div>
         <button class="btn secondary sm" onclick="resetScanner()">&#8592; Upload another</button>
-        <button class="btn primary sm" onclick="addBusinessToInvoices()">Add business income as invoices</button>
+      </div>
+      <div class="scanstats">
+        <div class="scstat"><div class="scv" id="sc-total">0</div><div class="scl">Total</div></div>
+        <div class="scstat"><div class="scv" id="sc-income" style="color:#3B6D11">0</div><div class="scl">Income</div></div>
+        <div class="scstat"><div class="scv" id="sc-expense" style="color:#A32D2D">0</div><div class="scl">Expenses</div></div>
+        <div class="scstat"><div class="scv" id="sc-business" style="color:#042C53">0</div><div class="scl">Business</div></div>
+      </div>
+      <!-- BULK ACTION BAR -->
+      <div class="bulk-bar" id="bulk-bar">
+        <span id="bulk-count">0 selected</span>
+        <button class="btn primary sm" onclick="bulkMark('business')">Mark Business</button>
+        <button class="btn sm" style="background:#FBEAF0;color:#993556;border:1px solid #D4537E" onclick="bulkMark('personal')">Mark Personal</button>
+        <button class="btn danger sm" onclick="bulkDelete()">Delete</button>
+        <button class="btn secondary sm" onclick="clearSelection()">Clear</button>
+      </div>
+      <!-- FILTERS -->
+      <div class="sc-filters">
+        <button class="sc-filter active" onclick="setFilter('all',this)">All</button>
+        <button class="sc-filter" onclick="setFilter('income',this)">&#8593; Income</button>
+        <button class="sc-filter" onclick="setFilter('expense',this)">&#8595; Expenses</button>
+        <button class="sc-filter" onclick="setFilter('business',this)">Business</button>
+        <button class="sc-filter" onclick="setFilter('personal',this)">Personal</button>
+        <button class="sc-filter" onclick="setFilter('uncat',this)">Uncategorised</button>
+      </div>
+      <!-- TABLE -->
+      <div style="border:1px solid #E0E0D8;border-radius:8px;overflow:hidden">
+        <div class="txrow hdr">
+          <input type="checkbox" id="sel-all" onchange="toggleSelectAll(this.checked)" title="Select all">
+          <span>Date</span><span>Description / Payer</span><span>Amount</span><span>Category</span><span>Action</span>
+        </div>
+        <div id="sc-txns"></div>
+      </div>
+      <div class="btnrow" style="margin-top:16px">
+        <button class="btn secondary" onclick="exportScanCSV()">Export CSV</button>
+        <button class="btn primary" onclick="addBusinessIncome()">Add business income as invoices</button>
       </div>
     </div>
+  </div>
 
-    <div class="scstats">
-      <div class="scstat"><div class="scv" id="sc-total">0</div><div class="scl">Total transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-income" style="color:#3B6D11">0</div><div class="scl">Income transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-expenses" style="color:#A32D2D">0</div><div class="scl">Expense transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-business" style="color:#042C53">0</div><div class="scl">Marked as business</div></div>
-    </div>
-
-    <div class="filter-bar">
-      <button class="filter-btn on" id="f-all" onclick="setFilter('all')">All</button>
-      <button class="filter-btn" id="f-income" onclick="setFilter('income')">Income only</button>
-      <button class="filter-btn" id="f-expenses" onclick="setFilter('expenses')">Expenses only</button>
-      <button class="filter-btn" id="f-business" onclick="setFilter('business')">Business</button>
-      <button class="filter-btn" id="f-personal" onclick="setFilter('personal')">Personal</button>
-      <button class="filter-btn" id="f-uncat" onclick="setFilter('uncat')">Uncategorised</button>
-    </div>
-
-    <div style="border:1px solid #E0E0D8;border-radius:8px;overflow:hidden">
-      <div class="txrow hdr">
-        <span>Date</span><span>Description</span><span class="txamt">Amount</span><span class="txcat">Category</span><span>Action</span>
-      </div>
-      <div id="tx-list"></div>
-    </div>
-
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center">
-      <div style="font-size:12px;color:#888">Click any transaction to categorise it as Business or Personal</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn secondary sm" onclick="exportScanCSV()">Export reviewed CSV</button>
-        <button class="btn primary sm" onclick="addBusinessToInvoices()">Add business income as invoices</button>
+  <!-- MTD RETURN -->
+  <div id="pg-mtd" class="pg">
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px">MTD VAT Return</div>
+    <div class="warn">&#9888; Review all 9 boxes carefully before submitting. Once filed with HMRC, corrections require a separate amendment return.</div>
+    <div class="card"><div class="card-title">VAT boxes — auto-filled from your invoices</div><div class="vatgrid" id="vat-boxes"></div></div>
+    <div style="background:#F5F5F0;border-radius:8px;padding:22px;text-align:center;border:1px solid #E0E0D8">
+      <div style="font-size:15px;font-weight:700;margin-bottom:6px">Ready to submit?</div>
+      <div style="font-size:13px;color:#888;margin-bottom:16px">Submit officially via HMRC&rsquo;s website or MTD-compatible bridging software.</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="https://www.gov.uk/send-vat-return" target="_blank" rel="noopener"><button class="btn secondary">File on HMRC &rarr;</button></a>
+        <button class="btn primary" onclick="markFiled()">Mark as filed</button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- MTD RETURN -->
-<div id="pg-mtd" class="pg">
-  <div style="font-size:16px;font-weight:700;margin-bottom:16px">MTD VAT Return</div>
-  <div class="warn">&#9888; Review all 9 boxes carefully before submitting. Once filed with HMRC, corrections require a separate amendment return.</div>
-  <div class="card">
-    <div class="card-title">VAT boxes — auto-filled from invoices (editable)</div>
-    <div class="vatgrid" id="vat-boxes"></div>
-  </div>
-  <div style="background:#F5F5F0;border-radius:8px;padding:22px;text-align:center;border:1px solid #E0E0D8">
-    <div style="font-size:15px;font-weight:700;margin-bottom:6px">Ready to submit?</div>
-    <div style="font-size:13px;color:#888;margin-bottom:16px">Submit via HMRC&rsquo;s website or MTD-compatible bridging software.</div>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <a href="https://www.gov.uk/send-vat-return" target="_blank" rel="noopener"><button class="btn secondary">File on HMRC &rarr;</button></a>
-      <button class="btn primary" onclick="markFiled()">Mark as filed</button>
-    </div>
-  </div>
-</div>
-
-</div><!-- end .app -->
 
 <!-- INVOICE MODAL -->
 <div class="modal-bg" id="inv-modal">
   <div class="modal">
-    <div class="modal-head">
-      <div><div class="modal-title" id="inv-modal-title">New Invoice</div></div>
-      <button class="closebtn" onclick="closeModal('inv-modal')">&times;</button>
-    </div>
+    <div class="modal-head"><div><div class="modal-title" id="inv-modal-title">New Invoice</div></div><button class="closebtn" onclick="closeModal('inv-modal')">&times;</button></div>
     <div class="fgrid">
       <div class="fg"><label>Invoice number</label><input id="f-num" placeholder="EC-2025-001"></div>
       <div class="fg"><label>Date</label><input type="date" id="f-date"></div>
       <div class="fg"><label>Client name</label><input id="f-client" placeholder="Acme Ltd"></div>
       <div class="fg"><label>Client VAT number (optional)</label><input id="f-cvat" placeholder="GB 123 4567 89"></div>
-      <div class="fg span2"><label>Client address</label><input id="f-addr" placeholder="123 High Street, London, EC1A 1BB"></div>
-      <div class="fg"><label>Payment terms</label>
-        <select id="f-terms"><option value="receipt">Due on receipt</option><option value="14">Net 14</option><option value="30">Net 30</option><option value="60">Net 60</option></select>
-      </div>
-      <div class="fg"><label>VAT rate</label>
-        <select id="f-vrate"><option value="0">No VAT (0%)</option><option value="20">Standard 20%</option><option value="5">Reduced 5%</option></select>
-      </div>
+      <div class="fg span2"><label>Client address</label><input id="f-addr" placeholder="123 High Street, London"></div>
+      <div class="fg"><label>Payment terms</label><select id="f-terms"><option value="receipt">Due on receipt</option><option value="14">Net 14</option><option value="30">Net 30</option><option value="60">Net 60</option></select></div>
+      <div class="fg"><label>VAT rate</label><select id="f-vrate"><option value="0">No VAT (0%)</option><option value="20">Standard 20%</option><option value="5">Reduced 5%</option></select></div>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Line items</div>
+    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Line items</div>
     <div class="lih"><span>Description</span><span>Qty</span><span>Unit price</span><span>VAT</span><span></span></div>
     <div id="f-lines"></div>
     <button class="btn secondary sm" onclick="addLine()" style="margin-top:4px">+ Add line</button>
@@ -349,27 +303,22 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
       <div class="trow"><span>VAT</span><span id="f-vat">£0.00</span></div>
       <div class="trow big"><span>Total</span><span id="f-tot">£0.00</span></div>
     </div>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="closeModal('inv-modal')">Cancel</button>
-      <button class="btn primary" onclick="saveInvoice()">Save Invoice</button>
-    </div>
+    <input type="hidden" id="f-edit-idx" value="">
+    <div class="btnrow"><button class="btn secondary" onclick="closeModal('inv-modal')">Cancel</button><button class="btn primary" onclick="saveInvoice()">Save Invoice</button></div>
   </div>
 </div>
 
 <!-- DETAIL MODAL -->
 <div class="modal-bg" id="detail-modal">
   <div class="modal">
-    <div class="modal-head">
-      <div><div class="modal-title" id="det-num">Invoice</div><div class="modal-sub" id="det-client"></div></div>
-      <button class="closebtn" onclick="closeModal('detail-modal')">&times;</button>
-    </div>
+    <div class="modal-head"><div><div class="modal-title" id="det-num">Invoice</div><div class="modal-sub" id="det-client"></div></div><button class="closebtn" onclick="closeModal('detail-modal')">&times;</button></div>
     <table class="tbl" style="margin-bottom:14px" id="det-lines-tbl"></table>
     <div class="tots" style="margin-bottom:18px">
       <div class="trow"><span>Net</span><span id="det-net"></span></div>
       <div class="trow"><span>VAT</span><span id="det-vat"></span></div>
       <div class="trow big"><span>Total</span><span id="det-tot"></span></div>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:10px">Payment status</div>
+    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Payment status</div>
     <div class="status-row" id="det-status-row"></div>
     <div class="btnrow" style="margin-top:20px">
       <button class="btn danger sm" onclick="deleteInvoice()">Delete</button>
@@ -382,33 +331,26 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
 <!-- SETTINGS MODAL -->
 <div class="modal-bg" id="settings-modal">
   <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Settings</div>
-      <button class="closebtn" onclick="closeModal('settings-modal')">&times;</button>
-    </div>
+    <div class="modal-head"><div class="modal-title">Settings</div><button class="closebtn" onclick="closeModal('settings-modal')">&times;</button></div>
     <div class="fgrid" style="margin-bottom:6px">
       <div class="fg span2"><label>Your business name</label><input id="s-biz" placeholder="EonCanvas"></div>
       <div class="fg span2"><label>Your VAT number (if registered)</label><input id="s-vat" placeholder="GB 123 4567 89"></div>
       <div class="fg"><label>VAT period</label>
         <select id="s-period">
-          <option value="Q1-2025">Jan–Mar 2025</option><option value="Q2-2025">Apr–Jun 2025</option>
-          <option value="Q3-2025">Jul–Sep 2025</option><option value="Q4-2025">Oct–Dec 2025</option>
-          <option value="Q1-2026">Jan–Mar 2026</option><option value="Q2-2026">Apr–Jun 2026</option>
-          <option value="Q3-2026">Jul–Sep 2026</option><option value="Q4-2026">Oct–Dec 2026</option>
+          <option value="Q1-2025">Jan&ndash;Mar 2025</option><option value="Q2-2025">Apr&ndash;Jun 2025</option>
+          <option value="Q3-2025">Jul&ndash;Sep 2025</option><option value="Q4-2025">Oct&ndash;Dec 2025</option>
+          <option value="Q1-2026" selected>Jan&ndash;Mar 2026</option><option value="Q2-2026">Apr&ndash;Jun 2026</option>
+          <option value="Q3-2026">Jul&ndash;Sep 2026</option><option value="Q4-2026">Oct&ndash;Dec 2026</option>
         </select>
       </div>
-      <div class="fg"><label>Your name (to filter self-transfers)</label><input id="s-myname" placeholder="e.g. Damilola Ajiboye"></div>
-      <div class="fg span2"><label>Anthropic API key (optional — for AI analysis)</label><input id="s-key" type="password" placeholder="sk-ant-..."></div>
+      <div class="fg"><label>Anthropic API key (AI scanner)</label><input id="s-key" type="password" placeholder="sk-ant-..."></div>
     </div>
-    <div style="background:#FFF5F5;border:1px solid #F09595;border-radius:7px;padding:12px 14px;margin:14px 0">
-      <div style="font-size:12px;font-weight:700;color:#A32D2D;margin-bottom:6px">&#9888; Clear all data</div>
-      <div style="font-size:12px;color:#888;margin-bottom:10px">Permanently delete all invoices. Cannot be undone.</div>
-      <button class="btn danger sm" onclick="clearAll()">Clear all invoices</button>
+    <div style="background:#FFF5F5;border:1px solid #F09595;border-radius:7px;padding:14px;margin:14px 0">
+      <div style="font-size:12px;font-weight:700;color:#A32D2D;margin-bottom:6px">&#9888; Danger zone</div>
+      <div style="font-size:12px;color:#888;margin-bottom:10px">Permanently delete all invoices and scanner data. Cannot be undone.</div>
+      <button class="btn danger sm" onclick="clearAll()">Clear all data</button>
     </div>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="closeModal('settings-modal')">Cancel</button>
-      <button class="btn primary" onclick="saveSettings()">Save settings</button>
-    </div>
+    <div class="btnrow"><button class="btn secondary" onclick="closeModal('settings-modal')">Cancel</button><button class="btn primary" onclick="saveSettings()">Save settings</button></div>
   </div>
 </div>
 
@@ -417,46 +359,30 @@ input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,2
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// ── STATE ────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────
 var invoices=[];
-var settings={biz:'',vat:'',period:'Q1-2026',key:'',myname:''};
+var settings={biz:'',vat:'',period:'Q1-2026',key:''};
 var editIdx=-1;
 var detailIdx=-1;
 var lines=[];
-var allTxns=[];   // full parsed transactions from statement
-var activeFilter='all';
-var scAddedCount=0;
+var scanned=[];
+var scFilter='all';
+var selectedRows=new Set();
 
-// ── PERSIST ──────────────────────────────────────────────
-function save(){
-  try{
-    localStorage.setItem('mtd_v3_inv',JSON.stringify(invoices));
-    localStorage.setItem('mtd_v3_set',JSON.stringify(settings));
-  }catch(e){}
-}
-function load(){
-  try{
-    var i=localStorage.getItem('mtd_v3_inv');
-    var s=localStorage.getItem('mtd_v3_set');
-    if(i)invoices=JSON.parse(i);
-    if(s)settings=Object.assign(settings,JSON.parse(s));
-  }catch(e){}
-}
+// ── PERSIST ───────────────────────────────────────────
+function save(){try{localStorage.setItem('mtd_v3_inv',JSON.stringify(invoices));localStorage.setItem('mtd_v3_set',JSON.stringify(settings));}catch(e){}}
+function load(){try{var i=localStorage.getItem('mtd_v3_inv');var s=localStorage.getItem('mtd_v3_set');if(i)invoices=JSON.parse(i);if(s)settings=Object.assign(settings,JSON.parse(s));}catch(e){}}
 
-// ── HELPERS ──────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────
 function fmt(n){return'£'+(parseFloat(n)||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-function fmtRaw(n){return(parseFloat(n)||0).toFixed(2);}
-function calcInv(inv){var n=0,v=0;(inv.lines||[]).forEach(function(l){var x=(l.q||0)*(l.p||0);n+=x;v+=x*((l.v||0)/100);});return{net:n,vat:v,tot:n+v};}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):'';}
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function dueDate(inv){
-  var d=new Date(inv.date);var days=inv.terms==='receipt'?0:inv.terms==='14'?14:inv.terms==='30'?30:60;
-  d.setDate(d.getDate()+days);return d.toISOString().split('T')[0];
-}
-function isOverdue(inv){if(inv.status==='paid')return false;var dd=dueDate(inv);return dd&&new Date(dd)<new Date();}
+function calcInv(inv){var n=0,v=0;(inv.lines||[]).forEach(function(l){var x=(l.q||0)*(l.p||0);n+=x;v+=x*((l.v||0)/100);});return{net:n,vat:v,tot:n+v};}
+function dueDate(inv){if(!inv.date)return'';var d=new Date(inv.date);var days=inv.terms==='receipt'?0:inv.terms==='14'?14:inv.terms==='30'?30:60;d.setDate(d.getDate()+days);return d.toISOString().split('T')[0];}
+function isOverdue(inv){if(inv.status==='paid')return false;var dd=dueDate(inv);if(!dd)return false;return new Date(dd)<new Date();}
 function vatBoxes(){var b1=0,b6=0;invoices.forEach(function(inv){var c=calcInv(inv);b1+=c.vat;b6+=c.net;});return{b1:b1,b2:0,b3:b1,b4:0,b5:Math.max(0,b1),b6:b6,b7:0,b8:0,b9:0};}
 
-// ── NAV ──────────────────────────────────────────────────
+// ── NAV ───────────────────────────────────────────────
 function goTo(pg,el){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
@@ -468,7 +394,7 @@ function goTo(pg,el){
   if(pg==='mtd')renderMTD();
 }
 
-// ── DASHBOARD ────────────────────────────────────────────
+// ── DASHBOARD ─────────────────────────────────────────
 function renderDash(){
   var total=0,paid=0,owing=0;
   invoices.forEach(function(inv){var c=calcInv(inv);total+=c.tot;if(inv.status==='paid')paid+=c.tot;else owing+=c.tot;});
@@ -478,59 +404,37 @@ function renderDash(){
   document.getElementById('d-owing').textContent=fmt(owing);
   document.getElementById('d-vat').textContent=fmt(b.b5);
   var recent=invoices.slice(-5).reverse();
-  var empty=document.getElementById('d-inv-empty');
   var tbody=document.getElementById('d-inv-body');
+  var empty=document.getElementById('d-inv-empty');
   if(!recent.length){tbody.innerHTML='';empty.style.display='block';}
-  else{
-    empty.style.display='none';
-    tbody.innerHTML=recent.map(function(inv,i){
-      var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;var ri=invoices.length-1-i;
-      return'<tr class="click" onclick="openDetail('+ri+')"><td style="padding:10px 16px"><strong style="color:#185FA5">'+inv.id+'</strong></td><td>'+esc(inv.client)+'</td><td>'+inv.date+'</td><td>'+fmt(c.tot)+'</td><td><span class="pill '+s+'">'+cap(s)+'</span></td></tr>';
-    }).join('');
-  }
+  else{empty.style.display='none';tbody.innerHTML=recent.map(function(inv,i){var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;return'<tr class="cl" onclick="openDetail('+(invoices.length-1-i)+')"><td style="padding:10px 16px"><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td><td>'+esc(inv.client)+'</td><td>'+esc(inv.date)+'</td><td>'+fmt(c.tot)+'</td><td><span class="pill '+s+'">'+cap(s)+'</span></td></tr>';}).join('');}
   var rows=[['1','VAT due on sales',b.b1],['2','VAT on EC acquisitions',b.b2],['3','Total VAT due',b.b3],['4','VAT reclaimed',b.b4],['5','Net VAT payable',b.b5],['6','Total sales ex. VAT',b.b6],['7','Total purchases ex. VAT',b.b7],['8','EC supplies',b.b8],['9','EC acquisitions',b.b9]];
   document.getElementById('d-vat-tbl').innerHTML='<thead><tr><th>Box</th><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+rows.map(function(r){return'<tr><td><span class="boxnum">'+r[0]+'</span></td><td style="color:#888;font-size:12px">'+r[1]+'</td><td style="text-align:right;font-weight:'+(r[0]==='5'?'700':'400')+';color:'+(r[0]==='5'?'#042C53':'#1a1a1a')+'">'+fmt(r[2])+'</td></tr>';}).join('')+'</tbody>';
 }
 
-// ── INVOICES ─────────────────────────────────────────────
+// ── INVOICES ──────────────────────────────────────────
 function renderInvoices(){
-  var empty=document.getElementById('inv-empty');
-  var tbody=document.getElementById('inv-body');
+  var tbody=document.getElementById('inv-body'),empty=document.getElementById('inv-empty');
   if(!invoices.length){tbody.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  tbody.innerHTML=invoices.map(function(inv,i){
-    var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;
-    return'<tr class="click" onclick="openDetail('+i+')">'
-      +'<td style="padding:10px 16px"><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td>'
-      +'<td>'+esc(inv.client)+'</td><td>'+inv.date+'</td>'
-      +'<td>'+fmt(c.net)+'</td><td>'+fmt(c.vat)+'</td>'
-      +'<td><strong>'+fmt(c.tot)+'</strong></td>'
-      +'<td><span class="pill '+s+'">'+cap(s)+'</span></td>'
-      +'<td><button class="btn secondary xs" onclick="event.stopPropagation();openDetail('+i+')">View</button></td>'
-      +'</tr>';
-  }).join('');
+  tbody.innerHTML=invoices.map(function(inv,i){var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;return'<tr class="cl" onclick="openDetail('+i+')"><td style="padding:10px 16px"><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td><td>'+esc(inv.client)+'</td><td>'+esc(inv.date)+'</td><td>'+fmt(c.net)+'</td><td>'+fmt(c.vat)+'</td><td><strong>'+fmt(c.tot)+'</strong></td><td><span class="pill '+s+'">'+cap(s)+'</span></td><td><button class="btn secondary xs" onclick="event.stopPropagation();openDetail('+i+')">View</button></td></tr>';}).join('');
 }
 
-// ── PAYMENTS ─────────────────────────────────────────────
+// ── PAYMENTS ──────────────────────────────────────────
 function renderPayments(){
   var received=0,pending=0,overdue=0;
   invoices.forEach(function(inv){var c=calcInv(inv);if(inv.status==='paid')received+=c.tot;else if(isOverdue(inv))overdue+=c.tot;else pending+=c.tot;});
   document.getElementById('p-received').textContent=fmt(received);
   document.getElementById('p-pending').textContent=fmt(pending);
   document.getElementById('p-overdue').textContent=fmt(overdue);
-  var tbody=document.getElementById('pay-body');
-  var empty=document.getElementById('pay-empty');
+  var tbody=document.getElementById('pay-body'),empty=document.getElementById('pay-empty');
   if(!invoices.length){tbody.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  tbody.innerHTML=invoices.map(function(inv,i){
-    var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;var dd=dueDate(inv);
-    var action=inv.status!=='paid'?'<button class="btn success xs" onclick="quickPay('+i+')">Mark paid</button>':'<span style="color:#3B6D11;font-size:12px">&#10003; Paid</span>';
-    return'<tr><td><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td><td>'+esc(inv.client)+'</td><td>'+(dd||'—')+'</td><td><strong>'+fmt(c.tot)+'</strong></td><td><span class="pill '+s+'">'+cap(s)+'</span></td><td>'+action+'</td></tr>';
-  }).join('');
+  tbody.innerHTML=invoices.map(function(inv,i){var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;var dd=dueDate(inv);var action=inv.status!=='paid'?'<button class="btn success xs" onclick="quickPay('+i+')">Mark paid</button>':'<span style="color:#3B6D11;font-size:12px">&#10003; Paid</span>';return'<tr><td><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td><td>'+esc(inv.client)+'</td><td>'+(dd||'&mdash;')+'</td><td><strong>'+fmt(c.tot)+'</strong></td><td><span class="pill '+s+'">'+cap(s)+'</span></td><td>'+action+'</td></tr>';}).join('');
 }
 function quickPay(i){invoices[i].status='paid';save();renderPayments();renderDash();toast('Invoice '+invoices[i].id+' marked as paid');}
 
-// ── INVOICE MODAL ─────────────────────────────────────────
+// ── INVOICE FORM ──────────────────────────────────────
 function openNewInvoice(){
   editIdx=-1;lines=[{d:'',q:1,p:0,v:0}];
   document.getElementById('inv-modal-title').textContent='New Invoice';
@@ -541,47 +445,14 @@ function openNewInvoice(){
   document.getElementById('f-addr').value='';
   document.getElementById('f-terms').value='receipt';
   document.getElementById('f-vrate').value='0';
+  document.getElementById('f-edit-idx').value='';
   renderLines();openModal('inv-modal');
 }
-function editInvoice(){
-  var i=detailIdx;if(i<0)return;
-  closeModal('detail-modal');
-  editIdx=i;var inv=invoices[i];
-  lines=JSON.parse(JSON.stringify(inv.lines||[]));
-  document.getElementById('inv-modal-title').textContent='Edit Invoice';
-  document.getElementById('f-num').value=inv.id;
-  document.getElementById('f-date').value=inv.date;
-  document.getElementById('f-client').value=inv.client;
-  document.getElementById('f-cvat').value=inv.cvat||'';
-  document.getElementById('f-addr').value=inv.addr||'';
-  document.getElementById('f-terms').value=inv.terms||'receipt';
-  document.getElementById('f-vrate').value=inv.vrate||'0';
-  renderLines();openModal('inv-modal');
-}
-function renderLines(){
-  document.getElementById('f-lines').innerHTML=lines.map(function(l,i){
-    return'<div class="lirow">'
-      +'<input placeholder="Description" value="'+esc(l.d)+'" oninput="lines['+i+'].d=this.value">'
-      +'<input type="number" min="0" value="'+l.q+'" oninput="lines['+i+'].q=parseFloat(this.value)||0;calcTots()">'
-      +'<input type="number" min="0" step="0.01" value="'+l.p+'" oninput="lines['+i+'].p=parseFloat(this.value)||0;calcTots()">'
-      +'<select onchange="lines['+i+'].v=parseFloat(this.value);calcTots()">'
-      +'<option value="0"'+(l.v===0?' selected':'')+'>0%</option>'
-      +'<option value="20"'+(l.v===20?' selected':'')+'>20%</option>'
-      +'<option value="5"'+(l.v===5?' selected':'')+'>5%</option>'
-      +'</select>'
-      +'<button class="delbtn" onclick="delLine('+i+')">&#215;</button>'
-      +'</div>';
-  }).join('');
-  calcTots();
-}
+function editInvoice(){var i=detailIdx;if(i<0)return;closeModal('detail-modal');editIdx=i;var inv=invoices[i];lines=JSON.parse(JSON.stringify(inv.lines||[]));document.getElementById('inv-modal-title').textContent='Edit Invoice';document.getElementById('f-num').value=inv.id;document.getElementById('f-date').value=inv.date;document.getElementById('f-client').value=inv.client;document.getElementById('f-cvat').value=inv.cvat||'';document.getElementById('f-addr').value=inv.addr||'';document.getElementById('f-terms').value=inv.terms||'receipt';document.getElementById('f-vrate').value=inv.vrate||'0';document.getElementById('f-edit-idx').value=i;renderLines();openModal('inv-modal');}
+function renderLines(){document.getElementById('f-lines').innerHTML=lines.map(function(l,i){return'<div class="lirow"><input placeholder="Description" value="'+esc(l.d)+'" oninput="lines['+i+'].d=this.value"><input type="number" min="0" value="'+l.q+'" oninput="lines['+i+'].q=parseFloat(this.value)||0;calcTots()"><input type="number" min="0" step="0.01" value="'+l.p+'" oninput="lines['+i+'].p=parseFloat(this.value)||0;calcTots()"><select onchange="lines['+i+'].v=parseFloat(this.value);calcTots()"><option value="0"'+(l.v===0?' selected':'')+'>0%</option><option value="20"'+(l.v===20?' selected':'')+'>20%</option><option value="5"'+(l.v===5?' selected':'')+'>5%</option></select><button class="delbtn" onclick="delLine('+i+')">&#215;</button></div>';}).join('');calcTots();}
 function addLine(){lines.push({d:'',q:1,p:0,v:0});renderLines();}
 function delLine(i){if(lines.length>1){lines.splice(i,1);renderLines();}}
-function calcTots(){
-  var n=0,v=0;lines.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});
-  document.getElementById('f-sub').textContent=fmt(n);
-  document.getElementById('f-vat').textContent=fmt(v);
-  document.getElementById('f-tot').textContent=fmt(n+v);
-}
+function calcTots(){var n=0,v=0;lines.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});document.getElementById('f-sub').textContent=fmt(n);document.getElementById('f-vat').textContent=fmt(v);document.getElementById('f-tot').textContent=fmt(n+v);}
 function saveInvoice(){
   var num=document.getElementById('f-num').value.trim();
   var client=document.getElementById('f-client').value.trim();
@@ -590,78 +461,58 @@ function saveInvoice(){
   var goodLines=lines.filter(function(l){return l.d.trim();});
   if(!goodLines.length){toast('Add at least one line item');return;}
   var inv={id:num,client:client,date:document.getElementById('f-date').value,cvat:document.getElementById('f-cvat').value,addr:document.getElementById('f-addr').value,terms:document.getElementById('f-terms').value,vrate:document.getElementById('f-vrate').value,lines:JSON.parse(JSON.stringify(goodLines)),status:'pending'};
-  if(editIdx>=0){inv.status=invoices[editIdx].status;invoices[editIdx]=inv;}
-  else invoices.push(inv);
+  var idx=parseInt(document.getElementById('f-edit-idx').value);
+  if(!isNaN(idx)&&idx>=0){inv.status=invoices[idx].status;invoices[idx]=inv;}else invoices.push(inv);
   save();closeModal('inv-modal');renderInvoices();renderDash();toast('Invoice '+num+' saved');
 }
 
-// ── DETAIL MODAL ──────────────────────────────────────────
+// ── DETAIL MODAL ──────────────────────────────────────
 function openDetail(i){
   detailIdx=i;var inv=invoices[i];var c=calcInv(inv);
   document.getElementById('det-num').textContent=inv.id;
-  document.getElementById('det-client').textContent=esc(inv.client)+' · '+inv.date;
+  document.getElementById('det-client').textContent=inv.client+' · '+inv.date;
   document.getElementById('det-lines-tbl').innerHTML='<thead><tr><th>Description</th><th>Qty</th><th>Price</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+(inv.lines||[]).map(function(l){return'<tr><td>'+esc(l.d)+'</td><td>'+l.q+'</td><td>'+fmt(l.p)+'</td><td style="text-align:right">'+fmt(l.q*l.p)+'</td></tr>';}).join('')+'</tbody>';
   document.getElementById('det-net').textContent=fmt(c.net);
   document.getElementById('det-vat').textContent=fmt(c.vat);
   document.getElementById('det-tot').textContent=fmt(c.tot);
   renderStatusBtns(inv.status);openModal('detail-modal');
 }
-function renderStatusBtns(current){
-  document.getElementById('det-status-row').innerHTML=['pending','paid','draft','overdue'].map(function(s){
-    return'<button class="sbtn'+(s===current?' on-'+s:'')+'" onclick="setStatus(\''+s+'\')">'+cap(s)+'</button>';
-  }).join('');
-}
-function setStatus(s){
-  if(detailIdx<0)return;
-  invoices[detailIdx].status=s;save();renderStatusBtns(s);renderDash();renderInvoices();renderPayments();toast('Status updated to '+cap(s));
-}
-function deleteInvoice(){
-  if(detailIdx<0)return;var id=invoices[detailIdx].id;
-  if(!confirm('Delete invoice '+id+'?'))return;
-  invoices.splice(detailIdx,1);save();closeModal('detail-modal');renderInvoices();renderDash();renderPayments();toast('Invoice '+id+' deleted');
-}
+function renderStatusBtns(current){document.getElementById('det-status-row').innerHTML=['pending','paid','draft','overdue'].map(function(s){return'<button class="sbtn'+(s===current?' on-'+s:'')+'" onclick="setStatus(\''+s+'\')">'+cap(s)+'</button>';}).join('');}
+function setStatus(s){if(detailIdx<0)return;invoices[detailIdx].status=s;save();renderStatusBtns(s);renderDash();renderInvoices();renderPayments();toast('Status updated to '+cap(s));}
+function deleteInvoice(){if(detailIdx<0)return;var id=invoices[detailIdx].id;if(!confirm('Delete invoice '+id+'? This cannot be undone.'))return;invoices.splice(detailIdx,1);save();closeModal('detail-modal');renderInvoices();renderDash();renderPayments();toast('Invoice '+id+' deleted');}
 
-// ── MTD RETURN ────────────────────────────────────────────
+// ── MTD ───────────────────────────────────────────────
 function renderMTD(){
   var b=vatBoxes();
-  var defs=[{n:'1',l:'VAT due on sales and outputs',v:b.b1,e:false},{n:'2',l:'VAT due on EC acquisitions',v:b.b2,e:true},{n:'3',l:'Total VAT due (1+2)',v:b.b3,e:false},{n:'4',l:'VAT reclaimed on purchases',v:b.b4,e:true},{n:'5',l:'Net VAT to pay HMRC',v:b.b5,e:false,hi:true},{n:'6',l:'Total sales ex. VAT',v:b.b6,e:false},{n:'7',l:'Total purchases ex. VAT',v:b.b7,e:true},{n:'8',l:'EC supplies of goods',v:b.b8,e:true},{n:'9',l:'EC acquisitions of goods',v:b.b9,e:true}];
-  document.getElementById('vat-boxes').innerHTML=defs.map(function(d){
-    return'<div class="vatbox'+(d.hi?' hi':'')+'"><div class="vbn">Box '+d.n+'</div><div class="vbl">'+d.l+'</div>'+(d.e?'<input type="number" step="0.01" value="'+fmtRaw(d.v)+'" style="font-size:16px;font-weight:700;border:none;border-bottom:2px solid #D0D0C8;border-radius:0;padding:3px 0;background:transparent">':'<div class="vbv">'+fmt(d.v)+'</div>')+'</div>';
-  }).join('');
+  var defs=[{n:'1',l:'VAT due on sales and outputs',v:b.b1,edit:false},{n:'2',l:'VAT due on EC acquisitions',v:b.b2,edit:true},{n:'3',l:'Total VAT due (1+2)',v:b.b3,edit:false},{n:'4',l:'VAT reclaimed on purchases',v:b.b4,edit:true},{n:'5',l:'Net VAT to pay HMRC',v:b.b5,edit:false,hi:true},{n:'6',l:'Total sales ex. VAT',v:b.b6,edit:false},{n:'7',l:'Total purchases ex. VAT',v:b.b7,edit:true},{n:'8',l:'EC supplies of goods',v:b.b8,edit:true},{n:'9',l:'EC acquisitions of goods',v:b.b9,edit:true}];
+  document.getElementById('vat-boxes').innerHTML=defs.map(function(d){return'<div class="vatbox'+(d.hi?' hi':'')+'"><div class="vbn">Box '+d.n+'</div><div class="vbl">'+d.l+'</div>'+(d.edit?'<input type="number" step="0.01" value="'+d.v.toFixed(2)+'" style="font-size:15px;font-weight:700;border:none;border-bottom:2px solid #D0D0C8;border-radius:0;padding:3px 0;background:transparent">':'<div class="vbv">'+fmt(d.v)+'</div>')+'</div>';}).join('');
 }
-function markFiled(){toast('Marked as filed. File officially at gov.uk/send-vat-return');}
+function markFiled(){toast('Marked as filed. Remember to also submit on gov.uk/send-vat-return');}
 
-// ── SETTINGS ─────────────────────────────────────────────
-function openSettings(){
-  document.getElementById('s-biz').value=settings.biz||'';
-  document.getElementById('s-vat').value=settings.vat||'';
-  document.getElementById('s-period').value=settings.period||'Q1-2026';
-  document.getElementById('s-key').value=settings.key||'';
-  document.getElementById('s-myname').value=settings.myname||'';
-  openModal('settings-modal');
-}
-function saveSettings(){
-  settings.biz=document.getElementById('s-biz').value;
-  settings.vat=document.getElementById('s-vat').value;
-  settings.period=document.getElementById('s-period').value;
-  settings.key=document.getElementById('s-key').value;
-  settings.myname=document.getElementById('s-myname').value;
-  save();closeModal('settings-modal');toast('Settings saved');
-}
-function clearAll(){if(!confirm('Delete ALL invoices?'))return;invoices=[];save();closeModal('settings-modal');renderDash();toast('All data cleared');}
+// ── SETTINGS ──────────────────────────────────────────
+function openSettings(){document.getElementById('s-biz').value=settings.biz||'';document.getElementById('s-vat').value=settings.vat||'';document.getElementById('s-period').value=settings.period||'Q1-2026';document.getElementById('s-key').value=settings.key||'';openModal('settings-modal');}
+function saveSettings(){settings.biz=document.getElementById('s-biz').value;settings.vat=document.getElementById('s-vat').value;settings.period=document.getElementById('s-period').value;settings.key=document.getElementById('s-key').value;save();closeModal('settings-modal');toast('Settings saved');}
+function clearAll(){if(!confirm('Delete ALL data? This cannot be undone.'))return;invoices=[];save();closeModal('settings-modal');renderDash();toast('All data cleared');}
 
-// ══════════════════════════════════════════════════════════
-// STATEMENT SCANNER — FULL REWRITE
-// ══════════════════════════════════════════════════════════
+// ── EXPORT ────────────────────────────────────────────
+function exportInvoices(){if(!invoices.length){toast('No invoices to export');return;}var rows=['Invoice,Client,Date,Net,VAT,Total,Status'];invoices.forEach(function(inv){var c=calcInv(inv);rows.push([inv.id,'"'+inv.client+'"',inv.date,c.net.toFixed(2),c.vat.toFixed(2),c.tot.toFixed(2),inv.status].join(','));});dlCSV(rows.join('\n'),'invoices-'+new Date().toISOString().split('T')[0]+'.csv');}
+function dlCSV(content,name){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/csv'}));a.download=name;a.click();}
 
+// ── MODALS ────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(function(bg){bg.addEventListener('click',function(e){if(e.target===bg)bg.classList.remove('open');});});
+
+// ══════════════════════════════════════════════════════
+// SCANNER
+// ══════════════════════════════════════════════════════
 var progIv=null;
-function startProg(msgs){
+
+function startProg(filename){
+  document.getElementById('sc-file-label').textContent='Reading: '+filename;
   var p=0,mi=0;
-  progIv=setInterval(function(){
-    p+=Math.random()*8+4;if(p>90)p=90;
-    document.getElementById('sc-prog').style.width=p+'%';
-    if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];
-  },600);
+  var msgs=['Parsing file...','Reading transactions...','Extracting dates and amounts...','Identifying counterparties...','Done!'];
+  progIv=setInterval(function(){p+=Math.random()*18+6;if(p>90)p=90;document.getElementById('sc-prog').style.width=p+'%';if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];},600);
 }
 function stopProg(){clearInterval(progIv);document.getElementById('sc-prog').style.width='100%';}
 
@@ -669,409 +520,10 @@ function onDrop(e){e.preventDefault();document.getElementById('dropzone').classL
 
 function onFile(file){
   if(!file)return;
-  var name=file.name.toLowerCase();
-  document.getElementById('sc-upload').style.display='none';
-  document.getElementById('sc-loading').style.display='block';
-  document.getElementById('sc-file-label').textContent='Reading: '+file.name;
-  startProg(['Opening file...','Parsing transactions...','Organising data...','Almost ready...']);
-
-  if(name.endsWith('.pdf')){
-    readPDF(file);
-  } else {
-    var r=new FileReader();
-    r.onload=function(e){parseStatement(e.target.result,file.name);};
-    r.onerror=function(){stopProg();toast('Could not read file');resetScanner();};
-    r.readAsText(file);
-  }
-}
-
-// ── PDF READER ────────────────────────────────────────────
-function readPDF(file){
-  file.arrayBuffer()
-    .then(function(buf){return pdfjsLib.getDocument({data:buf}).promise;})
-    .then(function(pdf){
-      var pages=[];for(var i=1;i<=pdf.numPages;i++)pages.push(pdf.getPage(i));
-      return Promise.all(pages);
-    })
-    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent();}));})
-    .then(function(contents){
-      var text=contents.map(function(c){return c.items.map(function(it){return it.str;}).join(' ');}).join('\n');
-      parsePDFText(text);
-    })
-    .catch(function(e){stopProg();toast('Could not read PDF. Try the CSV version from your bank.');resetScanner();});
-}
-
-// ── PDF TEXT PARSER ───────────────────────────────────────
-function parsePDFText(text){
-  // Generic approach: find lines with amounts
-  var txns=[];
-  var lines=text.split('\n');
-  var dateRe=/(\d{1,2}[\s\-\/]\w+[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2})/;
-  var amtRe=/([+-]?\d{1,3}(?:,\d{3})*\.\d{2})/g;
-
-  lines.forEach(function(line){
-    var stripped=line.trim();
-    if(!stripped||stripped.length<5)return;
-    var dateM=stripped.match(dateRe);
-    var amts=stripped.match(amtRe);
-    if(dateM&&amts){
-      amts.forEach(function(a){
-        var v=parseFloat(a.replace(',',''));
-        if(!isNaN(v)&&Math.abs(v)>0.5){
-          var desc=stripped.replace(dateM[0],'').replace(a,'').trim();
-          if(desc.length>2){
-            txns.push({
-              date:dateM[0],
-              desc:desc.substring(0,80),
-              amount:v,
-              payer:'',ref:'',
-              type:v>0?'CREDIT':'DEBIT',
-              category:'uncat',
-              bank:'PDF'
-            });
-          }
-        }
-      });
-    }
-  });
-
-  stopProg();
-  if(txns.length>0){showResults(txns);}
-  else{toast('Could not extract transactions from PDF. Please use the CSV version.');resetScanner();}
-}
-
-// ── CSV PARSER — HANDLES WISE, REVOLUT, GENERIC ──────────
-function parseStatement(text,filename){
-  var fname=filename.toLowerCase();
-  var lines=text.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
-  if(lines.length<2){stopProg();toast('File appears empty');resetScanner();return;}
-
-  var headers=splitCSV(lines[0]).map(function(h){return h.toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();});
-  var txns=[];
-
-  // ── WISE FORMAT ──
-  var isWise=headers.some(function(h){return h.indexOf('transferwise')>=0||h.indexOf('payer name')>=0;});
-  if(isWise){
-    var iId=fi(headers,'transferwise id');
-    var iAmt=fi(headers,'amount');
-    var iDate=fi(headers,'date');
-    var iDesc=fi(headers,'description');
-    var iRef=fi(headers,'payment reference');
-    var iPayer=fi(headers,'payer name');
-    var iPayee=fi(headers,'payee name');
-    var iType=fi(headers,'transaction type');
-
-    var myNamePat=buildNamePattern();
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<4)continue;
-      var amt=parseFloat(g(cols,iAmt));
-      if(isNaN(amt))continue;
-      var desc=g(cols,iDesc);
-      var payer=g(cols,iPayer);
-      var payee=g(cols,iPayee);
-      var ref=g(cols,iRef);
-      var rawDate=g(cols,iDate);
-
-      // Convert DD-MM-YYYY to YYYY-MM-DD
-      var dp=rawDate.split('-');
-      var isoDate=dp.length===3?(dp[2]+'-'+dp[1]+'-'+dp[0]):rawDate;
-
-      // Skip tiny amounts (bus refunds, PayPal verification cents)
-      if(Math.abs(amt)<0.50)continue;
-
-      txns.push({
-        date:isoDate,
-        desc:desc,
-        payer:payer,
-        payee:payee,
-        ref:ref,
-        amount:amt,
-        type:amt>0?'CREDIT':'DEBIT',
-        category:'uncat',
-        bank:'Wise',
-        id:g(cols,iId)
-      });
-    }
-  }
-
-  // ── REVOLUT FORMAT ──
-  else if(headers.some(function(h){return h.indexOf('started date')>=0||h.indexOf('completed date')>=0;})){
-    var iType2=fi(headers,'type');
-    var iDesc2=fi(headers,'description');
-    var iAmt2=fi(headers,'amount');
-    var iDate2=headers.indexOf('started date')>=0?fi(headers,'started date'):fi(headers,'completed date');
-    var iRef2=fi(headers,'reference')||fi(headers,'description');
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<3)continue;
-      var amt=parseFloat(g(cols,iAmt2));
-      if(isNaN(amt))continue;
-      var desc=g(cols,iDesc2);
-      if(Math.abs(amt)<0.50)continue;
-      txns.push({date:(g(cols,iDate2)||'').split(' ')[0],desc:desc,payer:'',payee:'',ref:g(cols,iRef2)||'',amount:amt,type:amt>0?'CREDIT':'DEBIT',category:'uncat',bank:'Revolut',id:''});
-    }
-  }
-
-  // ── GENERIC CSV FALLBACK ──
-  else{
-    // Try to auto-detect date, desc, amount columns
-    var iDate3=fi(headers,'date')||fi(headers,'transaction date')||0;
-    var iDesc3=fi(headers,'description')||fi(headers,'narrative')||fi(headers,'details')||1;
-    var iAmt3=fi(headers,'amount')||fi(headers,'value')||2;
-    var iCredit=fi(headers,'credit')||fi(headers,'money in')||fi(headers,'paid in');
-    var iDebit=fi(headers,'debit')||fi(headers,'money out')||fi(headers,'paid out');
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<2)continue;
-      var amt=0;
-      if(iCredit>=0&&iDebit>=0){
-        var cr=parseFloat(g(cols,iCredit))||0;
-        var db=parseFloat(g(cols,iDebit))||0;
-        amt=cr>0?cr:(db>0?-db:0);
-      } else {
-        amt=parseFloat(g(cols,iAmt3))||0;
-      }
-      if(amt===0)continue;
-      var desc=g(cols,iDesc3)||'Unknown';
-      if(Math.abs(amt)<0.50)continue;
-      txns.push({date:g(cols,iDate3)||'',desc:desc,payer:'',payee:'',ref:'',amount:amt,type:amt>0?'CREDIT':'DEBIT',category:'uncat',bank:'Bank',id:''});
-    }
-  }
-
-  stopProg();
-  if(txns.length>0){showResults(txns);}
-  else{toast('Could not parse this file. Please check the format and try again.');resetScanner();}
-}
-
-function fi(headers,name){var i=headers.indexOf(name);return i>=0?i:-1;}
-function g(cols,i){return i>=0&&i<cols.length?cols[i]:'';}
-function buildNamePattern(){
-  var n=(settings.myname||'damilola ajiboye').toLowerCase();
-  var parts=n.split(' ').filter(function(p){return p.length>2;});
-  return new RegExp(parts.join('|'),'i');
-}
-
-function splitCSV(line){
-  if(!line)return[];
-  var result=[],cur='',inQ=false;
-  for(var i=0;i<line.length;i++){
-    var c=line[i];
-    if(c==='"'){inQ=!inQ;}
-    else if(c===','&&!inQ){result.push(cur.trim());cur='';}
-    else{cur+=c;}
-  }
-  result.push(cur.trim());
-  return result;
-}
-
-// ── SHOW RESULTS ─────────────────────────────────────────
-function showResults(txns){
-  allTxns=txns;
-  document.getElementById('sc-loading').style.display='none';
-  document.getElementById('sc-results').style.display='block';
-  updateScStats();
-  activeFilter='all';
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('f-all').classList.add('on');
-  renderTxList();
-}
-
-function updateScStats(){
-  var income=allTxns.filter(function(t){return t.amount>0;}).length;
-  var expenses=allTxns.filter(function(t){return t.amount<0;}).length;
-  var business=allTxns.filter(function(t){return t.category==='business';}).length;
-  document.getElementById('sc-total').textContent=allTxns.length;
-  document.getElementById('sc-income').textContent=income;
-  document.getElementById('sc-expenses').textContent=expenses;
-  document.getElementById('sc-business').textContent=business;
-}
-
-// ── FILTER ────────────────────────────────────────────────
-function setFilter(f){
-  activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('f-'+f).classList.add('on');
-  renderTxList();
-}
-
-function getFiltered(){
-  return allTxns.filter(function(t){
-    if(activeFilter==='income')return t.amount>0;
-    if(activeFilter==='expenses')return t.amount<0;
-    if(activeFilter==='business')return t.category==='business';
-    if(activeFilter==='personal')return t.category==='personal';
-    if(activeFilter==='uncat')return t.category==='uncat';
-    return true;
-  });
-}
-
-// ── RENDER TRANSACTION LIST ───────────────────────────────
-function renderTxList(){
-  var filtered=getFiltered();
-  var html='';
-  var globalIdxMap=[];
-  filtered.forEach(function(t){globalIdxMap.push(allTxns.indexOf(t));});
-
-  filtered.forEach(function(t,fi){
-    var gi=globalIdxMap[fi];
-    var isCredit=t.amount>0;
-    var rowCls='txrow '+(isCredit?'credit':'debit')+' '+(t.category==='business'?' business':t.category==='personal'?' personal':'');
-    var pillCls=t.category==='business'?'bus':t.category==='personal'?'per':'unk';
-    var pillLabel=t.category==='business'?'Business':t.category==='personal'?'Personal':'Uncategorised';
-    var amtStr=(isCredit?'+':'')+fmt(t.amount);
-    var detailId='txd-'+gi;
-
-    // Main row
-    html+='<div class="'+rowCls+'" onclick="toggleDetail('+gi+')" id="txr-'+gi+'">'
-      +'<span>'+t.date+'</span>'
-      +'<span class="txdesc" title="'+(t.payer?esc(t.payer)+' — ':'')+esc(t.desc)+(t.ref?' ['+esc(t.ref)+']':'')+'"><strong>'+(t.payer?esc(t.payer):esc(t.desc).substring(0,40))+'</strong>'+(t.ref?'<br><span style="font-size:10px;color:#888">ref: '+esc(t.ref)+'</span>':'')+'</span>'
-      +'<span class="txamt">'+amtStr+'</span>'
-      +'<span class="txcat"><span class="txpill '+pillCls+'">'+pillLabel+'</span></span>'
-      +'<span style="color:#888;font-size:11px">&#9660;</span>'
-      +'</div>'
-      // Detail panel (hidden by default)
-      +'<div class="tx-detail" id="'+detailId+'">'
-      +'<div class="tx-detail-grid">'
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Date</div><div class="tx-detail-value">'+t.date+'</div></div>'
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Amount</div><div class="tx-detail-value" style="color:'+(isCredit?'#3B6D11':'#A32D2D')+'"><strong>'+amtStr+'</strong></div></div>'
-      +(t.payer?'<div class="tx-detail-item"><div class="tx-detail-label">From</div><div class="tx-detail-value">'+esc(t.payer)+'</div></div>':'')
-      +(t.payee?'<div class="tx-detail-item"><div class="tx-detail-label">To</div><div class="tx-detail-value">'+esc(t.payee)+'</div></div>':'')
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Description</div><div class="tx-detail-value">'+esc(t.desc)+'</div></div>'
-      +(t.ref?'<div class="tx-detail-item"><div class="tx-detail-label">Reference</div><div class="tx-detail-value">'+esc(t.ref)+'</div></div>':'')
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Bank</div><div class="tx-detail-value">'+t.bank+'</div></div>'
-      +(t.id?'<div class="tx-detail-item"><div class="tx-detail-label">Transaction ID</div><div class="tx-detail-value" style="font-size:10px;color:#aaa">'+esc(t.id)+'</div></div>':'')
-      +'</div>'
-      +'<div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Categorise this transaction</div>'
-      +'<div class="cat-btns">'
-      +'<button class="cat-btn business'+(t.category==='business'?' on':'')+'" onclick="setCat('+gi+',\'business\')">&#10003; Business</button>'
-      +'<button class="cat-btn personal'+(t.category==='personal'?' on':'')+'" onclick="setCat('+gi+',\'personal\')">&#10003; Personal</button>'
-      +'<button class="cat-btn ignore'+(t.category==='uncat'?' on':'')+'" onclick="setCat('+gi+',\'uncat\')">Clear</button>'
-      +'</div>'
-      +'</div>';
-  });
-
-  if(!filtered.length){
-    html='<div style="padding:30px;text-align:center;color:#aaa;font-size:13px">No transactions match this filter</div>';
-  }
-  document.getElementById('tx-list').innerHTML=html;
-}
-
-function toggleDetail(gi){
-  var det=document.getElementById('txd-'+gi);
-  if(!det)return;
-  var isOpen=det.classList.contains('open');
-  // Close all open panels
-  document.querySelectorAll('.tx-detail.open').forEach(function(d){d.classList.remove('open');});
-  if(!isOpen)det.classList.add('open');
-}
-
-function setCat(gi,cat){
-  allTxns[gi].category=cat;
-  updateScStats();
-  renderTxList();
-  // Re-open the detail panel
-  var det=document.getElementById('txd-'+gi);
-  if(det)det.classList.add('open');
-}
-
-// ── ADD BUSINESS INCOME AS INVOICES ──────────────────────
-function addBusinessToInvoices(){
-  var bizIncome=allTxns.filter(function(t){return t.category==='business'&&t.amount>0;});
-  if(!bizIncome.length){toast('No business income transactions found — mark some transactions as Business first');return;}
-  var added=0;
-  bizIncome.forEach(function(t){
-    var num='SC-'+t.date+'-'+Math.floor(Math.random()*99);
-    invoices.push({
-      id:num,
-      client:t.payer||t.desc.substring(0,40),
-      date:t.date,
-      lines:[{d:(t.ref||t.desc).substring(0,60),q:1,p:parseFloat(t.amount.toFixed(2)),v:0}],
-      status:'paid',
-      terms:'receipt',vrate:'0'
-    });
-    added++;
-  });
-  save();renderDash();
-  toast(added+' business income transaction(s) added as invoices');
-}
-
-// ── EXPORT SCAN CSV ───────────────────────────────────────
-function exportScanCSV(){
-  if(!allTxns.length){toast('Nothing to export');return;}
-  var rows=['Date,Description,Payer,Reference,Amount,Type,Category,Bank'];
-  allTxns.forEach(function(t){
-    rows.push([t.date,'"'+esc(t.desc)+'"','"'+(t.payer||'')+'"','"'+(t.ref||'')+'"',t.amount,t.type,t.category,t.bank].join(','));
-  });
-  dl(rows.join('\n'),'statement-categorised-'+new Date().toISOString().split('T')[0]+'.csv','text/csv');
-}
-
-function resetScanner(){
-  allTxns=[];
-  document.getElementById('sc-results').style.display='none';
-  document.getElementById('sc-loading').style.display='none';
-  document.getElementById('sc-upload').style.display='block';
-  document.getElementById('filein').value='';
-}
-
-// ── INVOICE EXPORT ────────────────────────────────────────
-function exportInvoices(){
-  if(!invoices.length){toast('No invoices to export');return;}
-  var rows=['Invoice,Client,Date,Net,VAT,Total,Status'];
-  invoices.forEach(function(inv){var c=calcInv(inv);rows.push([inv.id,'"'+inv.client+'"',inv.date,c.net.toFixed(2),c.vat.toFixed(2),c.tot.toFixed(2),inv.status].join(','));});
-  dl(rows.join('\n'),'invoices-'+new Date().toISOString().split('T')[0]+'.csv','text/csv');
-}
-function dl(content,name,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:type}));a.download=name;a.click();}
-
-// ── MODALS ────────────────────────────────────────────────
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(function(bg){bg.addEventListener('click',function(e){if(e.target===bg)bg.classList.remove('open');});});
-
-// ── TOAST ─────────────────────────────────────────────────
-function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
-
-// ── INIT ──────────────────────────────────────────────────
-load();renderDash();
-</script>
-</body>
-</html>  // ── SCANNER ───────────────────────────────────────────
-var progIv=null;
-var scFilter='all';
-var SELF_PATTERNS=/damilola|ajiboye/i;
-
-function startProg(filename){
-  document.getElementById('sc-file-label').textContent='Reading: '+filename;
-  var p=0;var mi=0;
-  var msgs=['Parsing file...','Reading all transactions...','Extracting amounts and dates...','Preparing for review...'];
-  progIv=setInterval(function(){
-    p+=Math.random()*15+8;if(p>90)p=90;
-    document.getElementById('sc-prog').style.width=p+'%';
-    if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];
-  },600);
-}
-function stopProg(){
-  clearInterval(progIv);
-  document.getElementById('sc-prog').style.width='100%';
-}
-
-function onDrop(e){
-  e.preventDefault();
-  document.getElementById('dropzone').classList.remove('drag');
-  var f=e.dataTransfer.files[0];
-  if(f)onFile(f);
-}
-
-function onFile(file){
-  if(!file)return;
-  var name=file.name.toLowerCase();
   document.getElementById('sc-upload').style.display='none';
   document.getElementById('sc-loading').style.display='block';
   startProg(file.name);
-
+  var name=file.name.toLowerCase();
   if(name.endsWith('.pdf')){
     readPDF(file);
   } else {
@@ -1082,136 +534,77 @@ function onFile(file){
   }
 }
 
-// ── PDF READER ────────────────────────────────────────
+// ── PDF ───────────────────────────────────────────────
 function readPDF(file){
   file.arrayBuffer()
     .then(function(buf){return pdfjsLib.getDocument({data:buf}).promise;})
-    .then(function(pdf){
-      var arr=[];
-      for(var i=1;i<=pdf.numPages;i++)arr.push(pdf.getPage(i));
-      return Promise.all(arr);
-    })
-    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent({includeMarkedContent:false});}));})
+    .then(function(pdf){var arr=[];for(var i=1;i<=pdf.numPages;i++)arr.push(pdf.getPage(i));return Promise.all(arr);})
+    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent();}));})
     .then(function(contents){
-      // Extract text items with position info for column detection
-      var allItems=[];
-      contents.forEach(function(c,pageNum){
+      var items=[];
+      contents.forEach(function(c,pg){
         c.items.forEach(function(it){
-          if(it.str&&it.str.trim()){
-            allItems.push({str:it.str.trim(),x:Math.round(it.transform[4]),y:Math.round(it.transform[5]),page:pageNum});
-          }
+          if(it.str&&it.str.trim())items.push({str:it.str.trim(),x:Math.round(it.transform[4]),y:Math.round(it.transform[5]),pg:pg});
         });
       });
-      parsePDFItems(allItems,file.name.toLowerCase());
+      parsePDFItems(items,file.name.toLowerCase());
     })
-    .catch(function(e){stopProg();toast('PDF read failed — please use the CSV version from your bank');resetScanner();});
+    .catch(function(){stopProg();toast('PDF could not be read. Please export CSV from your bank instead.');resetScanner();});
 }
 
 function parsePDFItems(items,filename){
-  var txns=[];
-  var bank='PDF';
-  if(filename.includes('wise'))bank='Wise';
-  else if(filename.includes('revolut'))bank='Revolut';
-  else if(filename.includes('monzo'))bank='Monzo';
-  else if(filename.includes('starling'))bank='Starling';
-  else if(filename.includes('barclays'))bank='Barclays';
-  else if(filename.includes('hsbc'))bank='HSBC';
-  else if(filename.includes('natwest'))bank='NatWest';
-  else if(filename.includes('lloyds'))bank='Lloyds';
-  else if(filename.includes('halifax'))bank='Halifax';
-  else if(filename.includes('santander'))bank='Santander';
-  else if(filename.includes('nationwide'))bank='Nationwide';
-
-  // Group items by Y position (same line = same Y within 3px)
+  var bankName=detectBankFromFilename(filename);
+  // Group by line (same page + similar Y)
   var lineMap={};
   items.forEach(function(it){
-    var key=it.page+'_'+Math.round(it.y/4)*4;
+    var key=it.pg+'_'+Math.round(it.y/3)*3;
     if(!lineMap[key])lineMap[key]=[];
     lineMap[key].push(it);
   });
-
-  // Sort lines top to bottom, left to right within each line
   var lines=Object.values(lineMap).map(function(its){
     its.sort(function(a,b){return a.x-b.x;});
-    return{y:its[0].y,page:its[0].page,text:its.map(function(it){return it.str;}).join(' '),items:its};
+    return{y:its[0].y,pg:its[0].pg,text:its.map(function(i){return i.str;}).join(' ')};
   });
-  lines.sort(function(a,b){return a.page===b.page?b.y-a.y:a.page-b.page;});
+  lines.sort(function(a,b){return a.pg!==b.pg?a.pg-b.pg:b.y-a.y;});
 
-  // Amount pattern
-  var amtRe=/^-?£?(\d{1,3}(?:,\d{3})*\.\d{2})$/;
-  var dateRe=/^(\d{1,2}[\s\-\/](?:\w{3}|\d{2})[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{2}[\/-]\d{2}[\/-]\d{4})$/i;
-  var monthNames=/jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec/i;
+  var txns=[];
+  var amtRe=/(\d{1,3}(?:,\d{3})*\.\d{2})/g;
+  var dateRe=/(\d{1,2}[\s\-\/](?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{2}[\/\-]\d{2}[\/\-]\d{4})/i;
 
   lines.forEach(function(line){
     var text=line.text;
-    // Skip header/footer lines
-    if(/page|statement|account number|sort code|balance brought|opening balance|closing balance|date.*description.*amount/i.test(text))return;
-    if(text.length<5)return;
-
-    // Find amounts in this line
-    var words=text.split(/\s+/);
+    if(text.length<6)return;
+    if(/page|account number|sort code|balance brought|opening|closing|statement date|^\s*date\s/i.test(text))return;
     var amounts=[];
-    var dateFound='';
-    var descParts=[];
-
-    words.forEach(function(w){
-      var clean=w.replace(/[£,]/g,'');
-      var m=clean.match(/^-?(\d{1,3}(?:,\d{3})*\.\d{2})$/);
-      if(m)amounts.push({raw:w,val:parseFloat(clean),negative:w.includes('-')});
-      else if(dateRe.test(w)||(/\d{1,2}/.test(w)&&monthNames.test(text)&&!dateFound)){
-        if(!dateFound)dateFound=w;
-      } else {
-        descParts.push(w);
-      }
-    });
-
+    var m;
+    var re=new RegExp(amtRe.source,'g');
+    while((m=re.exec(text))!==null){amounts.push(parseFloat(m[1].replace(/,/g,'')));}
     if(!amounts.length)return;
-
-    // Try to find the transaction amount (usually the largest or last non-balance amount)
-    var txAmt=amounts[amounts.length>1?amounts.length-2:0];
-    if(!txAmt)return;
-    var amt=Math.abs(txAmt.val);
-    if(amt<0.01||amt>500000)return;
-
-    // Determine direction
-    var isOut=txAmt.negative||/sent|paid to|payment to|debit|withdrawal|purchase|direct debit|standing order/i.test(text);
-    var dir=isOut?'out':'in';
-
-    var desc=descParts.filter(function(w){return w.length>1;}).join(' ').substring(0,80);
-    if(!desc)return;
-
-    // Try to find date from adjacent lines if not in this one
-    if(!dateFound){
-      // Look for a date word in the line
-      var dm=text.match(/(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{2,4})/i);
-      if(dm)dateFound=dm[1];
-    }
-
-    txns.push(makeTxn(dateFound,desc,text.substring(0,100),'',amt,dir,bank,dir==='in'?desc:'',dir==='out'?desc:''));
+    var dateMatch=text.match(dateRe);
+    var date=dateMatch?dateMatch[1]:'';
+    var isOut=/sent|paid to|payment to|debit|withdrawal|purchase|direct debit|standing order|card transaction/i.test(text);
+    var amt=amounts[0];
+    if(!amt||amt>500000)return;
+    var desc=text.replace(dateRe,'').replace(/(\d{1,3}(?:,\d{3})*\.\d{2})/g,'').replace(/\s+/g,' ').trim().substring(0,80);
+    if(desc.length<3)return;
+    txns.push(makeTxn(date,desc,text.substring(0,100),'',amt,isOut?'out':'in',bankName,'',''));
   });
 
   if(!txns.length){
     stopProg();
-    // Show helpful message based on bank
-    if(bank==='Wise'){
-      toast('Wise PDFs cannot be reliably parsed. Please use the CSV export from Wise instead.');
-    } else {
-      toast('Could not read this PDF — please export a CSV from your bank and upload that instead.');
-    }
-    resetScanner();
-    return;
+    if(filename.includes('wise')){toast('Wise PDFs cannot be parsed reliably — please use the CSV export from Wise instead.');}
+    else{toast('Could not extract transactions from this PDF — please try the CSV export from your bank.');}
+    resetScanner();return;
   }
-
-  stopProg();
-  setTimeout(function(){showScanResults(txns);},300);
+  maybeAIClassify(txns);
 }
 
-// ── CSV PARSER ────────────────────────────────────────
+// ── CSV PARSERS ───────────────────────────────────────
 function processCSV(text,filename){
   var lines=text.split('\n').filter(function(l){return l.trim();});
   if(lines.length<2){stopProg();toast('File appears empty');resetScanner();return;}
-  var headers=splitCSVLine(lines[0]).map(function(h){return h.toLowerCase().trim();});
-  var bank=detectBank(headers,filename.toLowerCase());
+  var headers=splitCSV(lines[0]).map(function(h){return h.toLowerCase().trim();});
+  var bank=detectBankFromHeaders(headers,filename.toLowerCase());
   var txns=[];
   if(bank==='wise')txns=parseWise(lines,headers);
   else if(bank==='revolut')txns=parseRevolut(lines,headers);
@@ -1219,32 +612,47 @@ function processCSV(text,filename){
   else if(bank==='starling')txns=parseStarling(lines,headers);
   else if(bank==='barclays')txns=parseBarclays(lines,headers);
   else if(bank==='hsbc')txns=parseHSBC(lines,headers);
-  else if(bank==='natwest'||bank==='rbs')txns=parseNatWest(lines,headers);
-  else if(bank==='lloyds'||bank==='halifax'||bank==='bos')txns=parseLloyds(lines,headers);
+  else if(bank==='natwest')txns=parseNatWest(lines,headers);
+  else if(bank==='lloyds')txns=parseLloyds(lines,headers);
   else if(bank==='santander')txns=parseSantander(lines,headers);
   else if(bank==='nationwide')txns=parseNationwide(lines,headers);
   else txns=parseGeneric(lines,headers);
-  if(!txns.length){stopProg();toast('No transactions found — check the file format or try another bank');resetScanner();return;}
-  stopProg();
-  setTimeout(function(){showScanResults(txns);},300);
+  if(!txns.length){stopProg();toast('No transactions found in this file. Check the format or try another export.');resetScanner();return;}
+  maybeAIClassify(txns);
 }
 
-function detectBank(headers,filename){
-  var h=headers.join(',');
-  if(h.includes('transferwise')||h.includes('payer name'))return'wise';
-  if(h.includes('started date')||h.includes('completed date')||filename.includes('revolut'))return'revolut';
-  if(h.includes('emoji')||filename.includes('monzo'))return'monzo';
-  if(h.includes('spending category')||filename.includes('starling'))return'starling';
-  if(h.includes('subcategory')||filename.includes('barclays'))return'barclays';
-  if(h.includes('gbp amount')||filename.includes('hsbc'))return'hsbc';
-  if(h.includes('type')&&h.includes('balance')&&(filename.includes('natwest')||filename.includes('rbs')))return'natwest';
+function detectBankFromFilename(f){
+  if(f.includes('wise')||f.includes('transferwise'))return'Wise';
+  if(f.includes('revolut'))return'Revolut';
+  if(f.includes('monzo'))return'Monzo';
+  if(f.includes('starling'))return'Starling';
+  if(f.includes('barclays'))return'Barclays';
+  if(f.includes('hsbc'))return'HSBC';
+  if(f.includes('natwest'))return'NatWest';
+  if(f.includes('rbs'))return'RBS';
+  if(f.includes('lloyds'))return'Lloyds';
+  if(f.includes('halifax'))return'Halifax';
+  if(f.includes('santander'))return'Santander';
+  if(f.includes('nationwide'))return'Nationwide';
+  return'Bank';
+}
+
+function detectBankFromHeaders(h,filename){
+  var joined=h.join(',');
+  if(joined.includes('transferwise')||joined.includes('payer name'))return'wise';
+  if(joined.includes('started date')||joined.includes('completed date')||filename.includes('revolut'))return'revolut';
+  if(joined.includes('emoji')||filename.includes('monzo'))return'monzo';
+  if(joined.includes('spending category')||filename.includes('starling'))return'starling';
+  if(joined.includes('subcategory')||filename.includes('barclays'))return'barclays';
+  if(joined.includes('gbp amount')||filename.includes('hsbc'))return'hsbc';
+  if((joined.includes('type')&&joined.includes('balance'))||filename.includes('natwest')||filename.includes('rbs'))return'natwest';
   if(filename.includes('lloyds')||filename.includes('halifax')||filename.includes('bos'))return'lloyds';
   if(filename.includes('santander'))return'santander';
   if(filename.includes('nationwide'))return'nationwide';
   return'generic';
 }
 
-function splitCSVLine(line){
+function splitCSV(line){
   if(!line)return[];
   var res=[],cur='',inQ=false;
   for(var i=0;i<line.length;i++){
@@ -1257,331 +665,190 @@ function splitCSVLine(line){
   return res;
 }
 
-function normaliseDate(d){
-  if(!d)return'';
-  d=d.trim();
-  // YYYY-MM-DD already fine
+function normDate(d){
+  if(!d)return'';d=d.trim();
   if(/^\d{4}-\d{2}-\d{2}/.test(d))return d.substring(0,10);
-  // DD-MM-YYYY or DD/MM/YYYY
   var m=d.match(/^(\d{1,2})[\-\/](\d{1,2})[\-\/](\d{4})/);
-  if(m)return m[3]+'-'+pad2(m[2])+'-'+pad2(m[1]);
-  // MM/DD/YYYY (American)
-  var m2=d.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if(m2)return m2[3]+'-'+pad2(m2[1])+'-'+pad2(m2[2]);
-  // DD Mon YYYY e.g. 26 Mar 2026
+  if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
   var months={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
-  var m3=d.match(/^(\d{1,2})\s+(\w{3})\s+(\d{4})/i);
-  if(m3){var mon=months[m3[2].toLowerCase()];if(mon)return m3[3]+'-'+mon+'-'+pad2(m3[1]);}
+  var m2=d.match(/^(\d{1,2})\s+(\w{3})\w*\s+(\d{4})/i);
+  if(m2){var mo=months[m2[2].toLowerCase()];if(mo)return m2[3]+'-'+mo+'-'+m2[1].padStart(2,'0');}
   return d;
 }
-function pad2(n){return String(n).padStart(2,'0');}
 
 function makeTxn(date,counterparty,desc,ref,amount,dir,bank,payer,payee){
-  return{date:normaliseDate(date),counterparty:(counterparty||'').trim(),desc:(desc||'').trim(),payer:(payer||'').trim(),payee:(payee||'').trim(),ref:(ref||'').trim(),amount:Math.abs(parseFloat(amount)||0),dir:dir,bank:bank,choice:'unreviewed'};
+  return{date:normDate(String(date||'')),counterparty:(counterparty||'').trim(),desc:(desc||'').trim(),payer:(payer||'').trim(),payee:(payee||'').trim(),ref:(ref||'').trim(),amount:Math.abs(parseFloat(amount)||0),dir:dir,bank:bank,cat:'uncat'};
 }
 
-// ── WISE CSV ─────────────────────────────────────────
 function parseWise(lines,headers){
-  var iAmt=headers.indexOf('amount');
-  var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description');
-  var iRef=headers.indexOf('payment reference');
-  var iPayer=headers.indexOf('payer name');
-  var iPayee=headers.indexOf('payee name');
-  var iMerchant=headers.indexOf('merchant');
+  var iAmt=headers.indexOf('amount'),iDate=headers.indexOf('date'),iDesc=headers.indexOf('description');
+  var iRef=headers.indexOf('payment reference'),iPayer=headers.indexOf('payer name');
+  var iPayee=headers.indexOf('payee name'),iMerchant=headers.indexOf('merchant');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<4)continue;
-    var amt=parseFloat(c[iAmt]);
-    if(isNaN(amt)||amt===0)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<4)continue;
+    var amt=parseFloat(c[iAmt]);if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var payer=(c[iPayer]||'').trim();
-    var payee=(c[iPayee]||'').trim();
+    var payer=(c[iPayer]||'').trim(),payee=(c[iPayee]||'').trim();
     var merchant=(iMerchant>=0?c[iMerchant]||'':'').trim();
-    var ref=(c[iRef]||'').trim();
-    var desc=(c[iDesc]||'').trim();
+    var ref=(c[iRef]||'').trim(),desc=(c[iDesc]||'').trim();
     var counterparty=dir==='in'?(payer||desc):(merchant||payee||desc);
     txns.push(makeTxn(c[iDate],counterparty,desc,ref,amt,dir,'Wise',dir==='in'?payer:'',dir==='out'?(merchant||payee):''));
   }
   return txns;
 }
 
-// ── REVOLUT CSV ───────────────────────────────────────
-// Headers: Type, Product, Started Date, Completed Date, Description, Amount, Fee, Currency, State, Balance
 function parseRevolut(lines,headers){
-  var iAmt=headers.indexOf('amount');
-  var iDate=headers.indexOf('started date');
-  if(iDate<0)iDate=headers.indexOf('completed date');
-  var iDesc=headers.indexOf('description');
-  var iType=headers.indexOf('type');
-  var iState=headers.indexOf('state');
+  var iAmt=headers.indexOf('amount'),iState=headers.indexOf('state');
+  var iDate=headers.indexOf('started date');if(iDate<0)iDate=headers.indexOf('completed date');
+  var iDesc=headers.indexOf('description'),iType=headers.indexOf('type');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<4)continue;
-    var state=(c[iState]||'').trim().toLowerCase();
+    var c=splitCSV(lines[i]);if(!c||c.length<4)continue;
+    var state=(c[iState]||'').toLowerCase();
     if(state==='declined'||state==='failed'||state==='reverted')continue;
-    var amt=parseFloat(c[iAmt]);
-    if(isNaN(amt)||amt===0)continue;
+    var amt=parseFloat(c[iAmt]);if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var desc=(c[iDesc]||'').trim();
-    var type=(c[iType]||'').trim();
-    var dateRaw=(c[iDate]||'').split(' ')[0];
-    var counterparty=desc;
-    txns.push(makeTxn(dateRaw,counterparty,desc+' ('+type+')','',amt,dir,'Revolut',dir==='in'?desc:'',dir==='out'?desc:''));
+    var desc=(c[iDesc]||'').trim(),type=(c[iType]||'').trim();
+    txns.push(makeTxn((c[iDate]||'').split(' ')[0],desc,desc+(type?' ['+type+']':''),'',amt,dir,'Revolut',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── MONZO CSV ─────────────────────────────────────────
-// Headers: Transaction ID, Date, Time, Type, Name, Emoji, Category, Amount, Currency, Local amount, Local currency, Notes and #tags, Address, Receipt, Description, Category Split, Money Out, Money In
 function parseMonzo(lines,headers){
-  var iAmt=headers.indexOf('amount');
-  var iMoneyIn=headers.indexOf('money in');
-  var iMoneyOut=headers.indexOf('money out');
-  var iDate=headers.indexOf('date');
-  var iName=headers.indexOf('name');
-  var iDesc=headers.indexOf('description');
-  var iCat=headers.indexOf('category');
+  var iDate=headers.indexOf('date'),iName=headers.indexOf('name'),iDesc=headers.indexOf('description');
+  var iIn=headers.indexOf('money in'),iOut=headers.indexOf('money out'),iAmt=headers.indexOf('amount');
   var iNotes=headers.indexOf('notes and #tags');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<4)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<4)continue;
     var amt=0,dir='out';
-    if(iMoneyIn>=0&&iMoneyOut>=0){
-      var mIn=parseFloat((c[iMoneyIn]||'').replace(/[£,]/g,''))||0;
-      var mOut=parseFloat((c[iMoneyOut]||'').replace(/[£,]/g,''))||0;
-      if(mIn>0){amt=mIn;dir='in';}
-      else if(mOut>0){amt=mOut;dir='out';}
-      else continue;
-    } else {
-      amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
-      if(isNaN(amt)||amt===0)continue;
-      dir=amt>0?'in':'out';
-      amt=Math.abs(amt);
-    }
-    var name=(c[iName]||'').trim();
-    var desc=(c[iDesc]||name).trim();
-    var notes=(iNotes>=0?c[iNotes]||'':'').trim();
-    var cat=(iCat>=0?c[iCat]||'':'').trim();
+    if(iIn>=0&&iOut>=0){var mIn=parseFloat((c[iIn]||'').replace(/[£,]/g,''))||0,mOut=parseFloat((c[iOut]||'').replace(/[£,]/g,''))||0;if(mIn>0){amt=mIn;dir='in';}else if(mOut>0){amt=mOut;dir='out';}else continue;}
+    else{amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;dir=amt>0?'in':'out';amt=Math.abs(amt);}
+    var name=(c[iName]||'').trim(),desc=(c[iDesc]||name).trim(),notes=(iNotes>=0?c[iNotes]||'':'').trim();
     txns.push(makeTxn(c[iDate],name,desc,notes,amt,dir,'Monzo',dir==='in'?name:'',dir==='out'?name:''));
   }
   return txns;
 }
 
-// ── STARLING CSV ─────────────────────────────────────
-// Headers: Date, Counter Party, Reference, Type, Amount (GBP), Balance (GBP), Spending Category, Notes
 function parseStarling(lines,headers){
-  var iDate=headers.indexOf('date');
-  var iParty=headers.indexOf('counter party');
+  var iDate=headers.indexOf('date'),iParty=headers.indexOf('counter party');
   var iRef=headers.indexOf('reference');
-  var iAmt=headers.indexOf('amount (gbp)');
-  if(iAmt<0)iAmt=headers.indexOf('amount');
-  var iCat=headers.indexOf('spending category');
+  var iAmt=headers.indexOf('amount (gbp)');if(iAmt<0)iAmt=headers.indexOf('amount');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<4)continue;
-    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
-    if(isNaN(amt)||amt===0)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<4)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var party=(c[iParty]||'').trim();
-    var ref=(c[iRef]||'').trim();
+    var party=(c[iParty]||'').trim(),ref=(c[iRef]||'').trim();
     txns.push(makeTxn(c[iDate],party,party,ref,amt,dir,'Starling',dir==='in'?party:'',dir==='out'?party:''));
   }
   return txns;
 }
 
-// ── BARCLAYS CSV ──────────────────────────────────────
-// Headers: Number, Date, Account, Amount, Subcategory, Memo
 function parseBarclays(lines,headers){
-  var iDate=headers.indexOf('date');
-  var iAmt=headers.indexOf('amount');
-  var iMemo=headers.indexOf('memo');
-  var iSub=headers.indexOf('subcategory');
+  var iDate=headers.indexOf('date'),iAmt=headers.indexOf('amount');
+  var iMemo=headers.indexOf('memo'),iSub=headers.indexOf('subcategory');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
-    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
-    if(isNaN(amt)||amt===0)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var memo=(c[iMemo]||'').trim();
-    var sub=(c[iSub]||'').trim();
+    var memo=(c[iMemo]||'').trim(),sub=(iSub>=0?c[iSub]||'':'').trim();
     txns.push(makeTxn(c[iDate],memo,memo+(sub?' ['+sub+']':''),'',amt,dir,'Barclays',dir==='in'?memo:'',dir==='out'?memo:''));
   }
   return txns;
 }
 
-// ── HSBC CSV ──────────────────────────────────────────
-// Headers: Date, Payee, Memo, Amount
-// Sometimes: Date, Description, Paid out, Paid in, Balance
 function parseHSBC(lines,headers){
-  var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description');
-  if(iDesc<0)iDesc=headers.indexOf('payee');
-  var iPaidOut=headers.indexOf('paid out');
-  var iPaidIn=headers.indexOf('paid in');
-  var iAmt=headers.indexOf('amount');
-  if(iAmt<0)iAmt=headers.indexOf('gbp amount');
+  var iDate=headers.indexOf('date'),iDesc=headers.indexOf('description');if(iDesc<0)iDesc=headers.indexOf('payee');
+  var iPaidOut=headers.indexOf('paid out'),iPaidIn=headers.indexOf('paid in'),iAmt=headers.indexOf('amount');if(iAmt<0)iAmt=headers.indexOf('gbp amount');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<3)continue;
     var amt=0,dir='out';
-    if(iPaidIn>=0&&iPaidOut>=0){
-      var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0;
-      var pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;
-      if(pIn>0){amt=pIn;dir='in';}
-      else if(pOut>0){amt=pOut;dir='out';}
-      else continue;
-    } else {
-      amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
-      if(isNaN(amt)||amt===0)continue;
-      dir=amt>0?'in':'out';amt=Math.abs(amt);
-    }
+    if(iPaidIn>=0&&iPaidOut>=0){var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0,pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;if(pIn>0){amt=pIn;dir='in';}else if(pOut>0){amt=pOut;dir='out';}else continue;}
+    else{amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;dir=amt>0?'in':'out';amt=Math.abs(amt);}
     var desc=(c[iDesc]||'').trim();
     txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'HSBC',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── NATWEST / RBS CSV ─────────────────────────────────
-// Headers: Date, Type, Description, Value, Balance, Account Name, Account Number
 function parseNatWest(lines,headers){
-  var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description');
-  var iVal=headers.indexOf('value');
-  var iType=headers.indexOf('type');
+  var iDate=headers.indexOf('date'),iDesc=headers.indexOf('description'),iVal=headers.indexOf('value'),iType=headers.indexOf('type');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
-    var amt=parseFloat((c[iVal]||'').replace(/[£,]/g,''));
-    if(isNaN(amt)||amt===0)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iVal]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var desc=(c[iDesc]||'').trim();
-    var type=(c[iType]||'').trim();
+    var desc=(c[iDesc]||'').trim(),type=(c[iType]||'').trim();
     txns.push(makeTxn(c[iDate],desc,desc+(type?' ('+type+')':''),'',amt,dir,'NatWest',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── LLOYDS / HALIFAX / BOS CSV ───────────────────────
-// Headers: Transaction Date, Transaction Type, Sort Code, Account Number, Transaction Description, Debit Amount, Credit Amount, Balance
 function parseLloyds(lines,headers){
-  var iDate=headers.indexOf('transaction date');
-  if(iDate<0)iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('transaction description');
-  if(iDesc<0)iDesc=headers.indexOf('description');
-  var iDebit=headers.indexOf('debit amount');
-  var iCredit=headers.indexOf('credit amount');
-  var iType=headers.indexOf('transaction type');
+  var iDate=headers.indexOf('transaction date');if(iDate<0)iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('transaction description');if(iDesc<0)iDesc=headers.indexOf('description');
+  var iDebit=headers.indexOf('debit amount'),iCredit=headers.indexOf('credit amount');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<4)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<4)continue;
     var amt=0,dir='out';
-    if(iDebit>=0&&iCredit>=0){
-      var cr=parseFloat((c[iCredit]||'').replace(/[£,]/g,''))||0;
-      var db=parseFloat((c[iDebit]||'').replace(/[£,]/g,''))||0;
-      if(cr>0){amt=cr;dir='in';}
-      else if(db>0){amt=db;dir='out';}
-      else continue;
-    } else continue;
+    if(iDebit>=0&&iCredit>=0){var cr=parseFloat((c[iCredit]||'').replace(/[£,]/g,''))||0,db=parseFloat((c[iDebit]||'').replace(/[£,]/g,''))||0;if(cr>0){amt=cr;dir='in';}else if(db>0){amt=db;dir='out';}else continue;}
+    else continue;
     var desc=(c[iDesc]||'').trim();
-    var type=(c[iType]||'').trim();
-    txns.push(makeTxn(c[iDate],desc,desc+(type?' ['+type+']':''),'',amt,dir,'Lloyds',dir==='in'?desc:'',dir==='out'?desc:''));
+    txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'Lloyds',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── SANTANDER CSV ─────────────────────────────────────
-// Headers: Date, Description, Amount
 function parseSantander(lines,headers){
-  var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description');
-  var iAmt=headers.indexOf('amount');
+  var iDate=headers.indexOf('date'),iDesc=headers.indexOf('description'),iAmt=headers.indexOf('amount');
   var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
-    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
-    if(isNaN(amt)||amt===0)continue;
-    var dir=amt>0?'in':'out';
-    var desc=(c[iDesc]||'').trim();
+    var c=splitCSV(lines[i]);if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));if(isNaN(amt)||amt===0)continue;
+    var dir=amt>0?'in':'out';var desc=(c[iDesc]||'').trim();
     txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'Santander',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── NATIONWIDE CSV ────────────────────────────────────
-// Nationwide CSVs have a few header rows before data starts
 function parseNationwide(lines,headers){
-  // Nationwide puts account info at top, find the data header row
   var dataStart=0;
-  for(var i=0;i<Math.min(lines.length,10);i++){
-    var l=lines[i].toLowerCase();
-    if(l.includes('date')&&(l.includes('description')||l.includes('transaction'))){
-      dataStart=i;headers=splitCSVLine(lines[i]).map(function(h){return h.toLowerCase().trim();});break;
-    }
-  }
-  var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description')||headers.indexOf('transactions');
-  var iPaidOut=headers.indexOf('paid out');
-  var iPaidIn=headers.indexOf('paid in');
+  for(var i=0;i<Math.min(lines.length,10);i++){var l=lines[i].toLowerCase();if(l.includes('date')&&(l.includes('description')||l.includes('transaction'))){dataStart=i;headers=splitCSV(lines[i]).map(function(h){return h.toLowerCase().trim();});break;}}
+  var iDate=headers.indexOf('date'),iDesc=headers.indexOf('description');if(iDesc<0)iDesc=headers.indexOf('transactions');
+  var iPaidOut=headers.indexOf('paid out'),iPaidIn=headers.indexOf('paid in');
   var txns=[];
   for(var i=dataStart+1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<3)continue;
+    var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0,pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;
     var amt=0,dir='out';
-    var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0;
-    var pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;
-    if(pIn>0){amt=pIn;dir='in';}
-    else if(pOut>0){amt=pOut;dir='out';}
-    else continue;
+    if(pIn>0){amt=pIn;dir='in';}else if(pOut>0){amt=pOut;dir='out';}else continue;
     var desc=(c[iDesc]||'').trim();
     txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'Nationwide',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
-// ── GENERIC CSV FALLBACK ──────────────────────────────
 function parseGeneric(lines,headers){
-  var txns=[];
-  // Try to find debit/credit columns
   var iDebit=-1,iCredit=-1,iAmt=-1,iDate=-1,iDesc=-1;
   headers.forEach(function(h,i){
     if(/date|time/.test(h)&&iDate<0)iDate=i;
     if(/description|details|memo|narrative|payee|merchant/.test(h)&&iDesc<0)iDesc=i;
-    if(/debit|out|withdraw|payment out/.test(h)&&iDebit<0)iDebit=i;
-    if(/credit|in|deposit|payment in/.test(h)&&iCredit<0)iCredit=i;
+    if(/debit|out|withdraw/.test(h)&&iDebit<0)iDebit=i;
+    if(/credit|in|deposit/.test(h)&&iCredit<0)iCredit=i;
     if(/^amount$|^value$/.test(h)&&iAmt<0)iAmt=i;
   });
+  var txns=[];
   for(var i=1;i<lines.length;i++){
-    var c=splitCSVLine(lines[i]);
-    if(!c||c.length<2)continue;
+    var c=splitCSV(lines[i]);if(!c||c.length<2)continue;
     var amt=0,dir='out';
-    if(iDebit>=0&&iCredit>=0){
-      var cr=parseFloat((c[iCredit]||'').replace(/[£,$,]/g,''))||0;
-      var db=parseFloat((c[iDebit]||'').replace(/[£,$,]/g,''))||0;
-      if(cr>0){amt=cr;dir='in';}
-      else if(db>0){amt=db;dir='out';}
-      else continue;
-    } else if(iAmt>=0){
-      var v=parseFloat((c[iAmt]||'').replace(/[£,$,]/g,''));
-      if(isNaN(v)||v===0)continue;
-      dir=v>0?'in':'out';amt=Math.abs(v);
-    } else {
-      // Last resort: scan all columns for a number
-      for(var j=0;j<c.length;j++){
-        var v=parseFloat(c[j].replace(/[£,$,]/g,''));
-        if(!isNaN(v)&&v!==0&&Math.abs(v)<1000000){amt=Math.abs(v);dir=v<0?'out':'in';break;}
-      }
-      if(!amt)continue;
-    }
+    if(iDebit>=0&&iCredit>=0){var cr=parseFloat((c[iCredit]||'').replace(/[£,$,]/g,''))||0,db=parseFloat((c[iDebit]||'').replace(/[£,$,]/g,''))||0;if(cr>0){amt=cr;dir='in';}else if(db>0){amt=db;dir='out';}else continue;}
+    else if(iAmt>=0){var v=parseFloat((c[iAmt]||'').replace(/[£,$,]/g,''));if(isNaN(v)||v===0)continue;dir=v>0?'in':'out';amt=Math.abs(v);}
+    else{for(var j=0;j<c.length;j++){var v=parseFloat(c[j].replace(/[£,$,]/g,''));if(!isNaN(v)&&v!==0&&Math.abs(v)<1000000){amt=Math.abs(v);dir=v<0?'out':'in';break;}}if(!amt)continue;}
     var desc=(iDesc>=0?c[iDesc]:c[1])||'Unknown';
     var date=iDate>=0?c[iDate]:c[0];
     txns.push(makeTxn(date,desc,desc,'',amt,dir,'Bank',dir==='in'?desc:'',dir==='out'?desc:''));
@@ -1589,1131 +856,195 @@ function parseGeneric(lines,headers){
   return txns;
 }
 
+// ── AI CLASSIFICATION ─────────────────────────────────
+function maybeAIClassify(txns){
+  var apiKey=settings.key||'';
+  if(!apiKey){stopProg();setTimeout(function(){showScanResults(txns);},300);return;}
+
+  var prompt='You are a UK tax expert. Classify each bank transaction for a self-employed freelancer/business owner.\n'
+    +'For EACH transaction return classification as one of:\n'
+    +'"business_income" - client payments, invoices paid, business services received\n'
+    +'"business_expense" - software, equipment, travel for work, professional services\n'
+    +'"personal_income" - gifts, personal transfers, refunds\n'
+    +'"personal_expense" - food, personal shopping, entertainment, personal travel\n'
+    +'"transfer" - moving money between own accounts\n'
+    +'Return ONLY a JSON array. Each: {"id":N,"cat":"business_income|business_expense|personal_income|personal_expense|transfer","confidence":"high|medium|low","reason":"short reason"}\n'
+    +'Transactions:\n'+JSON.stringify(txns.map(function(t,i){return{id:i,date:t.date,counterparty:t.counterparty,desc:t.desc,ref:t.ref,amount:t.amount,dir:t.dir};}));
+
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-calls':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    stopProg();
+    try{
+      var txt=data.content[0].text.replace(/```json|```/g,'').trim();
+      var results=JSON.parse(txt);
+      results.forEach(function(r){if(txns[r.id]){txns[r.id].cat=r.cat;txns[r.id].aiReason=r.reason;txns[r.id].aiConf=r.confidence;}});
+    }catch(e){}
+    setTimeout(function(){showScanResults(txns);},300);
+  }).catch(function(){
+    stopProg();
+    setTimeout(function(){showScanResults(txns);},300);
+  });
+}
+
 // ── RESULTS ───────────────────────────────────────────
 function showScanResults(txns){
+  scanned=txns;
+  selectedRows=new Set();
   document.getElementById('sc-loading').style.display='none';
   document.getElementById('sc-results').style.display='block';
-  scanned=txns;
   scFilter='all';
-  updateScanStats();
+  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('.sc-filter').classList.add('active');
+  updateStats();
   renderTxns();
 }
 
-function updateScanStats(){
+function updateStats(){
   var income=scanned.filter(function(t){return t.dir==='in';}).length;
   var expense=scanned.filter(function(t){return t.dir==='out';}).length;
+  var biz=scanned.filter(function(t){return t.cat==='business_income'||t.cat==='business_expense';}).length;
   document.getElementById('sc-total').textContent=scanned.length;
   document.getElementById('sc-income').textContent=income;
   document.getElementById('sc-expense').textContent=expense;
-  document.getElementById('sc-added').textContent=scAddedCount;
+  document.getElementById('sc-business').textContent=biz;
 }
 
-function filterTxns(btn,f){
+function setFilter(f,btn){
   scFilter=f;
-  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('on-filter');b.style.background='';b.style.color='';b.style.borderColor='';});
-  btn.classList.add('on-filter');
-  btn.style.background='#042C53';btn.style.color='#B5D4F4';btn.style.borderColor='#042C53';
+  document.querySelectorAll('.sc-filter').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
   renderTxns();
 }
 
-function renderTxns(){
-  var filtered=scanned.filter(function(t){
+function getFiltered(){
+  return scanned.filter(function(t,i){
     if(scFilter==='income')return t.dir==='in';
     if(scFilter==='expense')return t.dir==='out';
-    if(scFilter==='unreviewed')return t.choice==='unreviewed';
-    if(scFilter==='business')return t.choice==='business';
-    if(scFilter==='personal')return t.choice==='personal';
+    if(scFilter==='business')return t.cat==='business_income'||t.cat==='business_expense';
+    if(scFilter==='personal')return t.cat==='personal_income'||t.cat==='personal_expense';
+    if(scFilter==='uncat')return t.cat==='uncat';
     return true;
   });
+}
 
-  if(!filtered.length){
-    document.getElementById('sc-txns').innerHTML='<div style="text-align:center;padding:30px;color:#aaa;font-size:13px">No transactions match this filter</div>';
-    return;
-  }
-
+function renderTxns(){
+  var filtered=getFiltered();
+  if(!filtered.length){document.getElementById('sc-txns').innerHTML='<div style="text-align:center;padding:30px;color:#aaa;font-size:13px">No transactions match this filter</div>';return;}
   document.getElementById('sc-txns').innerHTML=filtered.map(function(t){
     var i=scanned.indexOf(t);
     var isIn=t.dir==='in';
-    var amtColor=isIn?'#3B6D11':'#A32D2D';
+    var amtCls=isIn?'tx-amt-in':'tx-amt-out';
     var amtSign=isIn?'+':'−';
-    var dirLabel=isIn
-      ?'<span style="background:#EAF3DE;color:#3B6D11;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700">&#8593; Income</span>'
-      :'<span style="background:#FCEBEB;color:#A32D2D;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700">&#8595; Expense</span>';
-    var biz=t.choice==='business';
-    var per=t.choice==='personal';
-    var skip=t.choice==='skip';
-    var cardStyle='';
-    if(biz)cardStyle='border-color:#3B6D11;border-width:2px';
-    else if(per)cardStyle='border-color:#D4537E;border-width:2px';
-    else if(skip)cardStyle='opacity:0.35';
-
-    // Main label: who sent / who received
-    var mainLabel=t.counterparty||t.payer||t.payee||t.desc||'Unknown';
-
-    // Build meta row
-    var metaParts=[];
-    metaParts.push('<span style="font-weight:600;color:#1a1a1a">'+escHtml(t.date)+'</span>');
-    metaParts.push(dirLabel);
-    metaParts.push('<span style="font-size:11px;color:#aaa">via '+escHtml(t.bank||'Bank')+'</span>');
-    if(t.payer&&isIn)metaParts.push('<span style="font-size:11px;color:#555"><strong>From:</strong> '+escHtml(t.payer)+'</span>');
-    if(t.payee&&!isIn)metaParts.push('<span style="font-size:11px;color:#555"><strong>To:</strong> '+escHtml(t.payee)+'</span>');
-    if(t.ref)metaParts.push('<span style="font-size:11px;color:#888"><strong>Ref:</strong> '+escHtml(t.ref)+'</span>');
-
-    return'<div class="txcard" id="tx-'+i+'" style="'+cardStyle+'">'
-      +'<div class="txhead">'
-      +'<span class="txdesc" style="font-size:13px;font-weight:700">'+escHtml(mainLabel)+'</span>'
-      +'<span style="font-size:15px;font-weight:700;color:'+amtColor+'">'+amtSign+'&nbsp;'+fmt(t.amount)+'</span>'
-      +'</div>'
-      +'<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:5px 0 6px;font-size:12px">'+metaParts.join('')+'</div>'
-      +(t.desc&&t.desc!==mainLabel?'<div style="font-size:11px;color:#888;margin-bottom:8px;line-height:1.5;padding:5px 8px;background:#F8F8F4;border-radius:4px">'+escHtml(t.desc)+'</div>':'')
-      +'<div class="txactions">'
-      +'<button class="txbtn trade'+(biz?' on':'')+'" onclick="setTx('+i+','business')">&#10003; Business</button>'
-      +'<button class="txbtn gift'+(per?' on':'')+'" onclick="setTx('+i+','personal')">&#10003; Personal</button>'
-      +'<button class="txbtn skip'+(skip?' on':'')+'" onclick="setTx('+i+','skip')">Skip</button>'
-      +'</div>'
-      +'</div>';
-  }).join('');
-}
-
-function setTx(i,choice){
-  scanned[i].choice=choice;
-  var card=document.getElementById('tx-'+i);
-  if(!card)return;
-  var btns=card.querySelectorAll('.txbtn');
-  btns[0].className='txbtn trade'+(choice==='business'?' on':'');
-  btns[1].className='txbtn gift'+(choice==='personal'?' on':'');
-  btns[2].className='txbtn skip'+(choice==='skip'?' on':'');
-  card.style.borderColor=choice==='business'?'#3B6D11':choice==='personal'?'#D4537E':'';
-  card.style.opacity=choice==='skip'?'0.4':'1';
-}
-body{font-family:system-ui,-apple-system,sans-serif;background:#F5F5F0;color:#1a1a1a;font-size:14px;min-height:100vh}
-.app{max-width:960px;margin:0 auto;background:#fff;min-height:100vh;border:1px solid #E0E0D8}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #E0E0D8;flex-wrap:wrap;gap:10px}
-.brand{display:flex;align-items:center;gap:10px}
-.bmark{width:34px;height:34px;background:#042C53;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#B5D4F4;font-size:9px;font-weight:700;letter-spacing:0.5px}
-.bname{font-size:15px;font-weight:700}.bsub{font-size:11px;color:#888;margin-top:1px}
-.top-right{display:flex;gap:8px}
-.tbtn{padding:6px 12px;border:1px solid #E0E0D8;border-radius:5px;background:#F5F5F0;color:#666;font-size:11px;cursor:pointer;font-family:inherit}
-.tbtn:hover{background:#E8E8E0}
-.nav{display:flex;border-bottom:1px solid #E0E0D8;background:#FAFAF8;overflow-x:auto}
-.nb{padding:12px 20px;border:none;background:transparent;font-size:13px;color:#888;cursor:pointer;font-family:inherit;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s}
-.nb:hover{color:#1a1a1a;background:#F0F0E8}
-.nb.on{color:#042C53;font-weight:700;border-bottom:2px solid #042C53;background:#fff}
-.pg{display:none;padding:24px}.pg.on{display:block}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat{background:#F5F5F0;border-radius:8px;padding:14px 16px}
-.sl{font-size:11px;color:#888;margin-bottom:5px}.sv{font-size:22px;font-weight:700}.ss{font-size:11px;color:#aaa;margin-top:2px}
-.stat.blue{background:#E6F1FB;border:1px solid #B5D4F4}.stat.blue .sv{color:#042C53}.stat.blue .sl{color:#378ADD}
-.stat.green{background:#EAF3DE;border:1px solid #C0DD97}.stat.green .sv{color:#3B6D11}.stat.green .sl{color:#639922}
-.stat.red{background:#FCEBEB;border:1px solid #F09595}.stat.red .sv{color:#A32D2D}.stat.red .sl{color:#C04040}
-.card{border:1px solid #E0E0D8;border-radius:8px;padding:18px 20px;margin-bottom:14px}
-.card-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:#888;border-bottom:1px solid #E0E0D8}
-.tbl td{padding:10px;border-bottom:1px solid #F0F0E8;vertical-align:middle}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:#F8F8F4}
-.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.pill.paid{background:#EAF3DE;color:#3B6D11}.pill.pending{background:#FAEEDA;color:#854F0B}
-.pill.draft{background:#F0F0E8;color:#666}.pill.overdue{background:#FCEBEB;color:#A32D2D}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.span2{grid-column:span 2}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fg label{font-size:11px;color:#888;font-weight:600}
-input,select,textarea{width:100%;padding:9px 11px;border:1px solid #D8D8D0;border-radius:6px;font-size:13px;background:#fff;color:#1a1a1a;font-family:inherit;outline:none}
-input:focus,select:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,0.1)}
-.lih{display:grid;grid-template-columns:1fr 60px 90px 70px 30px;gap:6px;padding:6px 8px;background:#F5F5F0;border-radius:5px;font-size:11px;color:#888;margin-bottom:5px}
-.lirow{display:grid;grid-template-columns:1fr 60px 90px 70px 30px;gap:6px;align-items:center;margin-bottom:5px}
-.lirow input,.lirow select{padding:6px 8px;font-size:12px}
-.delbtn{width:26px;height:26px;border:1px solid #E0E0D8;border-radius:4px;background:transparent;cursor:pointer;font-size:15px;color:#aaa;display:flex;align-items:center;justify-content:center;font-family:inherit}
-.delbtn:hover{background:#FCEBEB;border-color:#F09595;color:#A32D2D}
-.tots{background:#F5F5F0;border-radius:7px;padding:14px 16px;margin-top:14px}
-.trow{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:#888}
-.trow.big{border-top:1px solid #E0E0D8;margin-top:6px;padding-top:10px;font-size:16px;font-weight:700;color:#1a1a1a}
-.btn{padding:10px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all 0.15s}
-.btn.primary{background:#042C53;color:#B5D4F4}.btn.primary:hover{background:#185FA5}
-.btn.secondary{background:transparent;color:#666;border:1px solid #E0E0D8}.btn.secondary:hover{background:#F5F5F0}
-.btn.danger{background:transparent;color:#A32D2D;border:1px solid #F09595}.btn.danger:hover{background:#FCEBEB}
-.btn.success{background:#3B6D11;color:#fff}.btn.success:hover{background:#27500A}
-.btn.sm{padding:6px 14px;font-size:12px}.btn.xs{padding:4px 10px;font-size:11px}
-.btnrow{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:#fff;border-radius:10px;padding:28px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 10px 50px rgba(0,0,0,0.2)}
-.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
-.modal-title{font-size:16px;font-weight:700}.modal-sub{font-size:12px;color:#888;margin-top:2px}
-.closebtn{border:none;background:transparent;font-size:22px;cursor:pointer;color:#888;line-height:1;padding:0}
-.status-row{display:flex;gap:8px;flex-wrap:wrap}
-.sbtn{padding:8px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid #E0E0D8;background:transparent;color:#666;transition:all 0.15s}
-.sbtn.on-paid{border-color:#3B6D11;background:#EAF3DE;color:#3B6D11}
-.sbtn.on-pending{border-color:#854F0B;background:#FAEEDA;color:#854F0B}
-.sbtn.on-draft{border-color:#666;background:#F0F0E8;color:#666}
-.sbtn.on-overdue{border-color:#A32D2D;background:#FCEBEB;color:#A32D2D}
-.warn{background:#FAEEDA;border:1px solid #FAC775;border-radius:7px;padding:11px 14px;font-size:12px;color:#854F0B;margin-bottom:14px;line-height:1.6}
-.info{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:7px;padding:11px 14px;font-size:12px;color:#0C447C;margin-bottom:14px;line-height:1.6}
-.vatgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.vatbox{border:1px solid #E0E0D8;border-radius:8px;padding:14px}
-.vbn{font-size:11px;font-weight:700;color:#185FA5;margin-bottom:4px}
-.vbl{font-size:11px;color:#888;margin-bottom:8px;line-height:1.5}
-.vbv{font-size:20px;font-weight:700}
-.vatbox.hi{background:#E6F1FB;border-color:#B5D4F4}.vatbox.hi .vbv{color:#042C53}
-.boxnum{display:inline-block;width:22px;height:22px;border-radius:4px;background:#E6F1FB;color:#185FA5;font-size:10px;text-align:center;line-height:22px;margin-right:6px;font-weight:700}
-.empty{text-align:center;padding:40px 20px;color:#aaa}
-.empty-icon{font-size:32px;margin-bottom:10px}
-.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999;max-width:320px}
-.toast.show{opacity:1}
-
-/* ── SCANNER STYLES ── */
-.upload-zone{border:2px dashed #D0D0C8;border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:14px}
-.upload-zone:hover,.upload-zone.drag{border-color:#378ADD;background:#EEF6FC}
-.upload-zone input{display:none}
-.progbar{height:5px;background:#E0E0D8;border-radius:3px;margin:10px 0 18px;overflow:hidden}
-.progfill{height:100%;background:#378ADD;border-radius:3px;transition:width 0.4s}
-.spinner{width:16px;height:16px;border:2px solid #E0E0D8;border-top-color:#378ADD;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-.scstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.scstat{background:#F5F5F0;border-radius:6px;padding:12px;text-align:center;border:1px solid #E0E0D8}
-.scv{font-size:20px;font-weight:700}.scl{font-size:11px;color:#888;margin-top:2px}
-
-/* Transaction rows */
-.txrow{display:grid;grid-template-columns:90px 1fr 80px 70px 70px;align-items:center;padding:9px 12px;border-bottom:1px solid #F0F0E8;gap:8px;font-size:12px;cursor:pointer;transition:background 0.1s}
-.txrow:hover{background:#F8F8F4}
-.txrow.hdr{background:#F5F5F0;cursor:default;font-size:11px;color:#888;font-weight:600;border-radius:6px 6px 0 0}
-.txrow.hdr:hover{background:#F5F5F0}
-.txrow.credit .txamt{color:#3B6D11;font-weight:700}
-.txrow.debit .txamt{color:#A32D2D}
-.txrow.selected{background:#E6F1FB}
-.txrow.business{background:#EAF3DE}
-.txrow.personal{background:#FFF8F0}
-.txdesc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.txpill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
-.txpill.bus{background:#EAF3DE;color:#3B6D11}
-.txpill.per{background:#FAEEDA;color:#854F0B}
-.txpill.unk{background:#F0F0E8;color:#666}
-
-/* Detail panel */
-.tx-detail{background:#F8F8F4;border:1px solid #E0E0D8;border-radius:8px;padding:16px;margin-top:8px;display:none}
-.tx-detail.open{display:block}
-.tx-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;font-size:12px}
-.tx-detail-item{display:flex;flex-direction:column;gap:2px}
-.tx-detail-label{font-size:10px;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
-.tx-detail-value{color:#1a1a1a;font-weight:500}
-.cat-btns{display:flex;gap:8px;flex-wrap:wrap}
-.cat-btn{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:2px solid;transition:all 0.15s}
-.cat-btn.business{border-color:#3B6D11;color:#3B6D11;background:transparent}
-.cat-btn.business:hover,.cat-btn.business.on{background:#EAF3DE}
-.cat-btn.personal{border-color:#854F0B;color:#854F0B;background:transparent}
-.cat-btn.personal:hover,.cat-btn.personal.on{background:#FAEEDA}
-.cat-btn.ignore{border-color:#ccc;color:#888;background:transparent}
-.cat-btn.ignore:hover,.cat-btn.ignore.on{background:#F0F0E8}
-.filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.filter-btn{padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;font-family:inherit;border:1px solid #E0E0D8;background:transparent;color:#666;transition:all 0.15s}
-.filter-btn.on{background:#042C53;color:#B5D4F4;border-color:#042C53}
-.filter-btn:hover{background:#F0F0E8}
-.filter-btn.on:hover{background:#185FA5}
-
-@media(max-width:600px){
-  .stats{grid-template-columns:1fr 1fr}
-  .fgrid{grid-template-columns:1fr}.span2{grid-column:span 1}
-  .vatgrid{grid-template-columns:1fr}.scstats{grid-template-columns:1fr 1fr}
-  .txrow{grid-template-columns:70px 1fr 70px 55px}
-  .txrow .txcat{display:none}
-}
-</style>
-</head>
-<body>
-<div class="app">
-<div class="topbar">
-  <div class="brand">
-    <div class="bmark">MTD</div>
-    <div><div class="bname">MTD Filing Suite</div><div class="bsub">Making Tax Digital &middot; HMRC</div></div>
-  </div>
-  <div class="top-right">
-    <button class="tbtn" onclick="exportInvoices()">&#8595; Export CSV</button>
-    <button class="tbtn" onclick="openSettings()">&#9881; Settings</button>
-  </div>
-</div>
-
-<nav class="nav">
-  <button class="nb on" onclick="goTo('dash',this)">Dashboard</button>
-  <button class="nb" onclick="goTo('invoices',this)">Invoices</button>
-  <button class="nb" onclick="goTo('payments',this)">Payments</button>
-  <button class="nb" onclick="goTo('scanner',this)">Statement Scanner</button>
-  <button class="nb" onclick="goTo('mtd',this)">MTD Return</button>
-</nav>
-
-<!-- DASHBOARD -->
-<div id="pg-dash" class="pg on">
-  <div class="stats">
-    <div class="stat blue"><div class="sl">Total invoiced</div><div class="sv" id="d-total">£0</div><div class="ss">All invoices</div></div>
-    <div class="stat green"><div class="sl">Paid</div><div class="sv" id="d-paid">£0</div><div class="ss">Received</div></div>
-    <div class="stat"><div class="sl">Outstanding</div><div class="sv" id="d-owing">£0</div><div class="ss">Pending / overdue</div></div>
-    <div class="stat"><div class="sl">VAT owed</div><div class="sv" id="d-vat">£0</div><div class="ss">Box 1 &minus; Box 4</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Recent invoices</div>
-    <table class="tbl"><thead><tr><th>Invoice</th><th>Client</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody id="d-inv-body"></tbody></table>
-    <div id="d-inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div style="color:#888">No invoices yet — go to Invoices to create one</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">VAT summary (boxes 1–9)</div>
-    <table class="tbl" id="d-vat-tbl"></table>
-  </div>
-</div>
-
-<!-- INVOICES -->
-<div id="pg-invoices" class="pg">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div style="font-size:16px;font-weight:700">Invoices</div>
-    <button class="btn primary" onclick="openNewInvoice()">+ New Invoice</button>
-  </div>
-  <div class="card" style="padding:0;overflow:hidden">
-    <table class="tbl">
-      <thead><tr><th style="padding:12px 16px">Invoice</th><th>Client</th><th>Date</th><th>Net</th><th>VAT</th><th>Total</th><th>Status</th><th></th></tr></thead>
-      <tbody id="inv-body"></tbody>
-    </table>
-    <div id="inv-empty" class="empty" style="display:none"><div class="empty-icon">&#128196;</div><div style="color:#888">No invoices yet</div></div>
-  </div>
-</div>
-
-<!-- PAYMENTS -->
-<div id="pg-payments" class="pg">
-  <div style="font-size:16px;font-weight:700;margin-bottom:16px">Payments</div>
-  <div class="stats" style="grid-template-columns:repeat(3,1fr)">
-    <div class="stat green"><div class="sl">Total received</div><div class="sv" id="p-received">£0</div></div>
-    <div class="stat"><div class="sl">Awaiting payment</div><div class="sv" id="p-pending">£0</div></div>
-    <div class="stat red"><div class="sl">Overdue</div><div class="sv" id="p-overdue">£0</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">All invoices by payment status</div>
-    <table class="tbl">
-      <thead><tr><th>Invoice</th><th>Client</th><th>Due date</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
-      <tbody id="pay-body"></tbody>
-    </table>
-    <div id="pay-empty" class="empty" style="display:none"><div class="empty-icon">&#128176;</div><div style="color:#888">No invoices yet</div></div>
-  </div>
-</div>
-
-<!-- STATEMENT SCANNER -->
-<div id="pg-scanner" class="pg">
-
-  <!-- UPLOAD STATE -->
-  <div id="sc-upload">
-    <div style="font-size:16px;font-weight:700;margin-bottom:14px">Statement Scanner</div>
-    <div class="info">
-      Upload your bank statement (PDF or CSV). Every transaction — income and expenses — will be listed. You decide which ones are business and which are personal. Works with <strong>Wise, Revolut, Barclays, HSBC, NatWest, Monzo, Starling</strong> and all major UK banks.
-    </div>
-    <div class="upload-zone" id="dropzone"
-      onclick="document.getElementById('filein').click()"
-      ondragover="event.preventDefault();this.classList.add('drag')"
-      ondragleave="this.classList.remove('drag')"
-      ondrop="onDrop(event)">
-      <input type="file" id="filein" accept=".csv,.txt,.pdf" onchange="onFile(this.files[0])">
-      <div style="font-size:36px;margin-bottom:12px">&#128196;</div>
-      <div style="font-size:15px;font-weight:700;margin-bottom:6px">Upload your bank statement</div>
-      <div style="font-size:12px;color:#888;line-height:1.8">
-        Drag &amp; drop or click to browse<br>
-        <strong>CSV recommended</strong> for most accurate results &middot; PDF also supported
-      </div>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#E6F1FB;color:#185FA5;border:1px solid #B5D4F4">Wise CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#E6F1FB;color:#185FA5;border:1px solid #B5D4F4">Revolut CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Monzo CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Barclays CSV</span>
-        <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#F5F5F0;color:#666;border:1px solid #E0E0D8">Any bank PDF</span>
-      </div>
-    </div>
-    <div style="font-size:12px;color:#888;background:#F5F5F0;border-radius:6px;padding:10px 14px;line-height:1.7">
-      <strong>How to export your Wise CSV:</strong> Wise app or website &rarr; Statements &rarr; Download &rarr; Select date range &rarr; CSV format
-    </div>
-  </div>
-
-  <!-- LOADING STATE -->
-  <div id="sc-loading" style="display:none">
-    <div style="font-size:16px;font-weight:700;margin-bottom:6px">Reading statement&hellip;</div>
-    <div style="font-size:12px;color:#888;margin-bottom:12px" id="sc-file-label"></div>
-    <div class="progbar"><div class="progfill" id="sc-prog" style="width:0%"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;color:#888;font-size:13px"><div class="spinner"></div><span id="sc-msg">Reading your statement&hellip;</span></div>
-  </div>
-
-  <!-- RESULTS STATE -->
-  <div id="sc-results" style="display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-      <div style="font-size:16px;font-weight:700">All transactions</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn secondary sm" onclick="resetScanner()">&#8592; Upload another</button>
-        <button class="btn primary sm" onclick="addBusinessToInvoices()">Add business income as invoices</button>
-      </div>
-    </div>
-
-    <div class="scstats">
-      <div class="scstat"><div class="scv" id="sc-total">0</div><div class="scl">Total transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-income" style="color:#3B6D11">0</div><div class="scl">Income transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-expenses" style="color:#A32D2D">0</div><div class="scl">Expense transactions</div></div>
-      <div class="scstat"><div class="scv" id="sc-business" style="color:#042C53">0</div><div class="scl">Marked as business</div></div>
-    </div>
-
-    <div class="filter-bar">
-      <button class="filter-btn on" id="f-all" onclick="setFilter('all')">All</button>
-      <button class="filter-btn" id="f-income" onclick="setFilter('income')">Income only</button>
-      <button class="filter-btn" id="f-expenses" onclick="setFilter('expenses')">Expenses only</button>
-      <button class="filter-btn" id="f-business" onclick="setFilter('business')">Business</button>
-      <button class="filter-btn" id="f-personal" onclick="setFilter('personal')">Personal</button>
-      <button class="filter-btn" id="f-uncat" onclick="setFilter('uncat')">Uncategorised</button>
-    </div>
-
-    <div style="border:1px solid #E0E0D8;border-radius:8px;overflow:hidden">
-      <div class="txrow hdr">
-        <span>Date</span><span>Description</span><span class="txamt">Amount</span><span class="txcat">Category</span><span>Action</span>
-      </div>
-      <div id="tx-list"></div>
-    </div>
-
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center">
-      <div style="font-size:12px;color:#888">Click any transaction to categorise it as Business or Personal</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn secondary sm" onclick="exportScanCSV()">Export reviewed CSV</button>
-        <button class="btn primary sm" onclick="addBusinessToInvoices()">Add business income as invoices</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MTD RETURN -->
-<div id="pg-mtd" class="pg">
-  <div style="font-size:16px;font-weight:700;margin-bottom:16px">MTD VAT Return</div>
-  <div class="warn">&#9888; Review all 9 boxes carefully before submitting. Once filed with HMRC, corrections require a separate amendment return.</div>
-  <div class="card">
-    <div class="card-title">VAT boxes — auto-filled from invoices (editable)</div>
-    <div class="vatgrid" id="vat-boxes"></div>
-  </div>
-  <div style="background:#F5F5F0;border-radius:8px;padding:22px;text-align:center;border:1px solid #E0E0D8">
-    <div style="font-size:15px;font-weight:700;margin-bottom:6px">Ready to submit?</div>
-    <div style="font-size:13px;color:#888;margin-bottom:16px">Submit via HMRC&rsquo;s website or MTD-compatible bridging software.</div>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <a href="https://www.gov.uk/send-vat-return" target="_blank" rel="noopener"><button class="btn secondary">File on HMRC &rarr;</button></a>
-      <button class="btn primary" onclick="markFiled()">Mark as filed</button>
-    </div>
-  </div>
-</div>
-
-</div><!-- end .app -->
-
-<!-- INVOICE MODAL -->
-<div class="modal-bg" id="inv-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div><div class="modal-title" id="inv-modal-title">New Invoice</div></div>
-      <button class="closebtn" onclick="closeModal('inv-modal')">&times;</button>
-    </div>
-    <div class="fgrid">
-      <div class="fg"><label>Invoice number</label><input id="f-num" placeholder="EC-2025-001"></div>
-      <div class="fg"><label>Date</label><input type="date" id="f-date"></div>
-      <div class="fg"><label>Client name</label><input id="f-client" placeholder="Acme Ltd"></div>
-      <div class="fg"><label>Client VAT number (optional)</label><input id="f-cvat" placeholder="GB 123 4567 89"></div>
-      <div class="fg span2"><label>Client address</label><input id="f-addr" placeholder="123 High Street, London, EC1A 1BB"></div>
-      <div class="fg"><label>Payment terms</label>
-        <select id="f-terms"><option value="receipt">Due on receipt</option><option value="14">Net 14</option><option value="30">Net 30</option><option value="60">Net 60</option></select>
-      </div>
-      <div class="fg"><label>VAT rate</label>
-        <select id="f-vrate"><option value="0">No VAT (0%)</option><option value="20">Standard 20%</option><option value="5">Reduced 5%</option></select>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Line items</div>
-    <div class="lih"><span>Description</span><span>Qty</span><span>Unit price</span><span>VAT</span><span></span></div>
-    <div id="f-lines"></div>
-    <button class="btn secondary sm" onclick="addLine()" style="margin-top:4px">+ Add line</button>
-    <div class="tots">
-      <div class="trow"><span>Subtotal</span><span id="f-sub">£0.00</span></div>
-      <div class="trow"><span>VAT</span><span id="f-vat">£0.00</span></div>
-      <div class="trow big"><span>Total</span><span id="f-tot">£0.00</span></div>
-    </div>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="closeModal('inv-modal')">Cancel</button>
-      <button class="btn primary" onclick="saveInvoice()">Save Invoice</button>
-    </div>
-  </div>
-</div>
-
-<!-- DETAIL MODAL -->
-<div class="modal-bg" id="detail-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div><div class="modal-title" id="det-num">Invoice</div><div class="modal-sub" id="det-client"></div></div>
-      <button class="closebtn" onclick="closeModal('detail-modal')">&times;</button>
-    </div>
-    <table class="tbl" style="margin-bottom:14px" id="det-lines-tbl"></table>
-    <div class="tots" style="margin-bottom:18px">
-      <div class="trow"><span>Net</span><span id="det-net"></span></div>
-      <div class="trow"><span>VAT</span><span id="det-vat"></span></div>
-      <div class="trow big"><span>Total</span><span id="det-tot"></span></div>
-    </div>
-    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:10px">Payment status</div>
-    <div class="status-row" id="det-status-row"></div>
-    <div class="btnrow" style="margin-top:20px">
-      <button class="btn danger sm" onclick="deleteInvoice()">Delete</button>
-      <button class="btn secondary sm" onclick="editInvoice()">Edit</button>
-      <button class="btn primary sm" onclick="closeModal('detail-modal')">Done</button>
-    </div>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div class="modal-bg" id="settings-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Settings</div>
-      <button class="closebtn" onclick="closeModal('settings-modal')">&times;</button>
-    </div>
-    <div class="fgrid" style="margin-bottom:6px">
-      <div class="fg span2"><label>Your business name</label><input id="s-biz" placeholder="EonCanvas"></div>
-      <div class="fg span2"><label>Your VAT number (if registered)</label><input id="s-vat" placeholder="GB 123 4567 89"></div>
-      <div class="fg"><label>VAT period</label>
-        <select id="s-period">
-          <option value="Q1-2025">Jan–Mar 2025</option><option value="Q2-2025">Apr–Jun 2025</option>
-          <option value="Q3-2025">Jul–Sep 2025</option><option value="Q4-2025">Oct–Dec 2025</option>
-          <option value="Q1-2026">Jan–Mar 2026</option><option value="Q2-2026">Apr–Jun 2026</option>
-          <option value="Q3-2026">Jul–Sep 2026</option><option value="Q4-2026">Oct–Dec 2026</option>
-        </select>
-      </div>
-      <div class="fg"><label>Your name (to filter self-transfers)</label><input id="s-myname" placeholder="e.g. Damilola Ajiboye"></div>
-      <div class="fg span2"><label>Anthropic API key (optional — for AI analysis)</label><input id="s-key" type="password" placeholder="sk-ant-..."></div>
-    </div>
-    <div style="background:#FFF5F5;border:1px solid #F09595;border-radius:7px;padding:12px 14px;margin:14px 0">
-      <div style="font-size:12px;font-weight:700;color:#A32D2D;margin-bottom:6px">&#9888; Clear all data</div>
-      <div style="font-size:12px;color:#888;margin-bottom:10px">Permanently delete all invoices. Cannot be undone.</div>
-      <button class="btn danger sm" onclick="clearAll()">Clear all invoices</button>
-    </div>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="closeModal('settings-modal')">Cancel</button>
-      <button class="btn primary" onclick="saveSettings()">Save settings</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-// ── STATE ────────────────────────────────────────────────
-var invoices=[];
-var settings={biz:'',vat:'',period:'Q1-2026',key:'',myname:''};
-var editIdx=-1;
-var detailIdx=-1;
-var lines=[];
-var allTxns=[];   // full parsed transactions from statement
-var activeFilter='all';
-var scAddedCount=0;
-
-// ── PERSIST ──────────────────────────────────────────────
-function save(){
-  try{
-    localStorage.setItem('mtd_v3_inv',JSON.stringify(invoices));
-    localStorage.setItem('mtd_v3_set',JSON.stringify(settings));
-  }catch(e){}
-}
-function load(){
-  try{
-    var i=localStorage.getItem('mtd_v3_inv');
-    var s=localStorage.getItem('mtd_v3_set');
-    if(i)invoices=JSON.parse(i);
-    if(s)settings=Object.assign(settings,JSON.parse(s));
-  }catch(e){}
-}
-
-// ── HELPERS ──────────────────────────────────────────────
-function fmt(n){return'£'+(parseFloat(n)||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-function fmtRaw(n){return(parseFloat(n)||0).toFixed(2);}
-function calcInv(inv){var n=0,v=0;(inv.lines||[]).forEach(function(l){var x=(l.q||0)*(l.p||0);n+=x;v+=x*((l.v||0)/100);});return{net:n,vat:v,tot:n+v};}
-function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):'';}
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function dueDate(inv){
-  var d=new Date(inv.date);var days=inv.terms==='receipt'?0:inv.terms==='14'?14:inv.terms==='30'?30:60;
-  d.setDate(d.getDate()+days);return d.toISOString().split('T')[0];
-}
-function isOverdue(inv){if(inv.status==='paid')return false;var dd=dueDate(inv);return dd&&new Date(dd)<new Date();}
-function vatBoxes(){var b1=0,b6=0;invoices.forEach(function(inv){var c=calcInv(inv);b1+=c.vat;b6+=c.net;});return{b1:b1,b2:0,b3:b1,b4:0,b5:Math.max(0,b1),b6:b6,b7:0,b8:0,b9:0};}
-
-// ── NAV ──────────────────────────────────────────────────
-function goTo(pg,el){
-  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
-  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('pg-'+pg).classList.add('on');
-  el.classList.add('on');
-  if(pg==='dash')renderDash();
-  if(pg==='invoices')renderInvoices();
-  if(pg==='payments')renderPayments();
-  if(pg==='mtd')renderMTD();
-}
-
-// ── DASHBOARD ────────────────────────────────────────────
-function renderDash(){
-  var total=0,paid=0,owing=0;
-  invoices.forEach(function(inv){var c=calcInv(inv);total+=c.tot;if(inv.status==='paid')paid+=c.tot;else owing+=c.tot;});
-  var b=vatBoxes();
-  document.getElementById('d-total').textContent=fmt(total);
-  document.getElementById('d-paid').textContent=fmt(paid);
-  document.getElementById('d-owing').textContent=fmt(owing);
-  document.getElementById('d-vat').textContent=fmt(b.b5);
-  var recent=invoices.slice(-5).reverse();
-  var empty=document.getElementById('d-inv-empty');
-  var tbody=document.getElementById('d-inv-body');
-  if(!recent.length){tbody.innerHTML='';empty.style.display='block';}
-  else{
-    empty.style.display='none';
-    tbody.innerHTML=recent.map(function(inv,i){
-      var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;var ri=invoices.length-1-i;
-      return'<tr class="click" onclick="openDetail('+ri+')"><td style="padding:10px 16px"><strong style="color:#185FA5">'+inv.id+'</strong></td><td>'+esc(inv.client)+'</td><td>'+inv.date+'</td><td>'+fmt(c.tot)+'</td><td><span class="pill '+s+'">'+cap(s)+'</span></td></tr>';
-    }).join('');
-  }
-  var rows=[['1','VAT due on sales',b.b1],['2','VAT on EC acquisitions',b.b2],['3','Total VAT due',b.b3],['4','VAT reclaimed',b.b4],['5','Net VAT payable',b.b5],['6','Total sales ex. VAT',b.b6],['7','Total purchases ex. VAT',b.b7],['8','EC supplies',b.b8],['9','EC acquisitions',b.b9]];
-  document.getElementById('d-vat-tbl').innerHTML='<thead><tr><th>Box</th><th>Description</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+rows.map(function(r){return'<tr><td><span class="boxnum">'+r[0]+'</span></td><td style="color:#888;font-size:12px">'+r[1]+'</td><td style="text-align:right;font-weight:'+(r[0]==='5'?'700':'400')+';color:'+(r[0]==='5'?'#042C53':'#1a1a1a')+'">'+fmt(r[2])+'</td></tr>';}).join('')+'</tbody>';
-}
-
-// ── INVOICES ─────────────────────────────────────────────
-function renderInvoices(){
-  var empty=document.getElementById('inv-empty');
-  var tbody=document.getElementById('inv-body');
-  if(!invoices.length){tbody.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  tbody.innerHTML=invoices.map(function(inv,i){
-    var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;
-    return'<tr class="click" onclick="openDetail('+i+')">'
-      +'<td style="padding:10px 16px"><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td>'
-      +'<td>'+esc(inv.client)+'</td><td>'+inv.date+'</td>'
-      +'<td>'+fmt(c.net)+'</td><td>'+fmt(c.vat)+'</td>'
-      +'<td><strong>'+fmt(c.tot)+'</strong></td>'
-      +'<td><span class="pill '+s+'">'+cap(s)+'</span></td>'
-      +'<td><button class="btn secondary xs" onclick="event.stopPropagation();openDetail('+i+')">View</button></td>'
-      +'</tr>';
-  }).join('');
-}
-
-// ── PAYMENTS ─────────────────────────────────────────────
-function renderPayments(){
-  var received=0,pending=0,overdue=0;
-  invoices.forEach(function(inv){var c=calcInv(inv);if(inv.status==='paid')received+=c.tot;else if(isOverdue(inv))overdue+=c.tot;else pending+=c.tot;});
-  document.getElementById('p-received').textContent=fmt(received);
-  document.getElementById('p-pending').textContent=fmt(pending);
-  document.getElementById('p-overdue').textContent=fmt(overdue);
-  var tbody=document.getElementById('pay-body');
-  var empty=document.getElementById('pay-empty');
-  if(!invoices.length){tbody.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  tbody.innerHTML=invoices.map(function(inv,i){
-    var c=calcInv(inv);var s=isOverdue(inv)?'overdue':inv.status;var dd=dueDate(inv);
-    var action=inv.status!=='paid'?'<button class="btn success xs" onclick="quickPay('+i+')">Mark paid</button>':'<span style="color:#3B6D11;font-size:12px">&#10003; Paid</span>';
-    return'<tr><td><strong style="color:#185FA5">'+esc(inv.id)+'</strong></td><td>'+esc(inv.client)+'</td><td>'+(dd||'—')+'</td><td><strong>'+fmt(c.tot)+'</strong></td><td><span class="pill '+s+'">'+cap(s)+'</span></td><td>'+action+'</td></tr>';
-  }).join('');
-}
-function quickPay(i){invoices[i].status='paid';save();renderPayments();renderDash();toast('Invoice '+invoices[i].id+' marked as paid');}
-
-// ── INVOICE MODAL ─────────────────────────────────────────
-function openNewInvoice(){
-  editIdx=-1;lines=[{d:'',q:1,p:0,v:0}];
-  document.getElementById('inv-modal-title').textContent='New Invoice';
-  document.getElementById('f-num').value='';
-  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('f-client').value='';
-  document.getElementById('f-cvat').value='';
-  document.getElementById('f-addr').value='';
-  document.getElementById('f-terms').value='receipt';
-  document.getElementById('f-vrate').value='0';
-  renderLines();openModal('inv-modal');
-}
-function editInvoice(){
-  var i=detailIdx;if(i<0)return;
-  closeModal('detail-modal');
-  editIdx=i;var inv=invoices[i];
-  lines=JSON.parse(JSON.stringify(inv.lines||[]));
-  document.getElementById('inv-modal-title').textContent='Edit Invoice';
-  document.getElementById('f-num').value=inv.id;
-  document.getElementById('f-date').value=inv.date;
-  document.getElementById('f-client').value=inv.client;
-  document.getElementById('f-cvat').value=inv.cvat||'';
-  document.getElementById('f-addr').value=inv.addr||'';
-  document.getElementById('f-terms').value=inv.terms||'receipt';
-  document.getElementById('f-vrate').value=inv.vrate||'0';
-  renderLines();openModal('inv-modal');
-}
-function renderLines(){
-  document.getElementById('f-lines').innerHTML=lines.map(function(l,i){
-    return'<div class="lirow">'
-      +'<input placeholder="Description" value="'+esc(l.d)+'" oninput="lines['+i+'].d=this.value">'
-      +'<input type="number" min="0" value="'+l.q+'" oninput="lines['+i+'].q=parseFloat(this.value)||0;calcTots()">'
-      +'<input type="number" min="0" step="0.01" value="'+l.p+'" oninput="lines['+i+'].p=parseFloat(this.value)||0;calcTots()">'
-      +'<select onchange="lines['+i+'].v=parseFloat(this.value);calcTots()">'
-      +'<option value="0"'+(l.v===0?' selected':'')+'>0%</option>'
-      +'<option value="20"'+(l.v===20?' selected':'')+'>20%</option>'
-      +'<option value="5"'+(l.v===5?' selected':'')+'>5%</option>'
+    var dirBadge=isIn?'<span class="tx-badge income">&#8593; Income</span>':'<span class="tx-badge expense">&#8595; Expense</span>';
+    var catBadge='';
+    if(t.cat==='business_income')catBadge='<span class="tx-badge business">Business &#8593;</span>';
+    else if(t.cat==='business_expense')catBadge='<span class="tx-badge business">Business &#8595;</span>';
+    else if(t.cat==='personal_income'||t.cat==='personal_expense')catBadge='<span class="tx-badge personal">Personal</span>';
+    else if(t.cat==='transfer')catBadge='<span class="tx-badge" style="background:#F5F5F0;color:#666">Transfer</span>';
+    var aiInfo='';
+    if(t.aiConf){var confCls=t.aiConf==='high'?'ai-high':t.aiConf==='medium'?'ai-med':'ai-low';aiInfo='<span class="ai-badge '+confCls+'">AI: '+t.aiConf+'</span>';}
+    var isSel=selectedRows.has(i);
+    var label=t.counterparty||t.desc||'Unknown';
+    var subLabel=t.ref?(t.ref!==label?'Ref: '+t.ref:''):'';
+    if(!subLabel&&t.desc&&t.desc!==label)subLabel=t.desc.substring(0,50);
+    return'<div class="txrow'+(isSel?' selected':'')+'" id="txrow-'+i+'" onclick="rowClick(event,'+i+')">'
+      +'<input type="checkbox" '+(isSel?'checked':'')+' onclick="event.stopPropagation();toggleRow('+i+')" style="cursor:pointer">'
+      +'<span style="font-size:11px;color:#888">'+esc(t.date)+'</span>'
+      +'<div><div style="font-weight:600;font-size:13px">'+esc(label)+'</div>'
+      +(subLabel?'<div style="font-size:11px;color:#888;margin-top:1px">'+esc(subLabel)+'</div>':'')
+      +'<div style="margin-top:3px">'+dirBadge+'&nbsp;'+catBadge+aiInfo+'</div></div>'
+      +'<span class="'+amtCls+'">'+amtSign+fmt(t.amount)+'</span>'
+      +'<select class="cat-select" onchange="setCat('+i+',this.value)" onclick="event.stopPropagation()">'
+      +'<option value="uncat"'+(t.cat==='uncat'?' selected':'')+'>Uncategorised</option>'
+      +'<option value="business_income"'+(t.cat==='business_income'?' selected':'')+'>Business Income</option>'
+      +'<option value="business_expense"'+(t.cat==='business_expense'?' selected':'')+'>Business Expense</option>'
+      +'<option value="personal_income"'+(t.cat==='personal_income'?' selected':'')+'>Personal Income</option>'
+      +'<option value="personal_expense"'+(t.cat==='personal_expense'?' selected':'')+'>Personal Expense</option>'
+      +'<option value="transfer"'+(t.cat==='transfer'?' selected':'')+'>Own Transfer</option>'
       +'</select>'
-      +'<button class="delbtn" onclick="delLine('+i+')">&#215;</button>'
+      +'<span style="font-size:11px;color:#aaa">'+esc(t.bank||'')+'</span>'
       +'</div>';
   }).join('');
-  calcTots();
-}
-function addLine(){lines.push({d:'',q:1,p:0,v:0});renderLines();}
-function delLine(i){if(lines.length>1){lines.splice(i,1);renderLines();}}
-function calcTots(){
-  var n=0,v=0;lines.forEach(function(l){var x=l.q*l.p;n+=x;v+=x*(l.v/100);});
-  document.getElementById('f-sub').textContent=fmt(n);
-  document.getElementById('f-vat').textContent=fmt(v);
-  document.getElementById('f-tot').textContent=fmt(n+v);
-}
-function saveInvoice(){
-  var num=document.getElementById('f-num').value.trim();
-  var client=document.getElementById('f-client').value.trim();
-  if(!num){toast('Please enter an invoice number');return;}
-  if(!client){toast('Please enter a client name');return;}
-  var goodLines=lines.filter(function(l){return l.d.trim();});
-  if(!goodLines.length){toast('Add at least one line item');return;}
-  var inv={id:num,client:client,date:document.getElementById('f-date').value,cvat:document.getElementById('f-cvat').value,addr:document.getElementById('f-addr').value,terms:document.getElementById('f-terms').value,vrate:document.getElementById('f-vrate').value,lines:JSON.parse(JSON.stringify(goodLines)),status:'pending'};
-  if(editIdx>=0){inv.status=invoices[editIdx].status;invoices[editIdx]=inv;}
-  else invoices.push(inv);
-  save();closeModal('inv-modal');renderInvoices();renderDash();toast('Invoice '+num+' saved');
+  updateBulkBar();
 }
 
-// ── DETAIL MODAL ──────────────────────────────────────────
-function openDetail(i){
-  detailIdx=i;var inv=invoices[i];var c=calcInv(inv);
-  document.getElementById('det-num').textContent=inv.id;
-  document.getElementById('det-client').textContent=esc(inv.client)+' · '+inv.date;
-  document.getElementById('det-lines-tbl').innerHTML='<thead><tr><th>Description</th><th>Qty</th><th>Price</th><th style="text-align:right">Amount</th></tr></thead><tbody>'+(inv.lines||[]).map(function(l){return'<tr><td>'+esc(l.d)+'</td><td>'+l.q+'</td><td>'+fmt(l.p)+'</td><td style="text-align:right">'+fmt(l.q*l.p)+'</td></tr>';}).join('')+'</tbody>';
-  document.getElementById('det-net').textContent=fmt(c.net);
-  document.getElementById('det-vat').textContent=fmt(c.vat);
-  document.getElementById('det-tot').textContent=fmt(c.tot);
-  renderStatusBtns(inv.status);openModal('detail-modal');
-}
-function renderStatusBtns(current){
-  document.getElementById('det-status-row').innerHTML=['pending','paid','draft','overdue'].map(function(s){
-    return'<button class="sbtn'+(s===current?' on-'+s:'')+'" onclick="setStatus(\''+s+'\')">'+cap(s)+'</button>';
-  }).join('');
-}
-function setStatus(s){
-  if(detailIdx<0)return;
-  invoices[detailIdx].status=s;save();renderStatusBtns(s);renderDash();renderInvoices();renderPayments();toast('Status updated to '+cap(s));
-}
-function deleteInvoice(){
-  if(detailIdx<0)return;var id=invoices[detailIdx].id;
-  if(!confirm('Delete invoice '+id+'?'))return;
-  invoices.splice(detailIdx,1);save();closeModal('detail-modal');renderInvoices();renderDash();renderPayments();toast('Invoice '+id+' deleted');
+function rowClick(e,i){if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT'||e.target.tagName==='OPTION')return;toggleRow(i);}
+
+function toggleRow(i){
+  if(selectedRows.has(i))selectedRows.delete(i);else selectedRows.add(i);
+  var row=document.getElementById('txrow-'+i);
+  if(row){row.classList.toggle('selected',selectedRows.has(i));var cb=row.querySelector('input[type=checkbox]');if(cb)cb.checked=selectedRows.has(i);}
+  updateBulkBar();
 }
 
-// ── MTD RETURN ────────────────────────────────────────────
-function renderMTD(){
-  var b=vatBoxes();
-  var defs=[{n:'1',l:'VAT due on sales and outputs',v:b.b1,e:false},{n:'2',l:'VAT due on EC acquisitions',v:b.b2,e:true},{n:'3',l:'Total VAT due (1+2)',v:b.b3,e:false},{n:'4',l:'VAT reclaimed on purchases',v:b.b4,e:true},{n:'5',l:'Net VAT to pay HMRC',v:b.b5,e:false,hi:true},{n:'6',l:'Total sales ex. VAT',v:b.b6,e:false},{n:'7',l:'Total purchases ex. VAT',v:b.b7,e:true},{n:'8',l:'EC supplies of goods',v:b.b8,e:true},{n:'9',l:'EC acquisitions of goods',v:b.b9,e:true}];
-  document.getElementById('vat-boxes').innerHTML=defs.map(function(d){
-    return'<div class="vatbox'+(d.hi?' hi':'')+'"><div class="vbn">Box '+d.n+'</div><div class="vbl">'+d.l+'</div>'+(d.e?'<input type="number" step="0.01" value="'+fmtRaw(d.v)+'" style="font-size:16px;font-weight:700;border:none;border-bottom:2px solid #D0D0C8;border-radius:0;padding:3px 0;background:transparent">':'<div class="vbv">'+fmt(d.v)+'</div>')+'</div>';
-  }).join('');
-}
-function markFiled(){toast('Marked as filed. File officially at gov.uk/send-vat-return');}
-
-// ── SETTINGS ─────────────────────────────────────────────
-function openSettings(){
-  document.getElementById('s-biz').value=settings.biz||'';
-  document.getElementById('s-vat').value=settings.vat||'';
-  document.getElementById('s-period').value=settings.period||'Q1-2026';
-  document.getElementById('s-key').value=settings.key||'';
-  document.getElementById('s-myname').value=settings.myname||'';
-  openModal('settings-modal');
-}
-function saveSettings(){
-  settings.biz=document.getElementById('s-biz').value;
-  settings.vat=document.getElementById('s-vat').value;
-  settings.period=document.getElementById('s-period').value;
-  settings.key=document.getElementById('s-key').value;
-  settings.myname=document.getElementById('s-myname').value;
-  save();closeModal('settings-modal');toast('Settings saved');
-}
-function clearAll(){if(!confirm('Delete ALL invoices?'))return;invoices=[];save();closeModal('settings-modal');renderDash();toast('All data cleared');}
-
-// ══════════════════════════════════════════════════════════
-// STATEMENT SCANNER — FULL REWRITE
-// ══════════════════════════════════════════════════════════
-
-var progIv=null;
-function startProg(msgs){
-  var p=0,mi=0;
-  progIv=setInterval(function(){
-    p+=Math.random()*8+4;if(p>90)p=90;
-    document.getElementById('sc-prog').style.width=p+'%';
-    if(mi<msgs.length)document.getElementById('sc-msg').textContent=msgs[mi++];
-  },600);
-}
-function stopProg(){clearInterval(progIv);document.getElementById('sc-prog').style.width='100%';}
-
-function onDrop(e){e.preventDefault();document.getElementById('dropzone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f)onFile(f);}
-
-function onFile(file){
-  if(!file)return;
-  var name=file.name.toLowerCase();
-  document.getElementById('sc-upload').style.display='none';
-  document.getElementById('sc-loading').style.display='block';
-  document.getElementById('sc-file-label').textContent='Reading: '+file.name;
-  startProg(['Opening file...','Parsing transactions...','Organising data...','Almost ready...']);
-
-  if(name.endsWith('.pdf')){
-    readPDF(file);
-  } else {
-    var r=new FileReader();
-    r.onload=function(e){parseStatement(e.target.result,file.name);};
-    r.onerror=function(){stopProg();toast('Could not read file');resetScanner();};
-    r.readAsText(file);
-  }
-}
-
-// ── PDF READER ────────────────────────────────────────────
-function readPDF(file){
-  file.arrayBuffer()
-    .then(function(buf){return pdfjsLib.getDocument({data:buf}).promise;})
-    .then(function(pdf){
-      var pages=[];for(var i=1;i<=pdf.numPages;i++)pages.push(pdf.getPage(i));
-      return Promise.all(pages);
-    })
-    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent();}));})
-    .then(function(contents){
-      var text=contents.map(function(c){return c.items.map(function(it){return it.str;}).join(' ');}).join('\n');
-      parsePDFText(text);
-    })
-    .catch(function(e){stopProg();toast('Could not read PDF. Try the CSV version from your bank.');resetScanner();});
-}
-
-// ── PDF TEXT PARSER ───────────────────────────────────────
-function parsePDFText(text){
-  // Generic approach: find lines with amounts
-  var txns=[];
-  var lines=text.split('\n');
-  var dateRe=/(\d{1,2}[\s\-\/]\w+[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2})/;
-  var amtRe=/([+-]?\d{1,3}(?:,\d{3})*\.\d{2})/g;
-
-  lines.forEach(function(line){
-    var stripped=line.trim();
-    if(!stripped||stripped.length<5)return;
-    var dateM=stripped.match(dateRe);
-    var amts=stripped.match(amtRe);
-    if(dateM&&amts){
-      amts.forEach(function(a){
-        var v=parseFloat(a.replace(',',''));
-        if(!isNaN(v)&&Math.abs(v)>0.5){
-          var desc=stripped.replace(dateM[0],'').replace(a,'').trim();
-          if(desc.length>2){
-            txns.push({
-              date:dateM[0],
-              desc:desc.substring(0,80),
-              amount:v,
-              payer:'',ref:'',
-              type:v>0?'CREDIT':'DEBIT',
-              category:'uncat',
-              bank:'PDF'
-            });
-          }
-        }
-      });
-    }
-  });
-
-  stopProg();
-  if(txns.length>0){showResults(txns);}
-  else{toast('Could not extract transactions from PDF. Please use the CSV version.');resetScanner();}
-}
-
-// ── CSV PARSER — HANDLES WISE, REVOLUT, GENERIC ──────────
-function parseStatement(text,filename){
-  var fname=filename.toLowerCase();
-  var lines=text.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
-  if(lines.length<2){stopProg();toast('File appears empty');resetScanner();return;}
-
-  var headers=splitCSV(lines[0]).map(function(h){return h.toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();});
-  var txns=[];
-
-  // ── WISE FORMAT ──
-  var isWise=headers.some(function(h){return h.indexOf('transferwise')>=0||h.indexOf('payer name')>=0;});
-  if(isWise){
-    var iId=fi(headers,'transferwise id');
-    var iAmt=fi(headers,'amount');
-    var iDate=fi(headers,'date');
-    var iDesc=fi(headers,'description');
-    var iRef=fi(headers,'payment reference');
-    var iPayer=fi(headers,'payer name');
-    var iPayee=fi(headers,'payee name');
-    var iType=fi(headers,'transaction type');
-
-    var myNamePat=buildNamePattern();
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<4)continue;
-      var amt=parseFloat(g(cols,iAmt));
-      if(isNaN(amt))continue;
-      var desc=g(cols,iDesc);
-      var payer=g(cols,iPayer);
-      var payee=g(cols,iPayee);
-      var ref=g(cols,iRef);
-      var rawDate=g(cols,iDate);
-
-      // Convert DD-MM-YYYY to YYYY-MM-DD
-      var dp=rawDate.split('-');
-      var isoDate=dp.length===3?(dp[2]+'-'+dp[1]+'-'+dp[0]):rawDate;
-
-      // Skip tiny amounts (bus refunds, PayPal verification cents)
-      if(Math.abs(amt)<0.50)continue;
-
-      txns.push({
-        date:isoDate,
-        desc:desc,
-        payer:payer,
-        payee:payee,
-        ref:ref,
-        amount:amt,
-        type:amt>0?'CREDIT':'DEBIT',
-        category:'uncat',
-        bank:'Wise',
-        id:g(cols,iId)
-      });
-    }
-  }
-
-  // ── REVOLUT FORMAT ──
-  else if(headers.some(function(h){return h.indexOf('started date')>=0||h.indexOf('completed date')>=0;})){
-    var iType2=fi(headers,'type');
-    var iDesc2=fi(headers,'description');
-    var iAmt2=fi(headers,'amount');
-    var iDate2=headers.indexOf('started date')>=0?fi(headers,'started date'):fi(headers,'completed date');
-    var iRef2=fi(headers,'reference')||fi(headers,'description');
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<3)continue;
-      var amt=parseFloat(g(cols,iAmt2));
-      if(isNaN(amt))continue;
-      var desc=g(cols,iDesc2);
-      if(Math.abs(amt)<0.50)continue;
-      txns.push({date:(g(cols,iDate2)||'').split(' ')[0],desc:desc,payer:'',payee:'',ref:g(cols,iRef2)||'',amount:amt,type:amt>0?'CREDIT':'DEBIT',category:'uncat',bank:'Revolut',id:''});
-    }
-  }
-
-  // ── GENERIC CSV FALLBACK ──
-  else{
-    // Try to auto-detect date, desc, amount columns
-    var iDate3=fi(headers,'date')||fi(headers,'transaction date')||0;
-    var iDesc3=fi(headers,'description')||fi(headers,'narrative')||fi(headers,'details')||1;
-    var iAmt3=fi(headers,'amount')||fi(headers,'value')||2;
-    var iCredit=fi(headers,'credit')||fi(headers,'money in')||fi(headers,'paid in');
-    var iDebit=fi(headers,'debit')||fi(headers,'money out')||fi(headers,'paid out');
-
-    for(var i=1;i<lines.length;i++){
-      var cols=splitCSV(lines[i]);
-      if(!cols||cols.length<2)continue;
-      var amt=0;
-      if(iCredit>=0&&iDebit>=0){
-        var cr=parseFloat(g(cols,iCredit))||0;
-        var db=parseFloat(g(cols,iDebit))||0;
-        amt=cr>0?cr:(db>0?-db:0);
-      } else {
-        amt=parseFloat(g(cols,iAmt3))||0;
-      }
-      if(amt===0)continue;
-      var desc=g(cols,iDesc3)||'Unknown';
-      if(Math.abs(amt)<0.50)continue;
-      txns.push({date:g(cols,iDate3)||'',desc:desc,payer:'',payee:'',ref:'',amount:amt,type:amt>0?'CREDIT':'DEBIT',category:'uncat',bank:'Bank',id:''});
-    }
-  }
-
-  stopProg();
-  if(txns.length>0){showResults(txns);}
-  else{toast('Could not parse this file. Please check the format and try again.');resetScanner();}
-}
-
-function fi(headers,name){var i=headers.indexOf(name);return i>=0?i:-1;}
-function g(cols,i){return i>=0&&i<cols.length?cols[i]:'';}
-function buildNamePattern(){
-  var n=(settings.myname||'damilola ajiboye').toLowerCase();
-  var parts=n.split(' ').filter(function(p){return p.length>2;});
-  return new RegExp(parts.join('|'),'i');
-}
-
-function splitCSV(line){
-  if(!line)return[];
-  var result=[],cur='',inQ=false;
-  for(var i=0;i<line.length;i++){
-    var c=line[i];
-    if(c==='"'){inQ=!inQ;}
-    else if(c===','&&!inQ){result.push(cur.trim());cur='';}
-    else{cur+=c;}
-  }
-  result.push(cur.trim());
-  return result;
-}
-
-// ── SHOW RESULTS ─────────────────────────────────────────
-function showResults(txns){
-  allTxns=txns;
-  document.getElementById('sc-loading').style.display='none';
-  document.getElementById('sc-results').style.display='block';
-  updateScStats();
-  activeFilter='all';
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('f-all').classList.add('on');
-  renderTxList();
-}
-
-function updateScStats(){
-  var income=allTxns.filter(function(t){return t.amount>0;}).length;
-  var expenses=allTxns.filter(function(t){return t.amount<0;}).length;
-  var business=allTxns.filter(function(t){return t.category==='business';}).length;
-  document.getElementById('sc-total').textContent=allTxns.length;
-  document.getElementById('sc-income').textContent=income;
-  document.getElementById('sc-expenses').textContent=expenses;
-  document.getElementById('sc-business').textContent=business;
-}
-
-// ── FILTER ────────────────────────────────────────────────
-function setFilter(f){
-  activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('f-'+f).classList.add('on');
-  renderTxList();
-}
-
-function getFiltered(){
-  return allTxns.filter(function(t){
-    if(activeFilter==='income')return t.amount>0;
-    if(activeFilter==='expenses')return t.amount<0;
-    if(activeFilter==='business')return t.category==='business';
-    if(activeFilter==='personal')return t.category==='personal';
-    if(activeFilter==='uncat')return t.category==='uncat';
-    return true;
-  });
-}
-
-// ── RENDER TRANSACTION LIST ───────────────────────────────
-function renderTxList(){
+function toggleSelectAll(checked){
   var filtered=getFiltered();
-  var html='';
-  var globalIdxMap=[];
-  filtered.forEach(function(t){globalIdxMap.push(allTxns.indexOf(t));});
-
-  filtered.forEach(function(t,fi){
-    var gi=globalIdxMap[fi];
-    var isCredit=t.amount>0;
-    var rowCls='txrow '+(isCredit?'credit':'debit')+' '+(t.category==='business'?' business':t.category==='personal'?' personal':'');
-    var pillCls=t.category==='business'?'bus':t.category==='personal'?'per':'unk';
-    var pillLabel=t.category==='business'?'Business':t.category==='personal'?'Personal':'Uncategorised';
-    var amtStr=(isCredit?'+':'')+fmt(t.amount);
-    var detailId='txd-'+gi;
-
-    // Main row
-    html+='<div class="'+rowCls+'" onclick="toggleDetail('+gi+')" id="txr-'+gi+'">'
-      +'<span>'+t.date+'</span>'
-      +'<span class="txdesc" title="'+(t.payer?esc(t.payer)+' — ':'')+esc(t.desc)+(t.ref?' ['+esc(t.ref)+']':'')+'"><strong>'+(t.payer?esc(t.payer):esc(t.desc).substring(0,40))+'</strong>'+(t.ref?'<br><span style="font-size:10px;color:#888">ref: '+esc(t.ref)+'</span>':'')+'</span>'
-      +'<span class="txamt">'+amtStr+'</span>'
-      +'<span class="txcat"><span class="txpill '+pillCls+'">'+pillLabel+'</span></span>'
-      +'<span style="color:#888;font-size:11px">&#9660;</span>'
-      +'</div>'
-      // Detail panel (hidden by default)
-      +'<div class="tx-detail" id="'+detailId+'">'
-      +'<div class="tx-detail-grid">'
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Date</div><div class="tx-detail-value">'+t.date+'</div></div>'
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Amount</div><div class="tx-detail-value" style="color:'+(isCredit?'#3B6D11':'#A32D2D')+'"><strong>'+amtStr+'</strong></div></div>'
-      +(t.payer?'<div class="tx-detail-item"><div class="tx-detail-label">From</div><div class="tx-detail-value">'+esc(t.payer)+'</div></div>':'')
-      +(t.payee?'<div class="tx-detail-item"><div class="tx-detail-label">To</div><div class="tx-detail-value">'+esc(t.payee)+'</div></div>':'')
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Description</div><div class="tx-detail-value">'+esc(t.desc)+'</div></div>'
-      +(t.ref?'<div class="tx-detail-item"><div class="tx-detail-label">Reference</div><div class="tx-detail-value">'+esc(t.ref)+'</div></div>':'')
-      +'<div class="tx-detail-item"><div class="tx-detail-label">Bank</div><div class="tx-detail-value">'+t.bank+'</div></div>'
-      +(t.id?'<div class="tx-detail-item"><div class="tx-detail-label">Transaction ID</div><div class="tx-detail-value" style="font-size:10px;color:#aaa">'+esc(t.id)+'</div></div>':'')
-      +'</div>'
-      +'<div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Categorise this transaction</div>'
-      +'<div class="cat-btns">'
-      +'<button class="cat-btn business'+(t.category==='business'?' on':'')+'" onclick="setCat('+gi+',\'business\')">&#10003; Business</button>'
-      +'<button class="cat-btn personal'+(t.category==='personal'?' on':'')+'" onclick="setCat('+gi+',\'personal\')">&#10003; Personal</button>'
-      +'<button class="cat-btn ignore'+(t.category==='uncat'?' on':'')+'" onclick="setCat('+gi+',\'uncat\')">Clear</button>'
-      +'</div>'
-      +'</div>';
-  });
-
-  if(!filtered.length){
-    html='<div style="padding:30px;text-align:center;color:#aaa;font-size:13px">No transactions match this filter</div>';
-  }
-  document.getElementById('tx-list').innerHTML=html;
+  filtered.forEach(function(t){var i=scanned.indexOf(t);if(checked)selectedRows.add(i);else selectedRows.delete(i);});
+  renderTxns();
 }
 
-function toggleDetail(gi){
-  var det=document.getElementById('txd-'+gi);
-  if(!det)return;
-  var isOpen=det.classList.contains('open');
-  // Close all open panels
-  document.querySelectorAll('.tx-detail.open').forEach(function(d){d.classList.remove('open');});
-  if(!isOpen)det.classList.add('open');
+function updateBulkBar(){
+  var bar=document.getElementById('bulk-bar');
+  var count=selectedRows.size;
+  if(count>0){bar.classList.add('show');document.getElementById('bulk-count').textContent=count+' selected';}
+  else{bar.classList.remove('show');}
 }
 
-function setCat(gi,cat){
-  allTxns[gi].category=cat;
-  updateScStats();
-  renderTxList();
-  // Re-open the detail panel
-  var det=document.getElementById('txd-'+gi);
-  if(det)det.classList.add('open');
+function bulkMark(cat){
+  selectedRows.forEach(function(i){if(scanned[i])scanned[i].cat=cat==='business'?'business_income':cat;});
+  selectedRows=new Set();
+  updateStats();renderTxns();
+  document.getElementById('sel-all').checked=false;
+  toast('Updated '+selectedRows.size+' transactions');
 }
 
-// ── ADD BUSINESS INCOME AS INVOICES ──────────────────────
-function addBusinessToInvoices(){
-  var bizIncome=allTxns.filter(function(t){return t.category==='business'&&t.amount>0;});
-  if(!bizIncome.length){toast('No business income transactions found — mark some transactions as Business first');return;}
+function bulkDelete(){
+  if(!confirm('Delete '+selectedRows.size+' selected transaction(s)?'))return;
+  var toDelete=Array.from(selectedRows).sort(function(a,b){return b-a;});
+  toDelete.forEach(function(i){scanned.splice(i,1);});
+  selectedRows=new Set();
+  updateStats();renderTxns();toast('Deleted transactions');
+}
+
+function clearSelection(){selectedRows=new Set();document.getElementById('sel-all').checked=false;renderTxns();}
+
+function setCat(i,cat){scanned[i].cat=cat;updateStats();}
+
+function addBusinessIncome(){
+  var biz=scanned.filter(function(t){return t.cat==='business_income';});
+  if(!biz.length){toast('No transactions marked as Business Income — categorise some first');return;}
   var added=0;
-  bizIncome.forEach(function(t){
-    var num='SC-'+t.date+'-'+Math.floor(Math.random()*99);
-    invoices.push({
-      id:num,
-      client:t.payer||t.desc.substring(0,40),
-      date:t.date,
-      lines:[{d:(t.ref||t.desc).substring(0,60),q:1,p:parseFloat(t.amount.toFixed(2)),v:0}],
-      status:'paid',
-      terms:'receipt',vrate:'0'
-    });
+  biz.forEach(function(t){
+    var id='SC-'+t.date+'-'+Math.floor(Math.random()*999);
+    invoices.push({id:id,client:t.counterparty||t.desc||'Unknown',date:t.date||new Date().toISOString().split('T')[0],lines:[{d:(t.ref||t.desc||'Income'),q:1,p:t.amount,v:0}],status:'pending',terms:'receipt'});
     added++;
   });
-  save();renderDash();
-  toast(added+' business income transaction(s) added as invoices');
+  save();renderDash();toast(added+' business income transaction(s) added as invoices');
 }
 
-// ── EXPORT SCAN CSV ───────────────────────────────────────
 function exportScanCSV(){
-  if(!allTxns.length){toast('Nothing to export');return;}
-  var rows=['Date,Description,Payer,Reference,Amount,Type,Category,Bank'];
-  allTxns.forEach(function(t){
-    rows.push([t.date,'"'+esc(t.desc)+'"','"'+(t.payer||'')+'"','"'+(t.ref||'')+'"',t.amount,t.type,t.category,t.bank].join(','));
-  });
-  dl(rows.join('\n'),'statement-categorised-'+new Date().toISOString().split('T')[0]+'.csv','text/csv');
+  if(!scanned.length){toast('Nothing to export');return;}
+  var rows=['Date,Counterparty,Description,Reference,Amount,Direction,Bank,Category,AI Reason'];
+  scanned.forEach(function(t){rows.push([t.date,'"'+(t.counterparty||'').replace(/"/g,'')+'",','"'+(t.desc||'').replace(/"/g,'')+'",','"'+(t.ref||'').replace(/"/g,'')+'",',t.amount,t.dir,t.bank||'',t.cat||'uncat','"'+(t.aiReason||'').replace(/"/g,'')+'",'].join(','));});
+  dlCSV(rows.join('\n'),'statement-reviewed-'+new Date().toISOString().split('T')[0]+'.csv');
 }
 
 function resetScanner(){
-  allTxns=[];
   document.getElementById('sc-results').style.display='none';
   document.getElementById('sc-loading').style.display='none';
   document.getElementById('sc-upload').style.display='block';
   document.getElementById('filein').value='';
+  document.getElementById('sc-prog').style.width='0%';
+  scanned=[];selectedRows=new Set();
 }
 
-// ── INVOICE EXPORT ────────────────────────────────────────
-function exportInvoices(){
-  if(!invoices.length){toast('No invoices to export');return;}
-  var rows=['Invoice,Client,Date,Net,VAT,Total,Status'];
-  invoices.forEach(function(inv){var c=calcInv(inv);rows.push([inv.id,'"'+inv.client+'"',inv.date,c.net.toFixed(2),c.vat.toFixed(2),c.tot.toFixed(2),inv.status].join(','));});
-  dl(rows.join('\n'),'invoices-'+new Date().toISOString().split('T')[0]+'.csv','text/csv');
-}
-function dl(content,name,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:type}));a.download=name;a.click();}
-
-// ── MODALS ────────────────────────────────────────────────
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(function(bg){bg.addEventListener('click',function(e){if(e.target===bg)bg.classList.remove('open');});});
-
-// ── TOAST ─────────────────────────────────────────────────
+// ── TOAST ──────────────────────────────────────────────
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
 
-// ── INIT ──────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────
 load();renderDash();
 </script>
 </body>
