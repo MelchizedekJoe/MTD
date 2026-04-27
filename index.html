@@ -1091,57 +1091,117 @@ function readPDF(file){
       for(var i=1;i<=pdf.numPages;i++)arr.push(pdf.getPage(i));
       return Promise.all(arr);
     })
-    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent();}));})
+    .then(function(pages){return Promise.all(pages.map(function(p){return p.getTextContent({includeMarkedContent:false});}));})
     .then(function(contents){
-      var lines=[];
-      contents.forEach(function(c){
-        var line='';
+      // Extract text items with position info for column detection
+      var allItems=[];
+      contents.forEach(function(c,pageNum){
         c.items.forEach(function(it){
-          line+=it.str+' ';
-          if(it.hasEOL){lines.push(line.trim());line='';}
+          if(it.str&&it.str.trim()){
+            allItems.push({str:it.str.trim(),x:Math.round(it.transform[4]),y:Math.round(it.transform[5]),page:pageNum});
+          }
         });
-        if(line.trim())lines.push(line.trim());
       });
-      parsePDFLines(lines,file.name);
+      parsePDFItems(allItems,file.name.toLowerCase());
     })
-    .catch(function(e){stopProg();toast('PDF read failed — please use CSV instead');resetScanner();});
+    .catch(function(e){stopProg();toast('PDF read failed — please use the CSV version from your bank');resetScanner();});
 }
 
-function parsePDFLines(lines,filename){
-  // Generic PDF parser — extracts lines with amounts
+function parsePDFItems(items,filename){
   var txns=[];
-  var amtRe=/[+-]?\s*£?\s*(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/;
-  var dateRe=/(\d{1,2}[\s\-\/]\w+[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{2}[\/-]\d{2}[\/-]\d{4})/;
+  var bank='PDF';
+  if(filename.includes('wise'))bank='Wise';
+  else if(filename.includes('revolut'))bank='Revolut';
+  else if(filename.includes('monzo'))bank='Monzo';
+  else if(filename.includes('starling'))bank='Starling';
+  else if(filename.includes('barclays'))bank='Barclays';
+  else if(filename.includes('hsbc'))bank='HSBC';
+  else if(filename.includes('natwest'))bank='NatWest';
+  else if(filename.includes('lloyds'))bank='Lloyds';
+  else if(filename.includes('halifax'))bank='Halifax';
+  else if(filename.includes('santander'))bank='Santander';
+  else if(filename.includes('nationwide'))bank='Nationwide';
 
-  for(var i=0;i<lines.length;i++){
-    var line=lines[i];
-    if(!line||line.length<4)continue;
-    var amtMatch=line.match(amtRe);
-    if(!amtMatch)continue;
-    var amt=parseFloat(amtMatch[1].replace(/,/g,''));
-    if(isNaN(amt)||amt===0)continue;
-    var dateMatch=line.match(dateRe);
-    var date=dateMatch?dateMatch[1]:'';
-    var isOut=line.includes('-')||/sent|paid|payment to|debit|withdrawal|outgoing/i.test(line);
-    txns.push({
-      date:date,
-      desc:line.substring(0,80).trim(),
-      payer:'',
-      ref:'',
-      amount:Math.abs(amt),
-      dir:isOut?'out':'in',
-      bank:'PDF',
-      raw:line,
-      choice:'unreviewed'
+  // Group items by Y position (same line = same Y within 3px)
+  var lineMap={};
+  items.forEach(function(it){
+    var key=it.page+'_'+Math.round(it.y/4)*4;
+    if(!lineMap[key])lineMap[key]=[];
+    lineMap[key].push(it);
+  });
+
+  // Sort lines top to bottom, left to right within each line
+  var lines=Object.values(lineMap).map(function(its){
+    its.sort(function(a,b){return a.x-b.x;});
+    return{y:its[0].y,page:its[0].page,text:its.map(function(it){return it.str;}).join(' '),items:its};
+  });
+  lines.sort(function(a,b){return a.page===b.page?b.y-a.y:a.page-b.page;});
+
+  // Amount pattern
+  var amtRe=/^-?£?(\d{1,3}(?:,\d{3})*\.\d{2})$/;
+  var dateRe=/^(\d{1,2}[\s\-\/](?:\w{3}|\d{2})[\s\-\/]\d{2,4}|\d{4}-\d{2}-\d{2}|\d{2}[\/-]\d{2}[\/-]\d{4})$/i;
+  var monthNames=/jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec/i;
+
+  lines.forEach(function(line){
+    var text=line.text;
+    // Skip header/footer lines
+    if(/page|statement|account number|sort code|balance brought|opening balance|closing balance|date.*description.*amount/i.test(text))return;
+    if(text.length<5)return;
+
+    // Find amounts in this line
+    var words=text.split(/\s+/);
+    var amounts=[];
+    var dateFound='';
+    var descParts=[];
+
+    words.forEach(function(w){
+      var clean=w.replace(/[£,]/g,'');
+      var m=clean.match(/^-?(\d{1,3}(?:,\d{3})*\.\d{2})$/);
+      if(m)amounts.push({raw:w,val:parseFloat(clean),negative:w.includes('-')});
+      else if(dateRe.test(w)||(/\d{1,2}/.test(w)&&monthNames.test(text)&&!dateFound)){
+        if(!dateFound)dateFound=w;
+      } else {
+        descParts.push(w);
+      }
     });
-  }
+
+    if(!amounts.length)return;
+
+    // Try to find the transaction amount (usually the largest or last non-balance amount)
+    var txAmt=amounts[amounts.length>1?amounts.length-2:0];
+    if(!txAmt)return;
+    var amt=Math.abs(txAmt.val);
+    if(amt<0.01||amt>500000)return;
+
+    // Determine direction
+    var isOut=txAmt.negative||/sent|paid to|payment to|debit|withdrawal|purchase|direct debit|standing order/i.test(text);
+    var dir=isOut?'out':'in';
+
+    var desc=descParts.filter(function(w){return w.length>1;}).join(' ').substring(0,80);
+    if(!desc)return;
+
+    // Try to find date from adjacent lines if not in this one
+    if(!dateFound){
+      // Look for a date word in the line
+      var dm=text.match(/(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{2,4})/i);
+      if(dm)dateFound=dm[1];
+    }
+
+    txns.push(makeTxn(dateFound,desc,text.substring(0,100),'',amt,dir,bank,dir==='in'?desc:'',dir==='out'?desc:''));
+  });
 
   if(!txns.length){
     stopProg();
-    toast('Could not extract transactions from PDF — please use the CSV version');
+    // Show helpful message based on bank
+    if(bank==='Wise'){
+      toast('Wise PDFs cannot be reliably parsed. Please use the CSV export from Wise instead.');
+    } else {
+      toast('Could not read this PDF — please export a CSV from your bank and upload that instead.');
+    }
     resetScanner();
     return;
   }
+
   stopProg();
   setTimeout(function(){showScanResults(txns);},300);
 }
@@ -1150,30 +1210,38 @@ function parsePDFLines(lines,filename){
 function processCSV(text,filename){
   var lines=text.split('\n').filter(function(l){return l.trim();});
   if(lines.length<2){stopProg();toast('File appears empty');resetScanner();return;}
-
   var headers=splitCSVLine(lines[0]).map(function(h){return h.toLowerCase().trim();});
+  var bank=detectBank(headers,filename.toLowerCase());
   var txns=[];
-
-  // WISE
-  if(headers.indexOf('transferwise id')>=0||headers.indexOf('payer name')>=0){
-    txns=parseWise(lines,headers);
-  }
-  // REVOLUT
-  else if(headers.indexOf('started date')>=0||headers.indexOf('completed date')>=0){
-    txns=parseRevolut(lines,headers);
-  }
-  // MONZO
-  else if(headers.indexOf('transaction id')>=0&&headers.indexOf('emoji')>=0){
-    txns=parseMonzo(lines,headers);
-  }
-  // GENERIC
-  else {
-    txns=parseGeneric(lines,headers);
-  }
-
-  if(!txns.length){stopProg();toast('No transactions found — check the file format');resetScanner();return;}
+  if(bank==='wise')txns=parseWise(lines,headers);
+  else if(bank==='revolut')txns=parseRevolut(lines,headers);
+  else if(bank==='monzo')txns=parseMonzo(lines,headers);
+  else if(bank==='starling')txns=parseStarling(lines,headers);
+  else if(bank==='barclays')txns=parseBarclays(lines,headers);
+  else if(bank==='hsbc')txns=parseHSBC(lines,headers);
+  else if(bank==='natwest'||bank==='rbs')txns=parseNatWest(lines,headers);
+  else if(bank==='lloyds'||bank==='halifax'||bank==='bos')txns=parseLloyds(lines,headers);
+  else if(bank==='santander')txns=parseSantander(lines,headers);
+  else if(bank==='nationwide')txns=parseNationwide(lines,headers);
+  else txns=parseGeneric(lines,headers);
+  if(!txns.length){stopProg();toast('No transactions found — check the file format or try another bank');resetScanner();return;}
   stopProg();
   setTimeout(function(){showScanResults(txns);},300);
+}
+
+function detectBank(headers,filename){
+  var h=headers.join(',');
+  if(h.includes('transferwise')||h.includes('payer name'))return'wise';
+  if(h.includes('started date')||h.includes('completed date')||filename.includes('revolut'))return'revolut';
+  if(h.includes('emoji')||filename.includes('monzo'))return'monzo';
+  if(h.includes('spending category')||filename.includes('starling'))return'starling';
+  if(h.includes('subcategory')||filename.includes('barclays'))return'barclays';
+  if(h.includes('gbp amount')||filename.includes('hsbc'))return'hsbc';
+  if(h.includes('type')&&h.includes('balance')&&(filename.includes('natwest')||filename.includes('rbs')))return'natwest';
+  if(filename.includes('lloyds')||filename.includes('halifax')||filename.includes('bos'))return'lloyds';
+  if(filename.includes('santander'))return'santander';
+  if(filename.includes('nationwide'))return'nationwide';
+  return'generic';
 }
 
 function splitCSVLine(line){
@@ -1189,15 +1257,31 @@ function splitCSVLine(line){
   return res;
 }
 
-function fmtWiseDate(d){
-  // 30-03-2026 -> 2026-03-30
-  var p=d.split('-');
-  if(p.length===3&&p[2].length===4)return p[2]+'-'+p[1]+'-'+p[0];
+function normaliseDate(d){
+  if(!d)return'';
+  d=d.trim();
+  // YYYY-MM-DD already fine
+  if(/^\d{4}-\d{2}-\d{2}/.test(d))return d.substring(0,10);
+  // DD-MM-YYYY or DD/MM/YYYY
+  var m=d.match(/^(\d{1,2})[\-\/](\d{1,2})[\-\/](\d{4})/);
+  if(m)return m[3]+'-'+pad2(m[2])+'-'+pad2(m[1]);
+  // MM/DD/YYYY (American)
+  var m2=d.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m2)return m2[3]+'-'+pad2(m2[1])+'-'+pad2(m2[2]);
+  // DD Mon YYYY e.g. 26 Mar 2026
+  var months={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+  var m3=d.match(/^(\d{1,2})\s+(\w{3})\s+(\d{4})/i);
+  if(m3){var mon=months[m3[2].toLowerCase()];if(mon)return m3[3]+'-'+mon+'-'+pad2(m3[1]);}
   return d;
 }
+function pad2(n){return String(n).padStart(2,'0');}
 
+function makeTxn(date,counterparty,desc,ref,amount,dir,bank,payer,payee){
+  return{date:normaliseDate(date),counterparty:(counterparty||'').trim(),desc:(desc||'').trim(),payer:(payer||'').trim(),payee:(payee||'').trim(),ref:(ref||'').trim(),amount:Math.abs(parseFloat(amount)||0),dir:dir,bank:bank,choice:'unreviewed'};
+}
+
+// ── WISE CSV ─────────────────────────────────────────
 function parseWise(lines,headers){
-  var iId=headers.indexOf('transferwise id');
   var iAmt=headers.indexOf('amount');
   var iDate=headers.indexOf('date');
   var iDesc=headers.indexOf('description');
@@ -1205,13 +1289,11 @@ function parseWise(lines,headers){
   var iPayer=headers.indexOf('payer name');
   var iPayee=headers.indexOf('payee name');
   var iMerchant=headers.indexOf('merchant');
-  var iType=headers.indexOf('transaction type');
   var txns=[];
   for(var i=1;i<lines.length;i++){
     var c=splitCSVLine(lines[i]);
     if(!c||c.length<4)continue;
-    var amtRaw=c[iAmt]||'0';
-    var amt=parseFloat(amtRaw);
+    var amt=parseFloat(c[iAmt]);
     if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
     var payer=(c[iPayer]||'').trim();
@@ -1219,118 +1301,290 @@ function parseWise(lines,headers){
     var merchant=(iMerchant>=0?c[iMerchant]||'':'').trim();
     var ref=(c[iRef]||'').trim();
     var desc=(c[iDesc]||'').trim();
-    // Counterparty: for income show who paid us, for expense show who we paid
-    var counterparty=dir==='in'
-      ?(payer||desc)
-      :(merchant||payee||desc);
-    // Date: Wise format is DD-MM-YYYY -> convert to YYYY-MM-DD
-    var dateRaw=(c[iDate]||'').trim();
-    var dateParts=dateRaw.split('-');
-    var isoDate=dateParts.length===3&&dateParts[2].length===4
-      ?(dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0])
-      :dateRaw;
-    txns.push({
-      date:isoDate,
-      counterparty:counterparty,
-      desc:desc,
-      payer:dir==='in'?payer:'',
-      payee:dir==='out'?(merchant||payee):'',
-      ref:ref,
-      amount:Math.abs(amt),
-      dir:dir,
-      bank:'Wise',
-      choice:'unreviewed'
-    });
+    var counterparty=dir==='in'?(payer||desc):(merchant||payee||desc);
+    txns.push(makeTxn(c[iDate],counterparty,desc,ref,amt,dir,'Wise',dir==='in'?payer:'',dir==='out'?(merchant||payee):''));
   }
   return txns;
 }
 
+// ── REVOLUT CSV ───────────────────────────────────────
+// Headers: Type, Product, Started Date, Completed Date, Description, Amount, Fee, Currency, State, Balance
 function parseRevolut(lines,headers){
   var iAmt=headers.indexOf('amount');
   var iDate=headers.indexOf('started date');
   if(iDate<0)iDate=headers.indexOf('completed date');
   var iDesc=headers.indexOf('description');
   var iType=headers.indexOf('type');
+  var iState=headers.indexOf('state');
   var txns=[];
   for(var i=1;i<lines.length;i++){
     var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
+    if(!c||c.length<4)continue;
+    var state=(c[iState]||'').trim().toLowerCase();
+    if(state==='declined'||state==='failed'||state==='reverted')continue;
     var amt=parseFloat(c[iAmt]);
     if(isNaN(amt)||amt===0)continue;
     var dir=amt>0?'in':'out';
-    var desc=c[iDesc]||'';
-    if(SELF_PATTERNS.test(desc)&&dir==='in')continue;
-    txns.push({
-      date:(c[iDate]||'').split(' ')[0],
-      desc:desc,
-      payer:dir==='in'?desc:'',
-      ref:'',
-      amount:Math.abs(amt),
-      dir:dir,
-      bank:'Revolut',
-      raw:lines[i],
-      choice:'unreviewed'
-    });
+    var desc=(c[iDesc]||'').trim();
+    var type=(c[iType]||'').trim();
+    var dateRaw=(c[iDate]||'').split(' ')[0];
+    var counterparty=desc;
+    txns.push(makeTxn(dateRaw,counterparty,desc+' ('+type+')','',amt,dir,'Revolut',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
 
+// ── MONZO CSV ─────────────────────────────────────────
+// Headers: Transaction ID, Date, Time, Type, Name, Emoji, Category, Amount, Currency, Local amount, Local currency, Notes and #tags, Address, Receipt, Description, Category Split, Money Out, Money In
 function parseMonzo(lines,headers){
   var iAmt=headers.indexOf('amount');
+  var iMoneyIn=headers.indexOf('money in');
+  var iMoneyOut=headers.indexOf('money out');
   var iDate=headers.indexOf('date');
-  var iDesc=headers.indexOf('description');
   var iName=headers.indexOf('name');
+  var iDesc=headers.indexOf('description');
+  var iCat=headers.indexOf('category');
+  var iNotes=headers.indexOf('notes and #tags');
   var txns=[];
   for(var i=1;i<lines.length;i++){
     var c=splitCSVLine(lines[i]);
-    if(!c||c.length<3)continue;
-    var amt=parseFloat(c[iAmt]);
-    if(isNaN(amt)||amt===0)continue;
-    var dir=amt>0?'in':'out';
-    txns.push({
-      date:c[iDate]||'',
-      desc:c[iDesc]||c[iName]||'',
-      payer:dir==='in'?(c[iName]||''):'',
-      ref:'',
-      amount:Math.abs(amt),
-      dir:dir,
-      bank:'Monzo',
-      raw:lines[i],
-      choice:'unreviewed'
-    });
+    if(!c||c.length<4)continue;
+    var amt=0,dir='out';
+    if(iMoneyIn>=0&&iMoneyOut>=0){
+      var mIn=parseFloat((c[iMoneyIn]||'').replace(/[£,]/g,''))||0;
+      var mOut=parseFloat((c[iMoneyOut]||'').replace(/[£,]/g,''))||0;
+      if(mIn>0){amt=mIn;dir='in';}
+      else if(mOut>0){amt=mOut;dir='out';}
+      else continue;
+    } else {
+      amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
+      if(isNaN(amt)||amt===0)continue;
+      dir=amt>0?'in':'out';
+      amt=Math.abs(amt);
+    }
+    var name=(c[iName]||'').trim();
+    var desc=(c[iDesc]||name).trim();
+    var notes=(iNotes>=0?c[iNotes]||'':'').trim();
+    var cat=(iCat>=0?c[iCat]||'':'').trim();
+    txns.push(makeTxn(c[iDate],name,desc,notes,amt,dir,'Monzo',dir==='in'?name:'',dir==='out'?name:''));
   }
   return txns;
 }
 
-function parseGeneric(lines,headers){
-  // Try to detect date, description, and amount columns
+// ── STARLING CSV ─────────────────────────────────────
+// Headers: Date, Counter Party, Reference, Type, Amount (GBP), Balance (GBP), Spending Category, Notes
+function parseStarling(lines,headers){
+  var iDate=headers.indexOf('date');
+  var iParty=headers.indexOf('counter party');
+  var iRef=headers.indexOf('reference');
+  var iAmt=headers.indexOf('amount (gbp)');
+  if(iAmt<0)iAmt=headers.indexOf('amount');
+  var iCat=headers.indexOf('spending category');
   var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<4)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
+    if(isNaN(amt)||amt===0)continue;
+    var dir=amt>0?'in':'out';
+    var party=(c[iParty]||'').trim();
+    var ref=(c[iRef]||'').trim();
+    txns.push(makeTxn(c[iDate],party,party,ref,amt,dir,'Starling',dir==='in'?party:'',dir==='out'?party:''));
+  }
+  return txns;
+}
+
+// ── BARCLAYS CSV ──────────────────────────────────────
+// Headers: Number, Date, Account, Amount, Subcategory, Memo
+function parseBarclays(lines,headers){
+  var iDate=headers.indexOf('date');
+  var iAmt=headers.indexOf('amount');
+  var iMemo=headers.indexOf('memo');
+  var iSub=headers.indexOf('subcategory');
+  var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
+    if(isNaN(amt)||amt===0)continue;
+    var dir=amt>0?'in':'out';
+    var memo=(c[iMemo]||'').trim();
+    var sub=(c[iSub]||'').trim();
+    txns.push(makeTxn(c[iDate],memo,memo+(sub?' ['+sub+']':''),'',amt,dir,'Barclays',dir==='in'?memo:'',dir==='out'?memo:''));
+  }
+  return txns;
+}
+
+// ── HSBC CSV ──────────────────────────────────────────
+// Headers: Date, Payee, Memo, Amount
+// Sometimes: Date, Description, Paid out, Paid in, Balance
+function parseHSBC(lines,headers){
+  var iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('description');
+  if(iDesc<0)iDesc=headers.indexOf('payee');
+  var iPaidOut=headers.indexOf('paid out');
+  var iPaidIn=headers.indexOf('paid in');
+  var iAmt=headers.indexOf('amount');
+  if(iAmt<0)iAmt=headers.indexOf('gbp amount');
+  var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<3)continue;
+    var amt=0,dir='out';
+    if(iPaidIn>=0&&iPaidOut>=0){
+      var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0;
+      var pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;
+      if(pIn>0){amt=pIn;dir='in';}
+      else if(pOut>0){amt=pOut;dir='out';}
+      else continue;
+    } else {
+      amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
+      if(isNaN(amt)||amt===0)continue;
+      dir=amt>0?'in':'out';amt=Math.abs(amt);
+    }
+    var desc=(c[iDesc]||'').trim();
+    txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'HSBC',dir==='in'?desc:'',dir==='out'?desc:''));
+  }
+  return txns;
+}
+
+// ── NATWEST / RBS CSV ─────────────────────────────────
+// Headers: Date, Type, Description, Value, Balance, Account Name, Account Number
+function parseNatWest(lines,headers){
+  var iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('description');
+  var iVal=headers.indexOf('value');
+  var iType=headers.indexOf('type');
+  var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iVal]||'').replace(/[£,]/g,''));
+    if(isNaN(amt)||amt===0)continue;
+    var dir=amt>0?'in':'out';
+    var desc=(c[iDesc]||'').trim();
+    var type=(c[iType]||'').trim();
+    txns.push(makeTxn(c[iDate],desc,desc+(type?' ('+type+')':''),'',amt,dir,'NatWest',dir==='in'?desc:'',dir==='out'?desc:''));
+  }
+  return txns;
+}
+
+// ── LLOYDS / HALIFAX / BOS CSV ───────────────────────
+// Headers: Transaction Date, Transaction Type, Sort Code, Account Number, Transaction Description, Debit Amount, Credit Amount, Balance
+function parseLloyds(lines,headers){
+  var iDate=headers.indexOf('transaction date');
+  if(iDate<0)iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('transaction description');
+  if(iDesc<0)iDesc=headers.indexOf('description');
+  var iDebit=headers.indexOf('debit amount');
+  var iCredit=headers.indexOf('credit amount');
+  var iType=headers.indexOf('transaction type');
+  var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<4)continue;
+    var amt=0,dir='out';
+    if(iDebit>=0&&iCredit>=0){
+      var cr=parseFloat((c[iCredit]||'').replace(/[£,]/g,''))||0;
+      var db=parseFloat((c[iDebit]||'').replace(/[£,]/g,''))||0;
+      if(cr>0){amt=cr;dir='in';}
+      else if(db>0){amt=db;dir='out';}
+      else continue;
+    } else continue;
+    var desc=(c[iDesc]||'').trim();
+    var type=(c[iType]||'').trim();
+    txns.push(makeTxn(c[iDate],desc,desc+(type?' ['+type+']':''),'',amt,dir,'Lloyds',dir==='in'?desc:'',dir==='out'?desc:''));
+  }
+  return txns;
+}
+
+// ── SANTANDER CSV ─────────────────────────────────────
+// Headers: Date, Description, Amount
+function parseSantander(lines,headers){
+  var iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('description');
+  var iAmt=headers.indexOf('amount');
+  var txns=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<3)continue;
+    var amt=parseFloat((c[iAmt]||'').replace(/[£,]/g,''));
+    if(isNaN(amt)||amt===0)continue;
+    var dir=amt>0?'in':'out';
+    var desc=(c[iDesc]||'').trim();
+    txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'Santander',dir==='in'?desc:'',dir==='out'?desc:''));
+  }
+  return txns;
+}
+
+// ── NATIONWIDE CSV ────────────────────────────────────
+// Nationwide CSVs have a few header rows before data starts
+function parseNationwide(lines,headers){
+  // Nationwide puts account info at top, find the data header row
+  var dataStart=0;
+  for(var i=0;i<Math.min(lines.length,10);i++){
+    var l=lines[i].toLowerCase();
+    if(l.includes('date')&&(l.includes('description')||l.includes('transaction'))){
+      dataStart=i;headers=splitCSVLine(lines[i]).map(function(h){return h.toLowerCase().trim();});break;
+    }
+  }
+  var iDate=headers.indexOf('date');
+  var iDesc=headers.indexOf('description')||headers.indexOf('transactions');
+  var iPaidOut=headers.indexOf('paid out');
+  var iPaidIn=headers.indexOf('paid in');
+  var txns=[];
+  for(var i=dataStart+1;i<lines.length;i++){
+    var c=splitCSVLine(lines[i]);
+    if(!c||c.length<3)continue;
+    var amt=0,dir='out';
+    var pIn=parseFloat((c[iPaidIn]||'').replace(/[£,]/g,''))||0;
+    var pOut=parseFloat((c[iPaidOut]||'').replace(/[£,]/g,''))||0;
+    if(pIn>0){amt=pIn;dir='in';}
+    else if(pOut>0){amt=pOut;dir='out';}
+    else continue;
+    var desc=(c[iDesc]||'').trim();
+    txns.push(makeTxn(c[iDate],desc,desc,'',amt,dir,'Nationwide',dir==='in'?desc:'',dir==='out'?desc:''));
+  }
+  return txns;
+}
+
+// ── GENERIC CSV FALLBACK ──────────────────────────────
+function parseGeneric(lines,headers){
+  var txns=[];
+  // Try to find debit/credit columns
+  var iDebit=-1,iCredit=-1,iAmt=-1,iDate=-1,iDesc=-1;
+  headers.forEach(function(h,i){
+    if(/date|time/.test(h)&&iDate<0)iDate=i;
+    if(/description|details|memo|narrative|payee|merchant/.test(h)&&iDesc<0)iDesc=i;
+    if(/debit|out|withdraw|payment out/.test(h)&&iDebit<0)iDebit=i;
+    if(/credit|in|deposit|payment in/.test(h)&&iCredit<0)iCredit=i;
+    if(/^amount$|^value$/.test(h)&&iAmt<0)iAmt=i;
+  });
   for(var i=1;i<lines.length;i++){
     var c=splitCSVLine(lines[i]);
     if(!c||c.length<2)continue;
-    var amt=0,dir='in';
-    // Look for numeric columns
-    for(var j=0;j<c.length;j++){
-      var v=parseFloat(c[j].replace(/[£,]/g,''));
-      if(!isNaN(v)&&v!==0&&Math.abs(v)<1000000){
-        amt=Math.abs(v);
-        dir=v<0?'out':'in';
-        break;
+    var amt=0,dir='out';
+    if(iDebit>=0&&iCredit>=0){
+      var cr=parseFloat((c[iCredit]||'').replace(/[£,$,]/g,''))||0;
+      var db=parseFloat((c[iDebit]||'').replace(/[£,$,]/g,''))||0;
+      if(cr>0){amt=cr;dir='in';}
+      else if(db>0){amt=db;dir='out';}
+      else continue;
+    } else if(iAmt>=0){
+      var v=parseFloat((c[iAmt]||'').replace(/[£,$,]/g,''));
+      if(isNaN(v)||v===0)continue;
+      dir=v>0?'in':'out';amt=Math.abs(v);
+    } else {
+      // Last resort: scan all columns for a number
+      for(var j=0;j<c.length;j++){
+        var v=parseFloat(c[j].replace(/[£,$,]/g,''));
+        if(!isNaN(v)&&v!==0&&Math.abs(v)<1000000){amt=Math.abs(v);dir=v<0?'out':'in';break;}
       }
+      if(!amt)continue;
     }
-    if(!amt)continue;
-    var desc=c[1]||c[0]||'Unknown';
-    txns.push({
-      date:c[0]||'',
-      desc:desc,
-      payer:dir==='in'?desc:'',
-      ref:c[2]||'',
-      amount:amt,
-      dir:dir,
-      bank:'Bank',
-      raw:lines[i],
-      choice:'unreviewed'
-    });
+    var desc=(iDesc>=0?c[iDesc]:c[1])||'Unknown';
+    var date=iDate>=0?c[iDate]:c[0];
+    txns.push(makeTxn(date,desc,desc,'',amt,dir,'Bank',dir==='in'?desc:'',dir==='out'?desc:''));
   }
   return txns;
 }
